@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "412736386004",
+    "firebase_url": "https://melzarito.firebaseio.com",
+    "project_id": "melzarito",
+    "storage_bucket": "melzarito.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:412736386004:android:229f39d3c68405cc",
+        "android_client_info": {
+          "package_name": "sapir_liran.melzarito"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "412736386004-4busppk9jj5ov6qakqqri39fjd23f4km.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRvW_7Yye4VKIhmv2cbo9eSfd3njyzzDQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
