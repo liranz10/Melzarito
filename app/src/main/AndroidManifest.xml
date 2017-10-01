@@ -22,13 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.ResetPasswordActivity"></activity>
-        <activity android:name=".UI.SignupActivity"></activity>
-        <activity android:name=".UI.ChooseEmployeeRoleActivity"></activity>
+        <activity android:name=".UI.ResetPasswordActivity" />
+        <activity android:name=".UI.SignupActivity" />
+        <activity android:name=".UI.ChooseEmployeeRoleActivity" />
         <activity
             android:name=".UI.TablesActivity"
             android:label="@string/title_activity_tables"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".UI.OpenOrdersActivity"
+            android:label="@string/title_activity_openorders"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name=".UI.ClubMembersActivity"
+            android:label="@string/title_activity_club"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

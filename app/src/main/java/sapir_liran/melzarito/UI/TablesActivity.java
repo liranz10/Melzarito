@@ -1,5 +1,6 @@
 package sapir_liran.melzarito.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,10 +14,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import sapir_liran.melzarito.R;
 
 public class TablesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +29,7 @@ public class TablesActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        auth = FirebaseAuth.getInstance();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -82,18 +79,26 @@ public class TablesActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.tables) {
+            if(this instanceof TablesActivity && this.getClass() != TablesActivity.class) {
+                startActivity(new Intent(this, TablesActivity.class));
+                finish();
+            }
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.open_orders) {
+            if(!(this instanceof OpenOrdersActivity)) {
+                startActivity(new Intent(this, OpenOrdersActivity.class));
+                finish();
+            }
+        } else if (id == R.id.club) {
+            if(!(this instanceof ClubMembersActivity)) {
+                startActivity(new Intent(this, ClubMembersActivity.class));
+                finish();
+            }
+        } else if (id == R.id.logout_menu) {
+            auth.signOut();
+            startActivity(new Intent(TablesActivity.this, LoginActivity.class));
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -29,8 +29,11 @@
     <string name="forgot_password_msg">אנו צריכים את כתובת הדואר האלקטרוני שלך על מנת לשלוח לך סיסמא חדשה.</string>
     <string name="btn_chefs">טבחים</string>
     <string name="btn_waiters">מלצרים</string>
-    <string name="title_activity_tables">TablesActivity</string>
+    <string name="title_activity_tables">שולחנות</string>
+    <string name="title_activity_openorders">הזמנות פתוחות</string>
+    <string name="title_activity_club">מועדון לקוחות</string>
 
+    title_activity_club
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

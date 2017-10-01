@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="ltr"
+    android:layoutDirection="rtl"
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/colorPrimary"
@@ -28,7 +28,7 @@
         android:layout_gravity="center"
         android:drawableTop="@drawable/waiter"
         android:paddingTop="20sp"
-        android:layout_marginRight="40sp"
+        android:layout_marginLeft="40sp"
         />
 
     <Button
