@@ -48,4 +48,10 @@
     <string name="club_member_address">כתובת</string>
     <string name="club_member_phone">טלפון</string>
     <string name="waiter_chef_activity">מלצר/טבח</string>
+    <string name="deserts_btn">קינוחים</string>
+    <string name="drinks_btn">שתייה</string>
+    <string name="specials_btn">ספיישלים</string>
+    <string name="side_dishes_btn">תוספות</string>
+    <string name="main_course_btn">מנות עיקריות</string>
+    <string name="appetizers_btn">מנות ראשונות</string>
 </resources>

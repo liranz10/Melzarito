@@ -17,6 +17,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res/layout/waiters',
+                            'src/main/res/layout/kitchen',
+                            'src/main/res/layout',
+                            'src/main/res'
+                    ]
+
+        }
+    }
 }
 
 dependencies {
@@ -32,3 +44,4 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+

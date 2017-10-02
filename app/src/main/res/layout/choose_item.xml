@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/appetizers_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_marginTop="20sp"
+    android:orientation="vertical">
+
+
+    <Button
+        android:id="@+id/appetizers_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape"
+        android:textSize="20sp"
+        android:text="כרובית מטוגנת" />
+
+    <Button
+        android:id="@+id/main_course_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/buttonshape"
+        android:textSize="20sp"
+        android:text="חציל על האש" />
+
+    <Button
+        android:id="@+id/side_dishes_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/buttonshape"
+        android:textSize="20sp"
+        android:text="סלט קפרזה" />
+
+    <Button
+        android:id="@+id/specials_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/buttonshape"
+        android:textSize="20sp"
+        android:text="מרק היום" />
+
+
+</LinearLayout>

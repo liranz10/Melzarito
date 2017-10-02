@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_fragment_update_stocks">עדכון חוסרים</string>
+    <string name="title_fragment_update_specials">עדכון ספיישלים</string>
+</resources>

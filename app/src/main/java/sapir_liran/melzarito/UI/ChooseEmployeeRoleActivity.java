@@ -44,6 +44,13 @@ public class ChooseEmployeeRoleActivity extends AppCompatActivity {
                 startActivity(new Intent(ChooseEmployeeRoleActivity.this, WaitersMainActivity.class));
             }
         });
+
+        chefbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChooseEmployeeRoleActivity.this, KitchenMainActivity.class));
+            }
+        });
     }
 
 

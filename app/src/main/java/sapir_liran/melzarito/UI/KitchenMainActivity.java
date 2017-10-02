@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import sapir_liran.melzarito.R;
 
-public class WaitersMainActivity extends AppCompatActivity
+public class KitchenMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth auth;
     private TablesFragment tablesFragment;
@@ -26,13 +26,13 @@ public class WaitersMainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_waiters_main);
+        setContentView(R.layout.activity_kitchen_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         auth = FirebaseAuth.getInstance();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_waiters_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_kitchen_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -52,7 +52,7 @@ public class WaitersMainActivity extends AppCompatActivity
         if (count == 0) {
             fragmentManager.popBackStack();
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_waiters_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_kitchen_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
@@ -121,11 +121,11 @@ public class WaitersMainActivity extends AppCompatActivity
 
         }else if (id == R.id.logout_menu) {
             auth.signOut();
-            startActivity(new Intent(WaitersMainActivity.this, LoginActivity.class));
+            startActivity(new Intent(KitchenMainActivity.this, LoginActivity.class));
             finish();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_waiters_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_kitchen_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

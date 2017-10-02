@@ -29,6 +29,10 @@
             android:name=".UI.WaitersMainActivity"
             android:label="@string/title_fragment_tables"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".UI.KitchenMainActivity"
+            android:label="מטבח"
+            android:theme="@style/AppTheme" />
 
     </application>
 
