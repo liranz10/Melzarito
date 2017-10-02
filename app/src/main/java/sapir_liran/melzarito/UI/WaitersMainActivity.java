@@ -1,12 +1,8 @@
 package sapir_liran.melzarito.UI;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,14 +16,17 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import sapir_liran.melzarito.R;
 
-public class TablesActivity extends AppCompatActivity
+public class WaitersMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth auth;
+    private TablesFragment tablesFragment;
+    private OpenOrdersFragment openOrdersFragment;
+    private ClubMembersFragment clubMembersFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tables);
+        setContentView(R.layout.activity_waiters_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -56,7 +55,7 @@ public class TablesActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.tables, menu);
+        getMenuInflater().inflate(R.menu.waiters_main, menu);
         return true;
     }
 
@@ -80,28 +79,39 @@ public class TablesActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        FragmentManager fragmentManager = getFragmentManager();
 
         if (id == R.id.tables) {
-            if(this instanceof TablesActivity && this.getClass() != TablesActivity.class) {
-                startActivity(new Intent(this, TablesActivity.class));
-                finish();
-            }
+          if(tablesFragment ==null){
+              tablesFragment=new TablesFragment();
+          }
+            setTitle(R.string.title_fragment_tables);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, tablesFragment )
+                    .commit();
 
         } else if (id == R.id.open_orders) {
-            if(!(this instanceof OpenOrdersActivity)) {
-                startActivity(new Intent(this, OpenOrdersActivity.class));
-                finish();
+            if(openOrdersFragment ==null){
+                openOrdersFragment=new OpenOrdersFragment();
             }
-        } else if (id == R.id.club) {
-            FragmentManager fragmentManager = getFragmentManager();
-            ClubMembersActivity fragment = new ClubMembersActivity();
+            setTitle(R.string.title_fragment_openorders);
+
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fragment )
+                    .replace(R.id.content_frame, openOrdersFragment )
+                    .commit();
+
+        } else if (id == R.id.club) {
+            if(clubMembersFragment ==null){
+                clubMembersFragment=new ClubMembersFragment();
+            }
+            setTitle(R.string.title_fragment_club);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, clubMembersFragment )
                     .commit();
 
         } else if (id == R.id.logout_menu) {
             auth.signOut();
-            startActivity(new Intent(TablesActivity.this, LoginActivity.class));
+            startActivity(new Intent(WaitersMainActivity.this, LoginActivity.class));
             finish();
         }
 

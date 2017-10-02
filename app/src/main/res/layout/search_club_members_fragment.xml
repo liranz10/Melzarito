@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_club_member_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="150sp"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:background="@drawable/buttonshape"
+        android:id="@+id/search_club_member_by_id"
+        android:layout_width="72dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left"
+        app:srcCompat="@android:drawable/ic_search_category_default" />
+
+    <EditText
+        android:id="@+id/club_member_id_text"
+        android:textSize="25sp"
+        android:layout_marginLeft="20sp"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/club_member_id"
+        android:inputType="number" />
+
+</LinearLayout>

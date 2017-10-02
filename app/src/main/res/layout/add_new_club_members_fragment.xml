@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/add_new_club_member_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="120sp"
+    android:orientation="vertical">
+
+
+    <EditText
+        android:id="@+id/club_member_id_text"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/club_member_id"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/club_member_name_text"
+        android:textSize="25sp"
+        android:layout_marginTop="10sp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/club_member_name" />
+
+    <EditText
+        android:id="@+id/club_member_birthday_text"
+        android:textSize="25sp"
+        android:layout_marginTop="10sp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/club_member_birthday"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/club_member_address_text"
+        android:textSize="25sp"
+        android:layout_marginTop="10sp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/club_member_address"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/club_member_phone_text"
+        android:textSize="25sp"
+        android:layout_marginTop="10sp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/club_member_phone"
+        android:inputType="phone" />
+
+</LinearLayout>
