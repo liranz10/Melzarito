@@ -19,8 +19,7 @@
             android:id="@+id/choose_employee_role"
             android:icon="@drawable/pick"
             android:title="@string/waiter_chef_activity" />
-//sd
-        <item
+   <item
             android:id="@+id/logout_menu"
             android:icon="@drawable/logout"
             android:title="@string/btn_sign_out" />
