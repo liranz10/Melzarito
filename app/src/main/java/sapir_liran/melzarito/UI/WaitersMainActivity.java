@@ -51,14 +51,10 @@ public class WaitersMainActivity extends AppCompatActivity
 
         if (count == 0) {
             fragmentManager.popBackStack();
-        } else {
-            fragmentManager.popBackStack();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            super.onBackPressed();
         }
     }
 
@@ -97,7 +93,7 @@ public class WaitersMainActivity extends AppCompatActivity
           }
             setTitle(R.string.title_fragment_tables);
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, tablesFragment )
+                    .replace(R.id.content_frame, tablesFragment)
                     .commit();
 
         } else if (id == R.id.open_orders) {
@@ -107,7 +103,7 @@ public class WaitersMainActivity extends AppCompatActivity
             setTitle(R.string.title_fragment_openorders);
 
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, openOrdersFragment )
+                    .replace(R.id.content_frame, openOrdersFragment)
                     .commit();
 
         } else if (id == R.id.club) {
@@ -116,10 +112,13 @@ public class WaitersMainActivity extends AppCompatActivity
             }
             setTitle(R.string.title_fragment_club);
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, clubMembersFragment )
+                    .replace(R.id.content_frame, clubMembersFragment)
                     .commit();
 
-        } else if (id == R.id.logout_menu) {
+        } else if (id == R.id.choose_employee_role){
+            finish();
+
+        }else if (id == R.id.logout_menu) {
             auth.signOut();
             startActivity(new Intent(WaitersMainActivity.this, LoginActivity.class));
             finish();

@@ -47,4 +47,5 @@
     <string name="club_member_birthday">תאריך לידה</string>
     <string name="club_member_address">כתובת</string>
     <string name="club_member_phone">טלפון</string>
+    <string name="waiter_chef_activity">מלצר/טבח</string>
 </resources>

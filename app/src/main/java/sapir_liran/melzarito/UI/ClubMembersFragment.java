@@ -33,7 +33,7 @@ public class ClubMembersFragment extends android.app.Fragment {
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, addClubfragment )
+                        .replace(R.id.content_frame, addClubfragment ).addToBackStack(ClubMembersFragment.class.getName())
                         .commit();
             }
         });
@@ -44,7 +44,7 @@ public class ClubMembersFragment extends android.app.Fragment {
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, searchClubFragment)
+                        .replace(R.id.content_frame, searchClubFragment).addToBackStack(ClubMembersFragment.class.getName())
                         .commit();
             }
         });

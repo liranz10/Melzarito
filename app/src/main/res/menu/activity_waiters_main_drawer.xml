@@ -6,20 +6,24 @@
         <item
             android:id="@+id/tables"
             android:icon="@drawable/table"
-            android:title="שולחנות" />
+            android:title="@string/title_fragment_tables" />
         <item
             android:id="@+id/open_orders"
             android:icon="@drawable/openorders"
-            android:title="הזמנות פתוחות" />
+            android:title="@string/title_fragment_openorders" />
         <item
             android:id="@+id/club"
             android:icon="@drawable/club"
-            android:title="מועדון לקוחות" />
+            android:title="@string/title_fragment_club" />
+        <item
+            android:id="@+id/choose_employee_role"
+            android:icon="@drawable/pick"
+            android:title="@string/waiter_chef_activity" />
 
         <item
             android:id="@+id/logout_menu"
             android:icon="@drawable/logout"
-            android:title="התנתק" />
+            android:title="@string/btn_sign_out" />
     </group>
 
 
