@@ -1,5 +1,7 @@
 package sapir_liran.melzarito.UI;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -91,10 +93,12 @@ public class TablesActivity extends AppCompatActivity
                 finish();
             }
         } else if (id == R.id.club) {
-            if(!(this instanceof ClubMembersActivity)) {
-                startActivity(new Intent(this, ClubMembersActivity.class));
-                finish();
-            }
+            FragmentManager fragmentManager = getFragmentManager();
+            ClubMembersActivity fragment = new ClubMembersActivity();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragment )
+                    .commit();
+
         } else if (id == R.id.logout_menu) {
             auth.signOut();
             startActivity(new Intent(TablesActivity.this, LoginActivity.class));
