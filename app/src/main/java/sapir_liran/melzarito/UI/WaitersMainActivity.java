@@ -22,7 +22,7 @@ public class WaitersMainActivity extends AppCompatActivity
     private TablesFragment tablesFragment;
     private OpenOrdersFragment openOrdersFragment;
     private ClubMembersFragment clubMembersFragment;
-
+    private FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +42,23 @@ public class WaitersMainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+
+
     @Override
     public void onBackPressed() {
+
+        int count = fragmentManager.getBackStackEntryCount();
+
+        if (count == 0) {
+            fragmentManager.popBackStack();
+        } else {
+            fragmentManager.popBackStack();
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+//        } else {
+//            super.onBackPressed();
         }
     }
 
@@ -79,7 +89,7 @@ public class WaitersMainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager = getFragmentManager();
 
         if (id == R.id.tables) {
           if(tablesFragment ==null){

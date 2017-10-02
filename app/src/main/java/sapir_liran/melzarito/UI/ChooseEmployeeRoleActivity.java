@@ -42,8 +42,9 @@ public class ChooseEmployeeRoleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ChooseEmployeeRoleActivity.this, WaitersMainActivity.class));
-                finish();
             }
         });
     }
+
+
 }

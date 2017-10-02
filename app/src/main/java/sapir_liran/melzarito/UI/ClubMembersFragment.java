@@ -52,4 +52,5 @@ public class ClubMembersFragment extends android.app.Fragment {
         return view;
 
     }
+
 }
