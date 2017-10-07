@@ -23,4 +23,8 @@ public class Employee {
     public String getRole() {
         return role;
     }
+
+    public void setRole(String role){
+        this.role = role;
+    } //--sapir: add this
 }

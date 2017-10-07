@@ -35,7 +35,6 @@
     <string name="title_fragment_add_new_club_member">הוספת חבר מועדון</string>
     <string name="title_fragment_search_club_member">חיפוש חבר מועדון</string>
 
-    title_activity_club
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:text="@string/btn_sign_out"
         android:textColor="#e9343a"
-        android:background="@drawable/logoutshape"
+        android:background="@drawable/buttonshape"
         android:paddingLeft="40sp"
         android:paddingRight="30sp"
         android:drawableRight="@drawable/logout"/>

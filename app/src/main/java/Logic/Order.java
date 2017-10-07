@@ -10,7 +10,7 @@ public class Order {
     private int waiterID;
     private int cookerID;
     private Date lastModifiedTime;
-    private int lastModifiedBy;
+    private int lastModifiedBy; //--sapir: why do we need this?
     private boolean open;
 
     public Order(int id, int tableNumber, int waiterID, int cookerID, Date lastModifiedTime, int lastModifiedBy, boolean open) {

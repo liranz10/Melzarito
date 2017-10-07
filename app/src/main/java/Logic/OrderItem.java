@@ -9,7 +9,7 @@ public class OrderItem {
     private int orderID;
     private int menuItemID;
     private Date lastModifiedTime;
-    private int lastModifiedBy;
+    private int lastModifiedBy; //--sapir: why do we need this?
     private ArrayList<String> notes;
 
     public OrderItem(int orderID, int menuItemID, Date lastModifiedTime, int lastModifiedBy, ArrayList<String> notes) {

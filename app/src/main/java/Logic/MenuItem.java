@@ -4,11 +4,11 @@ import java.util.Date;
 
 
 public class MenuItem {
-    private int id;
+    private int id; //--sapir: what is the different between this and menuID ?
     private int menuID;
     private int category;
-    private Date lastModifiedTime;
-    private int lastModifiedBy;
+    private Date lastModifiedTime; //--sapir: why do we need this?
+    private int lastModifiedBy; //--sapir: why do we need this?
 
     public MenuItem(int id, int menuID, int category, Date lastModifiedTime, int lastModifiedBy) {
         this.id = id;

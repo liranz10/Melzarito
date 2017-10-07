@@ -6,7 +6,7 @@ import java.util.Date;
 public class Customer {
     private int id;
     private String name;
-    private String address;
+    private String address; //--sapir: why do we need this?
     private Date dateOfBirth;
     private int phoneNumber;
 

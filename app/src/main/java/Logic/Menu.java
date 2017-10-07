@@ -8,8 +8,8 @@ public class Menu {
 
     private int id;
     private ArrayList<MenuItem> items;
-    private Date lastModifiedTime;
-    private int lastModifiedBy;
+    private Date lastModifiedTime; //--sapir: why do we need this?
+    private int lastModifiedBy; //--sapir: why do we need this?
 
     public Menu(int id, ArrayList<MenuItem> items, Date lastModifiedTime, int lastModifiedBy) {
         this.id = id;
