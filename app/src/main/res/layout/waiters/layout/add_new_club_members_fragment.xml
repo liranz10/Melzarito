@@ -56,4 +56,14 @@
         android:hint="@string/club_member_phone"
         android:inputType="phone" />
 
+    <Button
+        android:id="@+id/add_new_club_member_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50sp"
+
+        android:text="הוסף"
+        android:background="@drawable/buttonshape"
+        android:layout_gravity="center"/>
+
 </LinearLayout>

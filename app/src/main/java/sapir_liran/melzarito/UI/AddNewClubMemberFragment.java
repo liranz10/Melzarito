@@ -18,14 +18,9 @@ public class AddNewClubMemberFragment extends Fragment {
 
         view= inflater.inflate(R.layout.add_new_club_members_fragment, container, false);
         getActivity().setTitle(R.string.title_fragment_add_new_club_member);
-        onBackPressed();
         return view;
 
     }
 
-    public void onBackPressed()
-    {
-        FragmentManager fm = getActivity().getFragmentManager();
-        fm.popBackStack();
-    }
+
 }
