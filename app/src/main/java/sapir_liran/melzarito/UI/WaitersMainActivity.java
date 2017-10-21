@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
 
 public class WaitersMainActivity extends AppCompatActivity
@@ -23,6 +24,8 @@ public class WaitersMainActivity extends AppCompatActivity
     private OpenOrdersFragment openOrdersFragment;
     private ClubMembersFragment clubMembersFragment;
     private FragmentManager fragmentManager;
+    public static RestaurantManager restaurantManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,16 @@ public class WaitersMainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        restaurantManager = new RestaurantManager();
+        //Deafult - Tables
+        fragmentManager = getFragmentManager();
+        if(tablesFragment ==null){
+            tablesFragment=new TablesFragment();
+        }
+        setTitle(R.string.title_fragment_tables);
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, tablesFragment)
+                .commit();
     }
 
 
@@ -85,16 +98,14 @@ public class WaitersMainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        fragmentManager = getFragmentManager();
 
         if (id == R.id.tables) {
           if(tablesFragment ==null){
               tablesFragment=new TablesFragment();
           }
             setTitle(R.string.title_fragment_tables);
-            TableOrderFragment fr =new TableOrderFragment();
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fr)
+                    .replace(R.id.content_frame, tablesFragment)
                     .commit();
 
         } else if (id == R.id.open_orders) {

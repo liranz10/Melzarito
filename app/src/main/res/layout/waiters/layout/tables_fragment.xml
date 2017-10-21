@@ -9,8 +9,13 @@
     android:layout_height="match_parent">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="liran"/>
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_gravity=""
+        android:background="@drawable/buttonshape"
+        android:drawableBottom="@drawable/table_image"
+        android:text="20"
+        android:textColor="@color/bg_main"
+        android:textSize="30sp" />
 
 </RelativeLayout>

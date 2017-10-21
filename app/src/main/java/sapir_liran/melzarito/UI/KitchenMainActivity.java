@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
 
 public class KitchenMainActivity extends AppCompatActivity
@@ -40,6 +41,7 @@ public class KitchenMainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
 
@@ -92,9 +94,9 @@ public class KitchenMainActivity extends AppCompatActivity
               tablesFragment=new TablesFragment();
           }
             setTitle(R.string.title_fragment_tables);
-            TableOrderFragment fr =new TableOrderFragment();
+            TablesFragment tables =new TablesFragment();
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fr)
+                    .replace(R.id.content_frame, tables)
                     .commit();
 
         } else if (id == R.id.open_orders) {

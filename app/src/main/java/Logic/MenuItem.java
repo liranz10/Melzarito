@@ -5,17 +5,17 @@ import java.util.Date;
 
 public class MenuItem {
     private int id; //--sapir: what is the different between this and menuID ?
-    private int menuID;
+    private String name;
     private int category;
-    private Date lastModifiedTime; //--sapir: why do we need this?
-    private int lastModifiedBy; //--sapir: why do we need this?
 
-    public MenuItem(int id, int menuID, int category, Date lastModifiedTime, int lastModifiedBy) {
+
+    public MenuItem() {
+    }
+
+    public MenuItem(int id, String name, int category) {
         this.id = id;
-        this.menuID = menuID;
+        this.name = name;
         this.category = category;
-        this.lastModifiedTime = lastModifiedTime;
-        this.lastModifiedBy = lastModifiedBy;
     }
 
     public int getId() {
@@ -26,12 +26,12 @@ public class MenuItem {
         this.id = id;
     }
 
-    public int getMenuID() {
-        return menuID;
+    public String getName() {
+        return name;
     }
 
-    public void setMenuID(int menuID) {
-        this.menuID = menuID;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getCategory() {
@@ -42,19 +42,7 @@ public class MenuItem {
         this.category = category;
     }
 
-    public Date getLastModifiedTime() {
-        return lastModifiedTime;
-    }
 
-    public void setLastModifiedTime(Date lastModifiedTime) {
-        this.lastModifiedTime = lastModifiedTime;
-    }
 
-    public int getLastModifiedBy() {
-        return lastModifiedBy;
-    }
 
-    public void setLastModifiedBy(int lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
 }

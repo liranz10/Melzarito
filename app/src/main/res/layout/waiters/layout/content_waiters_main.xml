@@ -15,15 +15,7 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
-        <Button
-            android:layout_width="100sp"
-            android:layout_height="100sp"
-            android:layout_gravity=""
-            android:background="@drawable/buttonshape"
-            android:drawableBottom="@drawable/table_image"
-            android:text="20"
 
-            android:textSize="30sp" />
 
     </FrameLayout>
 </android.support.constraint.ConstraintLayout>

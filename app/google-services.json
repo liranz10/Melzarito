@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "412736386004-q1jmpddnobvodu7n9buqt56ie1ebmnrh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sapir_liran.melzarito",
+            "certificate_hash": "caadcb3ded35a81112de83610f94641031befb03"
+          }
+        },
+        {
           "client_id": "412736386004-4busppk9jj5ov6qakqqri39fjd23f4km.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "412736386004-4busppk9jj5ov6qakqqri39fjd23f4km.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
