@@ -6,13 +6,13 @@ import java.util.Date;
 
 public class Menu {
 
-    private int id;
-    private ArrayList<MenuItem> items;
+    private int id; //--sapir: need this?
+    private ArrayList<ArrayList<MenuItem>> items;
 
     public Menu() {
     }
 
-    public Menu(int id, ArrayList<MenuItem> items) {
+    public Menu(int id, ArrayList<ArrayList<MenuItem>> items) {
         this.id = id;
         this.items = new ArrayList<>();
     }
@@ -25,11 +25,11 @@ public class Menu {
         this.id = id;
     }
 
-    public ArrayList<MenuItem> getItems() {
+    public ArrayList<ArrayList<MenuItem>> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<MenuItem> items) {
+    public void setItems(ArrayList<ArrayList<MenuItem>> items) {
         this.items = items;
     }
 

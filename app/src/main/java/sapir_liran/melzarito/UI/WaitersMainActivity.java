@@ -24,7 +24,7 @@ public class WaitersMainActivity extends AppCompatActivity
     private OpenOrdersFragment openOrdersFragment;
     private ClubMembersFragment clubMembersFragment;
     private FragmentManager fragmentManager;
-    public static RestaurantManager restaurantManager;
+   // public static RestaurantManager restaurantManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class WaitersMainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        restaurantManager = new RestaurantManager();
+        //restaurantManager = new RestaurantManager();
         //Deafult - Tables
         fragmentManager = getFragmentManager();
         if(tablesFragment ==null){

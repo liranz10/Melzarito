@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "412736386004-lb9jb790gkrf7ca18eva7j40ifpg6dd0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sapir_liran.melzarito",
+            "certificate_hash": "ce32c1395dbb4e263c6338fe93ef9550669aa220"
+          }
+        },
+        {
           "client_id": "412736386004-q1jmpddnobvodu7n9buqt56ie1ebmnrh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

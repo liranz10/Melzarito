@@ -4,7 +4,7 @@ import java.util.Date;
 
 
 public class MenuItem {
-    private int id; //--sapir: what is the different between this and menuID ?
+    private int id;
     private String name;
     private int category;
 

@@ -18,11 +18,22 @@ public class RestaurantManager {
 
 
     public RestaurantManager() {
-        ArrayList<MenuItem> items= new ArrayList<>();
-        MenuItem item1 = new MenuItem(1,"חציל בטחינה",1);
-        items.add(item1);
+        ArrayList<ArrayList<MenuItem>> items= new ArrayList<>();
+        ArrayList<MenuItem> firstDish = new ArrayList<>();
+        firstDish.add(new MenuItem(1, "חציל בטחינה", 1));
+
+        ArrayList<MenuItem> mainDish = new ArrayList<>();
+        mainDish.add(new MenuItem(1, "שניצל", 2));
+
+        ArrayList<MenuItem> desert = new ArrayList<>();
+        desert.add(new MenuItem(1, "עוגה", 3));
+
+        items.add(firstDish);
         menu = new Menu(1,items);
-        db.child("Menu").child("1").setValue(menu);
+        db.child("Menu").child("קינוחים").setValue(desert);
+        db.child("Menu").child("מנות עקריות").setValue(mainDish);
+        db.child("Menu").child("מנות ראשונות").setValue(firstDish);
+
 
         db.addValueEventListener(new ValueEventListener() {
             @Override
@@ -40,6 +51,11 @@ public class RestaurantManager {
             }
         });
 
+    }
+
+    public Menu getMenu()
+    {
+        return menu;
     }
 
 

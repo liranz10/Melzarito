@@ -4,7 +4,7 @@ package Logic;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class OrderItem {
+public class OrderItem { //--sapir: maybe should extends from MenuItem
 
     private int orderID;
     private int menuItemID;

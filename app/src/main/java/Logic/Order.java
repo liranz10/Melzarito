@@ -1,6 +1,7 @@
 package Logic;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
@@ -12,6 +13,7 @@ public class Order {
     private Date lastModifiedTime;
     private int lastModifiedBy; //--sapir: why do we need this?
     private boolean open;
+    private ArrayList<OrderItem> allOrders; //--sapir: add this
 
     public Order(int id, int tableNumber, int waiterID, int cookerID, Date lastModifiedTime, int lastModifiedBy, boolean open) {
         this.id = id;
