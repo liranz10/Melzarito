@@ -5,12 +5,16 @@ public class Table {
 
     private int number;
     private int numOfSeats;
-    private boolean isEmpty; //--sapir: add this
+    private boolean empty;
+
+    public Table() {
+
+    }
 
     public Table(int number, int numOfSeats) {
         this.number = number;
         this.numOfSeats = numOfSeats;
-        this.isEmpty = true;
+        this.empty = true;
     }
 
     public int getNumber() {
@@ -22,10 +26,10 @@ public class Table {
     }
 
     public boolean isEmpty(){
-        return isEmpty;
-    } //--sapir: add this
+        return empty;
+    }
 
     public void setIsEmpty(boolean isEmpty){
-        this.isEmpty = isEmpty;
-    } //--sapir: add this
+        this.empty = isEmpty;
+    }
 }

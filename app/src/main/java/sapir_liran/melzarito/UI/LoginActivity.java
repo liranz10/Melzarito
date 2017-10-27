@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
 import sapir_liran.melzarito.UI.ResetPasswordActivity;
 import sapir_liran.melzarito.UI.SignupActivity;
@@ -27,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
+    public static RestaurantManager restaurantManager = new RestaurantManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
