@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 
 import Logic.MenuItem;
+import Logic.Order;
 import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
 
@@ -20,6 +21,7 @@ public class OrderFragment extends android.app.Fragment {
     View view;
     ItemsFragment fragment = new ItemsFragment();
     private FragmentManager fragmentManager;
+    private Order order;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

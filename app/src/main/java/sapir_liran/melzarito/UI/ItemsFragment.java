@@ -16,9 +16,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import Logic.Menu;
 import Logic.MenuItem;
+import Logic.OrderItem;
 import Logic.RestaurantManager;
 import Logic.Table;
 import sapir_liran.melzarito.R;
@@ -31,6 +33,7 @@ public class ItemsFragment extends android.app.Fragment {
     private String text;
     private TableLayout layout;
 
+
     // private ArrayList<Button> itemsBtnArray = new ArrayList<>();
 
 
@@ -41,7 +44,7 @@ public class ItemsFragment extends android.app.Fragment {
          layout = (TableLayout) view.findViewById(R.id.items_layout);
         if (layout.getChildCount()!=0)
             layout.removeAllViews();
-        Menu menu = LoginActivity.restaurantManager.getMenu();
+        final Menu menu = LoginActivity.restaurantManager.getMenu();
         for(MenuItem item : menu.getItems()){
             if (item.getCategory() == category)
             {
@@ -102,6 +105,34 @@ public class ItemsFragment extends android.app.Fragment {
             }
 
         }
+
+        Button add_items_to_order_btn = (Button)view.findViewById(R.id.add_items_to_order);
+
+        add_items_to_order_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int orderID;
+                int menuItemID = -1;
+                Date lastModifiedTime;
+
+                for (int i=0; i<layout.getChildCount(); i++ )
+                {
+                    for (MenuItem m : menu.getItems())
+                    {
+                        if (m.getCategory() == category)
+                        {
+                            if (m.getName().equals(((TableRow)(layout.getChildAt(i))).getChildAt(0)))
+                            {
+                                menuItemID = m.getId();
+                            }
+                        }
+                    }
+                    lastModifiedTime = new Date();
+                    LoginActivity.restaurantManager.writeOrderData(1,menuItemID,lastModifiedTime);
+                }
+
+            }
+        });
 
         return view;
 

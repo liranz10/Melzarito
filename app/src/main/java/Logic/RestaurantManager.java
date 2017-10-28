@@ -10,6 +10,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class RestaurantManager {
@@ -17,6 +18,7 @@ public class RestaurantManager {
      DatabaseReference db ;
      Menu menu;
      ArrayList<Table> tables;
+    ArrayList<OrderItem> orders;
      ValueEventListener listener = new ValueEventListener() {
          @Override
          public void onDataChange(DataSnapshot dataSnapshot) {
@@ -30,6 +32,8 @@ public class RestaurantManager {
              GenericTypeIndicator<ArrayList<Table>> table_type = new GenericTypeIndicator<ArrayList<Table>>() {};
              tables =dataSnapshot.child("Tables").getValue(table_type);
 
+//             GenericTypeIndicator<ArrayList<OrderItem>> order_item_type = new GenericTypeIndicator<ArrayList<OrderItem>>() {};
+//             orders =dataSnapshot.child("Orders").getValue(order_item_type);
          }
 
          @Override
@@ -51,5 +55,11 @@ public class RestaurantManager {
 
     public ArrayList<Table> getTables() {
         return tables;
+    }
+
+    public void writeOrderData(int orderId, int menuItemId, Date lastModifiedTime) {
+        db.child("Orders").child(orderId+"").child("menuItemId").setValue(menuItemId);
+        db.child("Orders").child(orderId+"").child("lastModifiedTime").setValue(lastModifiedTime);
+
     }
 }

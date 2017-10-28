@@ -20,7 +20,7 @@
 </TableLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/add_items_to_order"
         android:layout_alignParentBottom="true"
         android:text="הוסף להזמנה"
         android:textSize="15sp"

@@ -12,6 +12,9 @@ public class OrderItem { //--sapir: maybe should extends from MenuItem
     private int lastModifiedBy; //--sapir: why do we need this?
     private ArrayList<String> notes;
 
+    public OrderItem() {
+    }
+
     public OrderItem(int orderID, int menuItemID, Date lastModifiedTime, int lastModifiedBy, ArrayList<String> notes) {
         this.orderID = orderID;
         this.menuItemID = menuItemID;
