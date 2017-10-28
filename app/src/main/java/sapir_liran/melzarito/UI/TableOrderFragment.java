@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import Logic.Order;
 import sapir_liran.melzarito.R;
 
 public class TableOrderFragment extends android.app.Fragment {

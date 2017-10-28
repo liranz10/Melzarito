@@ -91,7 +91,7 @@ public class ItemsFragment extends android.app.Fragment {
 
                 item_view.setPadding(60,0,30,0);
                 quantity.setPadding(10,0,10,0);
-
+                item_view.setId(item.getId());
                 tr.addView(item_view);
                 tr.addView(pls_button);
                 tr.addView(quantity);

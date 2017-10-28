@@ -33,7 +33,6 @@
             android:name=".UI.KitchenMainActivity"
             android:label="מטבח"
             android:theme="@style/AppTheme" />
-
     </application>
 
 </manifest>

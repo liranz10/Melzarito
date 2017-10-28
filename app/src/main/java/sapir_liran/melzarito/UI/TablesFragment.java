@@ -1,6 +1,13 @@
 package sapir_liran.melzarito.UI;
 
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
 import android.app.FragmentManager;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,42 +15,94 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import Logic.RestaurantManager;
 import Logic.Table;
 import sapir_liran.melzarito.R;
 
+import static sapir_liran.melzarito.R.drawable.table;
+import static sapir_liran.melzarito.R.drawable.table_button;
+
 public class TablesFragment extends android.app.Fragment {
     View view;
-    GridLayout gridLayout;
+        GridView gridView;
     FragmentManager fragmentManager;
     TableOrderFragment tableOrderFragment;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
        view= inflater.inflate(R.layout.tables_fragment, container, false);
-        //--sapir: make the grid
-       // restaurantManager = new RestaurantManager();
+        ArrayList<Button> btn = new ArrayList<>();
         tableOrderFragment = new TableOrderFragment();
-        gridLayout = (GridLayout) view.findViewById(R.id.tables_layout);
+        gridView = (GridView) view.findViewById(R.id.tables_layout);
         fragmentManager = getFragmentManager();
+        gridView.setLayoutParams(new GridView.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
 
-        for(Table table : LoginActivity.restaurantManager.getTables()){
-            Button table_button = (Button)new Button(getActivity());
-            table_button.setGravity(Gravity.CENTER);
-            table_button.setId(table.getNumber());
-            LinearLayout.LayoutParams lyt = new LinearLayout.LayoutParams(300, 300);
-            table_button.setLayoutParams(lyt);
-            table_button.setBackgroundResource(R.drawable.buttonshape);
-            Drawable img = getActivity().getResources().getDrawable(R.drawable.table_image, null);
-            table_button.setCompoundDrawablesWithIntrinsicBounds( null, null, null, img);
-            table_button.setTextSize(30);
-            table_button.setText(table.getNumber() + "");
-            table_button.setOnClickListener(new View.OnClickListener() {
+
+        TableAdapter tablesAdapter = new TableAdapter(getActivity(), LoginActivity.restaurantManager.getTables().size());
+        gridView.setAdapter(tablesAdapter);
+
+
+        return view;
+
+    }
+
+    
+    class TableAdapter extends BaseAdapter {
+
+        private final Context mContext;
+        private int size;
+
+        // 1
+        public TableAdapter(Context context, int size) {
+            this.mContext = context;
+            this.size = size;
+        }
+
+        // 2
+        @Override
+        public int getCount() {
+            return this.size;
+        }
+
+        // 3
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        // 4
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        // 5
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            Button dummyButton = new Button(mContext);
+            dummyButton.setText(String.valueOf(position));
+
+            dummyButton.setGravity(Gravity.CENTER);
+            dummyButton.setId(position + 1);
+            dummyButton.setBackgroundResource(R.drawable.buttonshape);
+            Drawable img = mContext.getResources().getDrawable(R.drawable.table_image, null);
+            dummyButton.setCompoundDrawablesWithIntrinsicBounds( null, null, null, img);
+            dummyButton.setTextSize(30);
+            dummyButton.setText(String.valueOf(position + 1));
+
+            dummyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     fragmentManager.beginTransaction()
@@ -51,11 +110,12 @@ public class TablesFragment extends android.app.Fragment {
                             .commit();
                 }
             });
-            gridLayout.addView(table_button);
+
+            return dummyButton;
         }
-
-
-        return view;
 
     }
 }
+
+
+
