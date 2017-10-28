@@ -26,6 +26,7 @@ import Logic.Table;
 import sapir_liran.melzarito.R;
 
 import static android.R.attr.button;
+import static android.os.Build.VERSION_CODES.M;
 
 public class ItemsFragment extends android.app.Fragment {
     View view;
@@ -94,7 +95,7 @@ public class ItemsFragment extends android.app.Fragment {
 
                 item_view.setPadding(60,0,30,0);
                 quantity.setPadding(10,0,10,0);
-                item_view.setId(item.getId());
+                quantity.setId(item.getId());
                 tr.addView(item_view);
                 tr.addView(pls_button);
                 tr.addView(quantity);
@@ -110,25 +111,17 @@ public class ItemsFragment extends android.app.Fragment {
 
         add_items_to_order_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                int orderID;
-                int menuItemID = -1;
-                Date lastModifiedTime;
-
-                for (int i=0; i<layout.getChildCount(); i++ )
+                public void onClick(View v) {
+                for (MenuItem i : menu.getItemsOnCategory(category))
                 {
-                    for (MenuItem m : menu.getItems())
-                    {
-                        if (m.getCategory() == category)
-                        {
-                            if (m.getName().equals(((TableRow)(layout.getChildAt(i))).getChildAt(0)))
-                            {
-                                menuItemID = m.getId();
-                            }
+
+                        int idd = getResources().getIdentifier(String.valueOf(i.getId()), "id", "com.sapir_liran.melzarito.UI");
+                        TextView quantity = (TextView)view.findViewById(idd);
+                        for (int j=0 ; j < Integer.parseInt(quantity.getText().toString()) ; j++ ){
+                            LoginActivity.restaurantManager.createOrderItemAndWriteToDB(i,category);
                         }
-                    }
-                    lastModifiedTime = new Date();
-                    LoginActivity.restaurantManager.writeOrderData(1,menuItemID,lastModifiedTime);
+
+
                 }
 
             }
@@ -145,4 +138,6 @@ public class ItemsFragment extends android.app.Fragment {
     public void setText(String text) {
         this.text = text;
     }
+
+
 }

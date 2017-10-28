@@ -101,13 +101,15 @@ public class TablesFragment extends android.app.Fragment {
             dummyButton.setCompoundDrawablesWithIntrinsicBounds( null, null, null, img);
             dummyButton.setTextSize(30);
             dummyButton.setText(String.valueOf(position + 1));
-
+            final int tableNumber = position+1;
             dummyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     fragmentManager.beginTransaction()
                             .replace(R.id.content_frame, tableOrderFragment ).addToBackStack(TablesFragment.class.getName())
                             .commit();
+                    tableOrderFragment.setTableNumber(tableNumber);
+
                 }
             });
 

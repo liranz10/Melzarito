@@ -18,6 +18,7 @@ public class TableOrderFragment extends android.app.Fragment {
     private  FloatingActionButton newOrderbtn;
     private OrderFragment orderFragment;
     private FragmentManager fragmentManager;
+    private int tableNumber;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.table_order_fragment, container, false);
@@ -29,14 +30,20 @@ public class TableOrderFragment extends android.app.Fragment {
             @Override
             public void onClick(View v) {
                 orderFragment=new OrderFragment();
+                LoginActivity.restaurantManager.CreateNewOrderAndWriteToDB(tableNumber);
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, orderFragment ).addToBackStack(TableOrderFragment.class.getName())
                         .commit();
+
             }
         });
 
 
         return view;
 
+    }
+
+    public void setTableNumber(int tableNumber) {
+        this.tableNumber = tableNumber;
     }
 }

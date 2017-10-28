@@ -33,6 +33,34 @@ public class Menu {
         this.items = items;
     }
 
+    public int getItemsCountOnCategory(int category){
+        int counter=0;
+        for(MenuItem item : items) {
+            if(item.getCategory()==category)
+                counter++;
+
+        }
+        return counter;
+    }
+
+    public ArrayList<MenuItem> getItemsOnCategory(int category){
+
+        ArrayList<MenuItem> itemsOnCategory = new ArrayList<>();
+        for(MenuItem item : items) {
+            if(item.getCategory()==category)
+                itemsOnCategory.add(item);
+
+        }
+        return itemsOnCategory;
+    }
+
+    public String getItemNameByID(int id){
+        for(MenuItem item : items) {
+            if(item.getId()==id)
+                return item.getName();
+        }
+        return "";
+    }
 
 
 }

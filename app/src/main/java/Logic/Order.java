@@ -13,7 +13,10 @@ public class Order {
     private Date lastModifiedTime;
     private int lastModifiedBy; //--sapir: why do we need this?
     private boolean open;
-    private ArrayList<OrderItem> allOrders; //--sapir: add this
+    private ArrayList<OrderItem> orderItems = new ArrayList<>(); //--sapir: add this
+
+    public Order() {
+    }
 
     public Order(int id, int tableNumber, int waiterID, int cookerID, Date lastModifiedTime, int lastModifiedBy, boolean open) {
         this.id = id;
@@ -75,6 +78,10 @@ public class Order {
 
     public boolean isOpen() {
         return open;
+    }
+
+    public ArrayList<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
     public void setOpen(boolean open) {

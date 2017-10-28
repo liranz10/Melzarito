@@ -4,39 +4,28 @@ package Logic;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class OrderItem { //--sapir: maybe should extends from MenuItem
+public class OrderItem extends MenuItem {
 
-    private int orderID;
-    private int menuItemID;
+    private int orderItemID;
     private Date lastModifiedTime;
-    private int lastModifiedBy; //--sapir: why do we need this?
     private ArrayList<String> notes;
 
     public OrderItem() {
     }
 
-    public OrderItem(int orderID, int menuItemID, Date lastModifiedTime, int lastModifiedBy, ArrayList<String> notes) {
-        this.orderID = orderID;
-        this.menuItemID = menuItemID;
+    public OrderItem(int id, String name, int category, int orderItemID, Date lastModifiedTime, ArrayList<String> notes) {
+        super(id, name, category);
+        this.orderItemID = orderItemID;
         this.lastModifiedTime = lastModifiedTime;
-        this.lastModifiedBy = lastModifiedBy;
         this.notes = notes;
     }
 
-    public int getOrderID() {
-        return orderID;
+    public int getOrderItemID() {
+        return orderItemID;
     }
 
-    public void setOrderID(int orderID) {
-        this.orderID = orderID;
-    }
-
-    public int getMenuItemID() {
-        return menuItemID;
-    }
-
-    public void setMenuItemID(int menuItemID) {
-        this.menuItemID = menuItemID;
+    public void setOrderItemID(int orderItemID) {
+        this.orderItemID = orderItemID;
     }
 
     public Date getLastModifiedTime() {
@@ -47,13 +36,6 @@ public class OrderItem { //--sapir: maybe should extends from MenuItem
         this.lastModifiedTime = lastModifiedTime;
     }
 
-    public int getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(int lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
 
     public ArrayList<String> getNotes() {
         return notes;
