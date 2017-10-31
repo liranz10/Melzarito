@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="sapir_liran.melzarito.UI.LoginActivity">
+    tools:context=".UI.SignupActivity">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -56,13 +56,48 @@
 
         </android.support.design.widget.TextInputLayout>
 
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/name_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:hint="@string/hint_name"
+                android:imeOptions="actionUnspecified"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@android:color/white" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/select_role_radio">
+            <RadioButton
+                android:id="@+id/radio_waiter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="מלצר"
+                />
+            <RadioButton
+                android:id="@+id/radio_cooker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="טבח"/>
+        </RadioGroup>
+
         <Button
             android:id="@+id/sign_up_button"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/colorAccent"
+            android:background="@drawable/buttonshape"
             android:text="@string/action_sign_in_short"
             android:textColor="@android:color/black"
             android:textStyle="bold" />

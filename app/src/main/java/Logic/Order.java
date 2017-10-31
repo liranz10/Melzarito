@@ -8,8 +8,8 @@ public class Order {
 
     private int id;
     private int tableNumber;
-    private int waiterID;
-    private int cookerID;
+    private String waiterName;
+    private String  cookerName;
     private Date lastModifiedTime;
     private int lastModifiedBy; //--sapir: why do we need this?
     private boolean open;
@@ -18,11 +18,10 @@ public class Order {
     public Order() {
     }
 
-    public Order(int id, int tableNumber, int waiterID, int cookerID, Date lastModifiedTime, int lastModifiedBy, boolean open) {
+    public Order(int id, int tableNumber, String waiterName, Date lastModifiedTime, int lastModifiedBy, boolean open) {
         this.id = id;
         this.tableNumber = tableNumber;
-        this.waiterID = waiterID;
-        this.cookerID = cookerID;
+        this.waiterName = waiterName;
         this.lastModifiedTime = lastModifiedTime;
         this.lastModifiedBy = lastModifiedBy;
         this.open = open;
@@ -44,20 +43,20 @@ public class Order {
         this.tableNumber = tableNumber;
     }
 
-    public int getWaiterID() {
-        return waiterID;
+    public String getWaiterName() {
+        return waiterName;
     }
 
-    public void setWaiterID(int waiterID) {
-        this.waiterID = waiterID;
+    public void setWaiterName(String waiterName) {
+        this.waiterName = waiterName;
     }
 
-    public int getCookerID() {
-        return cookerID;
+    public String getCookerName() {
+        return cookerName;
     }
 
-    public void setCookerID(int cookerID) {
-        this.cookerID = cookerID;
+    public void setCookerName(String cookerName) {
+        this.cookerName = cookerName;
     }
 
     public Date getLastModifiedTime() {
@@ -82,6 +81,10 @@ public class Order {
 
     public ArrayList<OrderItem> getOrderItems() {
         return orderItems;
+    }
+
+    public void setOrderItems(ArrayList<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public void setOpen(boolean open) {

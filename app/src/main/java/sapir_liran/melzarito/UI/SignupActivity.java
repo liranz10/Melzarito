@@ -9,14 +9,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import sapir_liran.melzarito.R;
+
+import static sapir_liran.melzarito.R.id.new_order;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -24,6 +30,8 @@ public class SignupActivity extends AppCompatActivity {
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
+    FirebaseDatabase database ;
+    DatabaseReference db ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +66,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = inputEmail.getText().toString().trim();
+                final String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
@@ -91,8 +99,26 @@ public class SignupActivity extends AppCompatActivity {
                                     Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-//                                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
+//                                    startActivity(new Intent(SignupActivity.this, lo.class));
 //                                    finish();
+                                    database = FirebaseDatabase.getInstance();
+                                    db = database.getReference();
+                                    db.keepSynced(true);
+                                    //get name
+                                    EditText inputName = (EditText) findViewById(R.id.name_text);
+                                    String name = inputName.getText().toString();
+                                    //get rule
+                                    RadioGroup inputRole =  (RadioGroup)findViewById(R.id.select_role_radio);
+                                    int radioButtonID = inputRole.getCheckedRadioButtonId();
+                                    View radioButton = inputRole.findViewById(radioButtonID);
+                                    int idx = inputRole.indexOfChild(radioButton);
+                                    RadioButton r = (RadioButton)  inputRole.getChildAt(idx);
+                                    String role = r.getText().toString();
+
+                                    //add to DB
+                                    db.child("Users").child(auth.getCurrentUser().getUid()).child("role").setValue(role);
+                                    db.child("Users").child(auth.getCurrentUser().getUid()).child("name").setValue(name);
+
                                 }
                             }
                         });

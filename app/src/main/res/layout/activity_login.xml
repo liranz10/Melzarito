@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sapir_liran.melzarito.UI.LoginActivity">
+    tools:context=".UI.LoginActivity">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -59,6 +59,8 @@
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
         </android.support.design.widget.TextInputLayout>
+
+
 
         <!-- Login Button -->
 

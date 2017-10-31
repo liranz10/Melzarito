@@ -10,9 +10,18 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Set;
+
+import sapir_liran.melzarito.UI.LoginActivity;
 
 import static android.R.attr.category;
+import static android.R.attr.name;
+import static android.R.attr.order;
+import static sapir_liran.melzarito.R.id.new_order;
 
 
 public class RestaurantManager {
@@ -22,7 +31,8 @@ public class RestaurantManager {
      int orderIdCounter=0;
      int orderItemIdCounter=0;
      ArrayList<Table> tables;
-     ArrayList<Order> orders = new ArrayList<>();
+    private boolean readfromDB = true;
+     static HashMap<Integer,Order> orders = new LinkedHashMap<>();
      ValueEventListener listener = new ValueEventListener() {
          @Override
          public void onDataChange(DataSnapshot dataSnapshot) {
@@ -40,8 +50,27 @@ public class RestaurantManager {
              orderIdCounter = (int) longOrderIdCounter;
              orderItemIdCounter = (int) longOrderItemIdCounter;
 
-//             GenericTypeIndicator<ArrayList<OrderItem>> order_item_type = new GenericTypeIndicator<ArrayList<OrderItem>>() {};
-//             orders =dataSnapshot.child("Orders").getValue(order_item_type);
+            if(readfromDB) {
+                if (dataSnapshot.child("Orders").getValue() != null) {
+                    Integer[] ids = new Integer[(int) ((long) dataSnapshot.child("Orders").getChildrenCount())];
+                    int i = 0;
+                    for (DataSnapshot d : dataSnapshot.child("Orders").getChildren()) {
+                        ids[i] = Integer.parseInt(d.getKey());
+                        i++;
+                    }
+                    for (Integer order_id : ids) {
+
+                        GenericTypeIndicator<Order> order_type= new GenericTypeIndicator<Order>(){};
+                        Order curr_order =(Order) dataSnapshot.child("Orders").child(order_id.toString()).getValue(order_type);
+
+
+                        if (curr_order.isOpen()) {
+                          orders.put(order_id, curr_order);
+                        }
+
+                    }
+                }
+            }
          }
 
          @Override
@@ -74,20 +103,31 @@ public class RestaurantManager {
         db.child("Orders").child(orderIdCounter+"").child("Order items").child(orderItemIdCounter+"").child("lastModifiedTime").setValue(new_item.getLastModifiedTime());
         db.child("Orders").child(orderIdCounter+"").child("Order items").child(orderItemIdCounter+"").child("name").setValue(new_item.getName());
         db.child("Orders").child(orderIdCounter+"").child("Order items").child(orderItemIdCounter+"").child("category").setValue(new_item.getCategory());
+
+        orders.get(orderIdCounter).getOrderItems().add(new_item);
         // add the notes to DB
 
     }
 
-    public void CreateNewOrderAndWriteToDB(int tableNumber) {
+      public void CreateNewOrderAndWriteToDB(int tableNumber) {
         orderIdCounter++;
+        readfromDB=false;
         db.child("counterOrderID").setValue(orderIdCounter);
-        Order new_order = new Order(orderIdCounter,tableNumber,1,1,new Date(),1,true);
-        orders.add(new_order);
-        db.child("Orders").child(new_order.getId()+"").child("Table number").setValue(new_order.getTableNumber());
-        db.child("Orders").child(new_order.getId()+"").child("lastModifiedTime").setValue(new_order.getLastModifiedTime());
-        db.child("Orders").child(new_order.getId()+"").child("isOpen").setValue(new_order.isOpen());
-        db.child("Orders").child(new_order.getId()+"").child("Order items").setValue(new_order.getOrderItems());
-
+        Order new_order = new Order(orderIdCounter,tableNumber, LoginActivity.loggedInUserName,new Date(),1,true);
+        HashMap<String, Order> ttt = new HashMap<>();
+          ttt.put(new_order.getId()+"", new_order);
+          db.child("Orders").setValue(ttt);
+//        db.child("Orders").child(new_order.getId()+"").child("Table number").setValue(new_order.getTableNumber());
+//        db.child("Orders").child(new_order.getId()+"").child("lastModifiedTime").setValue(new_order.getLastModifiedTime());
+//        db.child("Orders").child(new_order.getId()+"").child("isOpen").setValue(new_order.isOpen());
+//        db.child("Orders").child(new_order.getId()+"").child("waiterName").setValue(LoginActivity.loggedInUserName);
+//        db.child("Orders").child(new_order.getId()+"").child("Order items").setValue(new_order.getOrderItems());
+            readfromDB=true;
 
     }
+    public static Collection<Order> getOpenOrders(){
+        return orders.values();
+    }
+
+
 }

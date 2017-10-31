@@ -16,6 +16,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
@@ -28,6 +33,10 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
+    public static String loggedInUserName;
+    public static String loggedInUserRole;
+    FirebaseDatabase database ;
+    DatabaseReference db ;
     public static RestaurantManager restaurantManager = new RestaurantManager();
 
     @Override
@@ -38,11 +47,13 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
+            getLoggedinUserFromDB(auth.getCurrentUser().getUid());
+
             startActivity(new Intent(LoginActivity.this, ChooseEmployeeRoleActivity.class));
             finish();
         }
 
-        // set the view now
+
         setContentView(R.layout.activity_login);
 
 
@@ -57,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-        btnSignup.setOnClickListener(new View.OnClickListener() {
+              btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, SignupActivity.class));
@@ -74,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = inputEmail.getText().toString();
+                final String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
@@ -106,12 +117,32 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
+
+                                    getLoggedinUserFromDB(auth.getCurrentUser().getUid());
                                     Intent intent = new Intent(LoginActivity.this, ChooseEmployeeRoleActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
                             }
                         });
+            }
+        });
+    }
+
+    private void getLoggedinUserFromDB(final String uid){
+        database = FirebaseDatabase.getInstance();
+        db = database.getReference();
+        db.keepSynced(true);
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                loggedInUserName=(String)dataSnapshot.child("Users").child(uid).child("name").getValue();
+                loggedInUserRole=(String)dataSnapshot.child("Users").child(uid).child("role").getValue();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }
