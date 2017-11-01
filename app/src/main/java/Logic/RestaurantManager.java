@@ -73,15 +73,15 @@ public class RestaurantManager {
                         GenericTypeIndicator<Order> order_type= new GenericTypeIndicator<Order>(){};
                         Order curr_order =(Order) dataSnapshot.child("Orders").child(order_id.toString()).getValue(order_type);
 
-//                        GenericTypeIndicator<HashMap<String, OrderItem>> orderItems_type = new GenericTypeIndicator<HashMap<String, OrderItem>>() {};
-//                        HashMap<String, OrderItem> orderItemHashMap = dataSnapshot.child("Orders").child(order_id.toString()).child("Order items").getValue(orderItems_type);
+                        GenericTypeIndicator<HashMap<String, OrderItem>> orderItems_type = new GenericTypeIndicator<HashMap<String, OrderItem>>() {};
+                        HashMap<String, OrderItem> orderItemHashMap = dataSnapshot.child("Orders").child(order_id.toString()).child("Order items").getValue(orderItems_type);
 
-                        GenericTypeIndicator<ArrayList<OrderItem>> orderItems_type = new GenericTypeIndicator<ArrayList<OrderItem>>() {};
-                        ArrayList<OrderItem> orderItemHashMap = dataSnapshot.child("Orders").child(order_id.toString()).child("Order items").getValue(orderItems_type);
+//                        GenericTypeIndicator<ArrayList<OrderItem>> orderItems_type = new GenericTypeIndicator<ArrayList<OrderItem>>() {};
+//                        ArrayList<OrderItem> orderItemHashMap = dataSnapshot.child("Orders").child(order_id.toString()).child("Order items").getValue(orderItems_type);
 
                         if(orderItemHashMap != null) {
-                            //Collection<OrderItem> co = orderItemHashMap.values();
-                            for (OrderItem orderItem : orderItemHashMap)
+                            Collection<OrderItem> co = orderItemHashMap.values();
+                            for (OrderItem orderItem : co)
                                 curr_order.addOrderItem(orderItem);
                         }
                         if (curr_order.isOpen()) {
@@ -137,7 +137,15 @@ public class RestaurantManager {
         Order new_order = new Order(orderIdCounter,tableNumber, LoginActivity.loggedInUserName,new Date(),1,true);
 //        HashMap<String, Order> ttt = new HashMap<>();
           ttt.put(new_order.getId()+"", new_order);
-          db.child("Orders").setValue(ttt);
+
+          Collection<Order> co = ttt.values();
+          Set<String> so = ttt.keySet();
+          for(Order o : co){
+              db.child("Orders").child(so.iterator().next()).setValue(o);
+          }
+
+        //  db.child("Orders").setValue(ttt);
+
 //        db.child("Orders").child(new_order.getId()+"").child("Table number").setValue(new_order.getTableNumber());
 //        db.child("Orders").child(new_order.getId()+"").child("lastModifiedTime").setValue(new_order.getLastModifiedTime());
 //        db.child("Orders").child(new_order.getId()+"").child("isOpen").setValue(new_order.isOpen());

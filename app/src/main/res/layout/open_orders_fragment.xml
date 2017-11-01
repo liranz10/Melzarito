@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<GridView
     android:id="@+id/open_orders_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="20sp"
     android:layout_gravity="center"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:numColumns="2"
+    android:horizontalSpacing="10sp"
+    android:verticalSpacing="10sp"
+    android:padding="20sp">
 
 
 
-</RelativeLayout>
+</GridView>
