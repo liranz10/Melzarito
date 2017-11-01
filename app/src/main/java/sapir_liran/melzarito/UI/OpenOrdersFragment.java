@@ -20,7 +20,7 @@ import Logic.Table;
 import sapir_liran.melzarito.R;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-import static sapir_liran.melzarito.R.drawable.note;
+//import static sapir_liran.melzarito.R.drawable.note;
 
 public class OpenOrdersFragment extends Fragment {
     private RelativeLayout fragment_layout;
@@ -31,9 +31,10 @@ public class OpenOrdersFragment extends Fragment {
         fragment_layout=(RelativeLayout)view.findViewById(R.id.open_orders_layout);
         ArrayList<Order> openOrders =new ArrayList<>();
         openOrders.addAll(RestaurantManager.getOpenOrders());
+        fragment_layout.removeAllViews();
         for(Order order : openOrders){
             TableLayout order_layout = new TableLayout(view.getContext());
-            order_layout.setBackgroundResource(R.drawable.note);
+           // order_layout.setBackgroundResource(R.drawable.note);
             order_layout.setPadding(30,30,30,30);
 
             TableRow headline = new TableRow(view.getContext());

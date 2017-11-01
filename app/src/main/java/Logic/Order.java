@@ -83,8 +83,8 @@ public class Order {
         return orderItems;
     }
 
-    public void setOrderItems(ArrayList<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public void addOrderItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
     }
 
     public void setOpen(boolean open) {

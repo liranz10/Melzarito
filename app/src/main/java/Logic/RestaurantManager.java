@@ -1,5 +1,6 @@
 package Logic;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +34,7 @@ public class RestaurantManager {
      ArrayList<Table> tables;
     private boolean readfromDB = true;
      static HashMap<Integer,Order> orders = new LinkedHashMap<>();
+    HashMap<String, Order> ttt = new HashMap<>();
      ValueEventListener listener = new ValueEventListener() {
          @Override
          public void onDataChange(DataSnapshot dataSnapshot) {
@@ -45,8 +47,16 @@ public class RestaurantManager {
              //loading Tables
              GenericTypeIndicator<ArrayList<Table>> table_type = new GenericTypeIndicator<ArrayList<Table>>() {};
              tables =dataSnapshot.child("Tables").getValue(table_type);
+
+             //--sapir: need to check why we cannot load this 2 integers in the first time from DB
+             if(dataSnapshot.child("counterOrderID").getValue() == null)
+                 db.child("counterOrderID").setValue(0);
              long longOrderIdCounter = (long) dataSnapshot.child("counterOrderID").getValue();
+
+             if(dataSnapshot.child("counterOrderItemsID").getValue() == null)
+                 db.child("counterOrderItemsID").setValue(0);
              long longOrderItemIdCounter = (long) dataSnapshot.child("counterOrderItemsID").getValue();
+
              orderIdCounter = (int) longOrderIdCounter;
              orderItemIdCounter = (int) longOrderItemIdCounter;
 
@@ -63,7 +73,17 @@ public class RestaurantManager {
                         GenericTypeIndicator<Order> order_type= new GenericTypeIndicator<Order>(){};
                         Order curr_order =(Order) dataSnapshot.child("Orders").child(order_id.toString()).getValue(order_type);
 
+//                        GenericTypeIndicator<HashMap<String, OrderItem>> orderItems_type = new GenericTypeIndicator<HashMap<String, OrderItem>>() {};
+//                        HashMap<String, OrderItem> orderItemHashMap = dataSnapshot.child("Orders").child(order_id.toString()).child("Order items").getValue(orderItems_type);
 
+                        GenericTypeIndicator<ArrayList<OrderItem>> orderItems_type = new GenericTypeIndicator<ArrayList<OrderItem>>() {};
+                        ArrayList<OrderItem> orderItemHashMap = dataSnapshot.child("Orders").child(order_id.toString()).child("Order items").getValue(orderItems_type);
+
+                        if(orderItemHashMap != null) {
+                            //Collection<OrderItem> co = orderItemHashMap.values();
+                            for (OrderItem orderItem : orderItemHashMap)
+                                curr_order.addOrderItem(orderItem);
+                        }
                         if (curr_order.isOpen()) {
                           orders.put(order_id, curr_order);
                         }
@@ -95,16 +115,17 @@ public class RestaurantManager {
     }
 
     public void createOrderItemAndWriteToDB(MenuItem item,int category) {
-        orderItemIdCounter++;
+        //orderItemIdCounter++;
         OrderItem new_item = new OrderItem(item.getId(),item.getName(),category,orderItemIdCounter,new Date(),new ArrayList<String>());
 
-        db.child("counterOrderItemsID").setValue(orderItemIdCounter);
 
+        db.child(orderItemIdCounter+"");
         db.child("Orders").child(orderIdCounter+"").child("Order items").child(orderItemIdCounter+"").child("lastModifiedTime").setValue(new_item.getLastModifiedTime());
         db.child("Orders").child(orderIdCounter+"").child("Order items").child(orderItemIdCounter+"").child("name").setValue(new_item.getName());
         db.child("Orders").child(orderIdCounter+"").child("Order items").child(orderItemIdCounter+"").child("category").setValue(new_item.getCategory());
-
-        orders.get(orderIdCounter).getOrderItems().add(new_item);
+        orderItemIdCounter++;
+        db.child("counterOrderItemsID").setValue(orderItemIdCounter);
+        orders.get(orderIdCounter).addOrderItem(new_item);
         // add the notes to DB
 
     }
@@ -114,7 +135,7 @@ public class RestaurantManager {
         readfromDB=false;
         db.child("counterOrderID").setValue(orderIdCounter);
         Order new_order = new Order(orderIdCounter,tableNumber, LoginActivity.loggedInUserName,new Date(),1,true);
-        HashMap<String, Order> ttt = new HashMap<>();
+//        HashMap<String, Order> ttt = new HashMap<>();
           ttt.put(new_order.getId()+"", new_order);
           db.child("Orders").setValue(ttt);
 //        db.child("Orders").child(new_order.getId()+"").child("Table number").setValue(new_order.getTableNumber());
@@ -125,6 +146,7 @@ public class RestaurantManager {
             readfromDB=true;
 
     }
+    @NonNull
     public static Collection<Order> getOpenOrders(){
         return orders.values();
     }
