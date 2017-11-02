@@ -21,7 +21,7 @@ public class KitchenMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth auth;
     private TablesFragment tablesFragment;
-    private OpenOrdersFragment openOrdersFragment;
+    private KitchenOpenOrdersFragment openOrdersFragment;
     private ClubMembersFragment clubMembersFragment;
     private FragmentManager fragmentManager;
     @Override
@@ -89,24 +89,14 @@ public class KitchenMainActivity extends AppCompatActivity
         int id = item.getItemId();
         fragmentManager = getFragmentManager();
 
-        if (id == R.id.tables) {
-          if(tablesFragment ==null){
-              tablesFragment=new TablesFragment();
-          }
-            setTitle(R.string.title_fragment_tables);
-            TablesFragment tables =new TablesFragment();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, tables)
-                    .commit();
-
-        } else if (id == R.id.open_orders) {
+      if (id == R.id.kitchen_open_order) {
             if(openOrdersFragment ==null){
-                openOrdersFragment=new OpenOrdersFragment();
+                openOrdersFragment=new KitchenOpenOrdersFragment();
             }
             setTitle(R.string.title_fragment_openorders);
 
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, openOrdersFragment)
+                    .replace(R.id.content_frame_kitchen, openOrdersFragment)
                     .commit();
 
         } else if (id == R.id.club) {
@@ -115,7 +105,7 @@ public class KitchenMainActivity extends AppCompatActivity
             }
             setTitle(R.string.title_fragment_club);
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, clubMembersFragment)
+                    .replace(R.id.content_frame_kitchen, clubMembersFragment)
                     .commit();
 
         } else if (id == R.id.choose_employee_role){

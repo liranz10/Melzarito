@@ -27,6 +27,7 @@ import Logic.Table;
 import sapir_liran.melzarito.R;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+import static sapir_liran.melzarito.R.id.order_layout;
 //import static sapir_liran.melzarito.R.drawable.note;
 
 public class OpenOrdersFragment extends Fragment {
@@ -38,8 +39,13 @@ public class OpenOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.open_orders_fragment, container, false);
         fragment_layout = (GridView) view.findViewById(R.id.open_orders_layout);
+        openOrders.clear();
         openOrders.addAll(RestaurantManager.getOpenOrders());
-        OpenOrdersAdapter tablesAdapter = new OpenOrdersAdapter(getActivity(), openOrders.size());
+
+        int openOrdersNum = 0;
+        if(openOrders!=null)
+            openOrdersNum=openOrders.size();
+        OpenOrdersAdapter tablesAdapter = new OpenOrdersAdapter(getActivity(), openOrdersNum);
         fragment_layout.setAdapter(tablesAdapter);
 
         return view;
@@ -77,47 +83,58 @@ public class OpenOrdersFragment extends Fragment {
         // 5
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            TableLayout order_layout = new TableLayout(mContext);
+            if (openOrders!=null) {
+                TableLayout order_layout = new TableLayout(mContext);
+                order_layout.setBackgroundResource(R.drawable.note);
+                TableLayout.LayoutParams tableRowParams =
+                        new TableLayout.LayoutParams
+                                (TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
-            // order_layout.setBackgroundResource(R.drawable.note);
+                TableRow headline = new TableRow(view.getContext());
+                TextView orderNum = new TextView(view.getContext());
 
-            TableRow headline = new TableRow(view.getContext());
+                orderNum.setText("\n\nמספר הזמנה: " + openOrders.get(position).getId());
+                orderNum.setTextSize(16);
+                headline.addView(orderNum);
 
-            TextView orderNum = new TextView(view.getContext());
-            orderNum.setText("מספר הזמנה: " + openOrders.get(position).getId());
-            orderNum.setTextSize(16);
-            headline.addView(orderNum);
+                TableRow tableNum = new TableRow(view.getContext());
+                tableNum.setGravity(Gravity.CENTER);
+                TextView tableNumtext = new TextView(view.getContext());
+                tableNumtext.setText("מספר שולחן: " + openOrders.get(position).getTableNumber());
+                tableNumtext.setTextSize(22);
+                tableNum.addView(tableNumtext);
 
-            TableRow tableNum = new TableRow(view.getContext());
+                TableRow item_headline = new TableRow(view.getContext());
 
-            TextView tableNumtext = new TextView(view.getContext());
-            tableNumtext.setText("מספר שולחן: " + openOrders.get(position).getTableNumber());
-            tableNumtext.setTextSize(16);
-            tableNum.addView(tableNumtext);
+                TextView items = new TextView(view.getContext());
+                items.setText("פריטים בהזמנה:");
+                items.setTextSize(16);
+                item_headline.addView(items);
 
-            TableRow item_headline = new TableRow(view.getContext());
 
-            TextView items = new TextView(view.getContext());
-            items.setText("פריטים בהזמנה:");
-            items.setTextSize(16);
-            item_headline.addView(items);
+                headline.setLayoutParams(tableRowParams);
+                order_layout.addView(headline, tableRowParams);
 
-            TableRow item_row = new TableRow(view.getContext());
+                order_layout.addView(tableNum, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
 
-            for (OrderItem item : openOrders.get(position).getOrderItems()) {
-                item_row = new TableRow(view.getContext());
-                TextView item_text = new TextView(view.getContext());
-                item_text.setTextSize(13);
-                item_text.setText(item.getName());
-                item_row.addView(item_text);
+                tableRowParams.setMargins(0, 0, 50, 0);
+                item_headline.setLayoutParams(tableRowParams);
+                order_layout.addView(item_headline, tableRowParams);
+
+                for (OrderItem item : openOrders.get(position).getOrderItems()) {
+                    TableRow item_row = new TableRow(view.getContext());
+                    TextView item_text = new TextView(view.getContext());
+                    item_text.setTextSize(13);
+                    item_text.setText(item.getName());
+                    item_row.addView(item_text);
+                    tableRowParams.setMargins(0, 0, 50, 20);
+                    item_row.setLayoutParams(tableRowParams);
+                    order_layout.addView(item_row, tableRowParams);
+                }
+
+                return order_layout;
             }
-
-            order_layout.addView(headline, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
-            order_layout.addView(tableNum, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
-            order_layout.addView(item_headline, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
-            order_layout.addView(item_row, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
-
-            return order_layout;
+            else return null;
         }
     }
 }

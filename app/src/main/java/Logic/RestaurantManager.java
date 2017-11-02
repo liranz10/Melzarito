@@ -73,15 +73,15 @@ public class RestaurantManager {
                         GenericTypeIndicator<Order> order_type= new GenericTypeIndicator<Order>(){};
                         Order curr_order =(Order) dataSnapshot.child("Orders").child(order_id.toString()).getValue(order_type);
 
-                        GenericTypeIndicator<HashMap<String, OrderItem>> orderItems_type = new GenericTypeIndicator<HashMap<String, OrderItem>>() {};
-                        HashMap<String, OrderItem> orderItemHashMap = dataSnapshot.child("Orders").child(order_id.toString()).child("Order items").getValue(orderItems_type);
+//                        GenericTypeIndicator<HashMap<String, OrderItem>> orderItems_type = new GenericTypeIndicator<HashMap<String, OrderItem>>() {};
+//                        HashMap<String, OrderItem> orderItemHashMap = dataSnapshot.child("Orders").child(order_id.toString()).child("Order items").getValue(orderItems_type);
 
-//                        GenericTypeIndicator<ArrayList<OrderItem>> orderItems_type = new GenericTypeIndicator<ArrayList<OrderItem>>() {};
-//                        ArrayList<OrderItem> orderItemHashMap = dataSnapshot.child("Orders").child(order_id.toString()).child("Order items").getValue(orderItems_type);
+                        GenericTypeIndicator<ArrayList<OrderItem>> orderItems_type = new GenericTypeIndicator<ArrayList<OrderItem>>() {};
+                        ArrayList<OrderItem> orderItemHashMap = dataSnapshot.child("Orders").child(order_id.toString()).child("Order items").getValue(orderItems_type);
 
                         if(orderItemHashMap != null) {
-                            Collection<OrderItem> co = orderItemHashMap.values();
-                            for (OrderItem orderItem : co)
+//                            Collection<OrderItem> co = orderItemHashMap.values();
+                            for (OrderItem orderItem : orderItemHashMap)
                                 curr_order.addOrderItem(orderItem);
                         }
                         if (curr_order.isOpen()) {
@@ -103,6 +103,7 @@ public class RestaurantManager {
         db = database.getReference();
         db.keepSynced(true);
         db.addValueEventListener(listener);
+
 
     }
 

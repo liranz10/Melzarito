@@ -48,9 +48,10 @@ public class TablesFragment extends android.app.Fragment {
         gridView.setLayoutParams(new GridView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
-
-
-        TableAdapter tablesAdapter = new TableAdapter(getActivity(), LoginActivity.restaurantManager.getTables().size());
+        int tableNum=0;
+        if(LoginActivity.restaurantManager.getTables()!=null)
+            tableNum=LoginActivity.restaurantManager.getTables().size();
+        TableAdapter tablesAdapter = new TableAdapter(getActivity(), tableNum);
         gridView.setAdapter(tablesAdapter);
 
 
