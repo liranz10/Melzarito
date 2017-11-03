@@ -41,7 +41,7 @@ public class OpenOrdersFragment extends Fragment {
         fragment_layout = (GridView) view.findViewById(R.id.open_orders_layout);
         openOrders.clear();
         openOrders.addAll(RestaurantManager.getOpenOrders());
-
+        RestaurantManager.isDataChanged=false;
         int openOrdersNum = 0;
         if(openOrders!=null)
             openOrdersNum=openOrders.size();

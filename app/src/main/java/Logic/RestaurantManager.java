@@ -34,12 +34,14 @@ public class RestaurantManager {
      int orderIdCounter=0;
      int orderItemIdCounter=0;
      ArrayList<Table> tables;
-    private boolean readfromDB = true;
+     private boolean readfromDB = true;
      static HashMap<Integer,Order> orders = new LinkedHashMap<>();
+     public static boolean isDataChanged=false;
     //HashMap<String, Order> ordersHashMapStringKey = new HashMap<>();
      ValueEventListener listener = new ValueEventListener() {
          @Override
          public void onDataChange(DataSnapshot dataSnapshot) {
+             isDataChanged=true;
              //loading Menu
              long idl =(long) dataSnapshot.child("Menu").child("id").getValue();
              int id = (int)idl;
@@ -89,16 +91,17 @@ public class RestaurantManager {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 if(dataSnapshot.getValue() != null) {
-                                    for (Integer orderItem_id : orderItemsIds) {
+//                                    for (Integer orderItem_id : orderItemsIds) {
                                         GenericTypeIndicator<Date> date_type = new GenericTypeIndicator<Date>() {};
                                         Date tempLastModified = dataSnapshot.child("lastModifiedTime").getValue(date_type);
                                         String tempName = (String) dataSnapshot.child("name").getValue();
                                         int tempCategory = (int) ((long) dataSnapshot.child("category").getValue());
                                         int tempMenuId = (int) ((long) dataSnapshot.child("MenuItemId").getValue());
+                                    int orderItem_id = Integer.parseInt(dataSnapshot.getKey());
                                         curr_order.addOrderItem(new OrderItem(tempMenuId, tempName, tempCategory, orderItem_id, tempLastModified, new ArrayList<String>()));
 
 
-                                    }
+//                                    }
                                 }
                             }
 
@@ -187,7 +190,7 @@ public class RestaurantManager {
         db.child("Orders").child(orderIdCounter+"").child("Order items").child(orderItemIdCounter+"").child("category").setValue(new_item.getCategory());
         orderItemIdCounter++;
         db.child("counterOrderItemsID").setValue(orderItemIdCounter);
-        orders.get(orderIdCounter).addOrderItem(new_item);
+        //orders.get(orderIdCounter).addOrderItem(new_item);
         // add the notes to DB
 
     }
