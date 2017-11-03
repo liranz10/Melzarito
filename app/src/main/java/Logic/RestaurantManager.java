@@ -3,11 +3,13 @@ package Logic;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class RestaurantManager {
      ArrayList<Table> tables;
     private boolean readfromDB = true;
      static HashMap<Integer,Order> orders = new LinkedHashMap<>();
-    HashMap<String, Order> ttt = new HashMap<>();
+    //HashMap<String, Order> ordersHashMapStringKey = new HashMap<>();
      ValueEventListener listener = new ValueEventListener() {
          @Override
          public void onDataChange(DataSnapshot dataSnapshot) {
@@ -68,11 +70,67 @@ public class RestaurantManager {
                         ids[i] = Integer.parseInt(d.getKey());
                         i++;
                     }
-                    for (Integer order_id : ids) {
+                    for (final Integer order_id : ids) {
 
                         GenericTypeIndicator<Order> order_type= new GenericTypeIndicator<Order>(){};
-                        Order curr_order =(Order) dataSnapshot.child("Orders").child(order_id.toString()).getValue(order_type);
+                        final Order curr_order =dataSnapshot.child("Orders").child(order_id.toString()).getValue(order_type);
+                        final Integer[] orderItemsIds = new Integer[(int)((long)dataSnapshot.child("Orders").child(order_id+"").child("Order items").getChildrenCount())];
+                        i=0;
+                        //if(orderItemsIds.length >0) {
+                            for (DataSnapshot d : dataSnapshot.child("Orders").child(order_id + "").child("Order items").getChildren()) {
+                                orderItemsIds[i] = Integer.parseInt(d.getKey());
+                                i++;
+                            }
+                      //  }
 
+                        final Query query = db.child("Orders").child(order_id+"").child("Order items");
+
+                        query.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                if(dataSnapshot.getValue() != null) {
+                                    for (Integer orderItem_id : orderItemsIds) {
+                                        GenericTypeIndicator<Date> date_type = new GenericTypeIndicator<Date>() {};
+                                        Date tempLastModified = dataSnapshot.child("lastModifiedTime").getValue(date_type);
+                                        String tempName = (String) dataSnapshot.child("name").getValue();
+                                        int tempCategory = (int) ((long) dataSnapshot.child("category").getValue());
+                                        int tempMenuId = (int) ((long) dataSnapshot.child("MenuItemId").getValue());
+                                        curr_order.addOrderItem(new OrderItem(tempMenuId, tempName, tempCategory, orderItem_id, tempLastModified, new ArrayList<String>()));
+
+
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+
+                        if (curr_order.isOpen()) {
+                            orders.put(order_id, curr_order);
+                        }
+
+/*
 //                        GenericTypeIndicator<HashMap<String, OrderItem>> orderItems_type = new GenericTypeIndicator<HashMap<String, OrderItem>>() {};
 //                        HashMap<String, OrderItem> orderItemHashMap = dataSnapshot.child("Orders").child(order_id.toString()).child("Order items").getValue(orderItems_type);
 
@@ -87,6 +145,8 @@ public class RestaurantManager {
                         if (curr_order.isOpen()) {
                           orders.put(order_id, curr_order);
                         }
+
+                        */
 
                     }
                 }
@@ -120,7 +180,8 @@ public class RestaurantManager {
         OrderItem new_item = new OrderItem(item.getId(),item.getName(),category,orderItemIdCounter,new Date(),new ArrayList<String>());
 
 
-        db.child(orderItemIdCounter+"");
+//        db.child(orderItemIdCounter+"");
+        db.child("Orders").child(orderIdCounter+"").child("Order items").child(orderItemIdCounter+"").child("MenuItemId").setValue(new_item.getId());
         db.child("Orders").child(orderIdCounter+"").child("Order items").child(orderItemIdCounter+"").child("lastModifiedTime").setValue(new_item.getLastModifiedTime());
         db.child("Orders").child(orderIdCounter+"").child("Order items").child(orderItemIdCounter+"").child("name").setValue(new_item.getName());
         db.child("Orders").child(orderIdCounter+"").child("Order items").child(orderItemIdCounter+"").child("category").setValue(new_item.getCategory());
@@ -132,18 +193,29 @@ public class RestaurantManager {
     }
 
       public void CreateNewOrderAndWriteToDB(int tableNumber) {
+          orderIdCounter++;
+          readfromDB=false;
+          db.child("counterOrderID").setValue(orderIdCounter);
+          Order new_order = new Order(orderIdCounter,tableNumber, LoginActivity.loggedInUserName,new Date(),1,true);
+          //orders.put(new_order.getId(), new_order);
+          db.child("Orders").child(new_order.getId()+"").setValue(new_order);
+
+          /*
         orderIdCounter++;
         readfromDB=false;
         db.child("counterOrderID").setValue(orderIdCounter);
         Order new_order = new Order(orderIdCounter,tableNumber, LoginActivity.loggedInUserName,new Date(),1,true);
-//        HashMap<String, Order> ttt = new HashMap<>();
-          ttt.put(new_order.getId()+"", new_order);
+//        HashMap<String, Order> ordersHashMapStringKey = new HashMap<>();
+          ordersHashMapStringKey.put(new_order.getId()+"", new_order);
 
-          Collection<Order> co = ttt.values();
-          Set<String> so = ttt.keySet();
+          Collection<Order> co = ordersHashMapStringKey.values();
+          Set<String> so = ordersHashMapStringKey.keySet();
           for(Order o : co){
               db.child("Orders").child(so.iterator().next()).setValue(o);
           }
+
+          */
+
 
         //  db.child("Orders").setValue(ttt);
 
