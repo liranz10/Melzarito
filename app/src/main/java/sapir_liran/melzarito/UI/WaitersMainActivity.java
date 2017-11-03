@@ -111,6 +111,7 @@ public class WaitersMainActivity extends AppCompatActivity
         } else if (id == R.id.open_orders) {
             if(openOrdersFragment ==null){
                 openOrdersFragment=new OpenOrdersFragment();
+
             }
             setTitle(R.string.title_fragment_openorders);
 
@@ -142,10 +143,7 @@ public class WaitersMainActivity extends AppCompatActivity
     }
 
 
-
-
-
-
-
-
+    public OpenOrdersFragment getOpenOrdersFragment() {
+        return openOrdersFragment;
+    }
 }
