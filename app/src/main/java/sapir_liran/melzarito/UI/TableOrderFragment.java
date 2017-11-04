@@ -25,7 +25,7 @@ public class TableOrderFragment extends android.app.Fragment {
 
         newOrderbtn = (FloatingActionButton)view.findViewById(R.id.new_order) ;
         fragmentManager = getFragmentManager();
-
+        getActivity().setTitle(R.string.title_fragment_table_total_order);
         newOrderbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

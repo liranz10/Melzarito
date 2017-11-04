@@ -28,6 +28,7 @@ public class OrderFragment extends android.app.Fragment {
         view= inflater.inflate(R.layout.order_fragment, container, false);
 
         fragmentManager = getFragmentManager();
+        getActivity().setTitle(R.string.title_fragment_menu);
         final Button appetizers_btn =(Button) view.findViewById(R.id.appetizers_btn);
         appetizers_btn.setOnClickListener(new View.OnClickListener() {
             @Override

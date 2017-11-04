@@ -36,7 +36,7 @@ public class RestaurantManager {
      int orderItemIdCounter=0;
      ArrayList<Table> tables;
      private boolean readfromDB = false;
-     static HashMap<Integer,Order> orders = new LinkedHashMap<>();
+     public static HashMap<Integer,Order> orders = new LinkedHashMap<>();
 
     private boolean hasDataChanged;
     //HashMap<String, Order> ordersHashMapStringKey = new HashMap<>();
@@ -199,6 +199,7 @@ public class RestaurantManager {
     public static Collection<Order> getOpenOrders(){
         return orders.values();
     }
+
 
 
 }

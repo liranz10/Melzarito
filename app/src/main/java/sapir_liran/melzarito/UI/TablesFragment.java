@@ -42,6 +42,7 @@ public class TablesFragment extends android.app.Fragment {
 
        view= inflater.inflate(R.layout.tables_fragment, container, false);
         ArrayList<Button> btn = new ArrayList<>();
+        getActivity().setTitle(R.string.title_fragment_tables);
         tableOrderFragment = new TableOrderFragment();
         gridView = (GridView) view.findViewById(R.id.tables_layout);
         fragmentManager = getFragmentManager();

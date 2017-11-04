@@ -1,5 +1,6 @@
 package sapir_liran.melzarito.UI;
 
+import android.app.FragmentManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ public class ItemsFragment extends android.app.Fragment {
     private int category;
     private String text;
     private TableLayout layout;
+    private FragmentManager fragmentManager;
+    //OrderFragment fragment = new OrderFragment();
 
 
     // private ArrayList<Button> itemsBtnArray = new ArrayList<>();
@@ -123,6 +126,11 @@ public class ItemsFragment extends android.app.Fragment {
 
 
                 }
+
+
+                fragmentManager = getFragmentManager();
+                fragmentManager.popBackStack();
+
 
             }
         });

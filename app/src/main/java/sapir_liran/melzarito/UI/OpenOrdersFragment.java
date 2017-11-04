@@ -49,27 +49,130 @@ public class OpenOrdersFragment extends Fragment {
     private  GridView fragment_layout;
     public  ArrayList<Order> openOrders = new ArrayList<>();
      View view;
-    public  OpenOrdersAdapter tablesAdapter;
+    public  OpenOrdersAdapter ordersAdapter;
     public  int openOrdersNum = 0;
     FirebaseDatabase database ;
     DatabaseReference db ;
-    HashMap<Integer,Order> orders = new LinkedHashMap<>();
+   // HashMap<Integer,Order> orders = new LinkedHashMap<>();
+    //private boolean toRefresh = true;
+    private Button refresh_btn;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.open_orders_fragment, container, false);
+        refresh_btn = (Button)view.findViewById(R.id.refresh_button);
+
         database = FirebaseDatabase.getInstance();
         db = database.getReference();
-        db.addValueEventListener(listener);
-        fragment_layout = (GridView) view.findViewById(R.id.open_orders_layout);
-        openOrders.clear();
-        openOrders.addAll(RestaurantManager.getOpenOrders());
 
 
-        if(openOrders!=null)
-            openOrdersNum=openOrders.size();
-         tablesAdapter = new OpenOrdersAdapter(getActivity(), openOrdersNum);
+        refresh_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment_layout = (GridView) view.findViewById(R.id.open_orders_layout);
+                openOrders.clear();
+                openOrders.addAll(RestaurantManager.getOpenOrders());
 
-        fragment_layout.setAdapter(tablesAdapter);
+                if(openOrders!=null)
+                    openOrdersNum=openOrders.size();
+                ordersAdapter = new OpenOrdersAdapter(getActivity(), openOrdersNum);
+
+                fragment_layout.setAdapter(ordersAdapter);
+            }
+        });
+
+
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                openOrders.clear();
+                RestaurantManager.orders.clear();
+                if (dataSnapshot.child("Orders").getValue() != null) {
+                    Integer[] ids = new Integer[(int) ((long) dataSnapshot.child("Orders").getChildrenCount())];
+                    int i = 0;
+                    for (DataSnapshot d : dataSnapshot.child("Orders").getChildren()) {
+                        ids[i] = Integer.parseInt(d.getKey());
+                        i++;
+                    }
+                    for (final Integer order_id : ids) {
+
+                        GenericTypeIndicator<Order> order_type= new GenericTypeIndicator<Order>(){};
+                        final Order curr_order =dataSnapshot.child("Orders").child(order_id.toString()).getValue(order_type);
+                        final Integer[] orderItemsIds = new Integer[(int)((long)dataSnapshot.child("Orders").child(order_id+"").child("Order items").getChildrenCount())];
+                        i=0;
+                        //if(orderItemsIds.length >0) {
+                        for (DataSnapshot d : dataSnapshot.child("Orders").child(order_id + "").child("Order items").getChildren()) {
+                            orderItemsIds[i] = Integer.parseInt(d.getKey());
+                            i++;
+                        }
+                        //  }
+
+                        final Query query = db.child("Orders").child(order_id+"").child("Order items");
+
+                        query.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                                if (dataSnapshot.getValue() != null) {
+//
+                                    try {
+                                        GenericTypeIndicator<Date> date_type = new GenericTypeIndicator<Date>() {
+                                        };
+                                        Date tempLastModified = dataSnapshot.child("lastModifiedTime").getValue(date_type);
+                                        String tempName = (String) dataSnapshot.child("name").getValue();
+                                        int tempCategory = (int) ((long) dataSnapshot.child("category").getValue());
+                                        int tempMenuId = (int) ((long) dataSnapshot.child("MenuItemId").getValue());
+                                        int orderItem_id = Integer.parseInt(dataSnapshot.getKey());
+                                        curr_order.addOrderItem(new OrderItem(tempMenuId, tempName, tempCategory, orderItem_id, tempLastModified, new ArrayList<String>()));
+                                    }catch (NullPointerException ex){}
+
+//
+                                }
+                            }
+
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                        if (curr_order.isOpen()) {
+
+                            RestaurantManager.orders.put(order_id, curr_order);
+                        }
+
+
+
+                        openOrders.addAll(RestaurantManager.orders.values());
+                      //  tablesAdapter.notifyDataSetChanged();
+                        //refresh_btn.callOnClick();
+
+                    }
+                }
+                refresh_btn.callOnClick();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         return view;
     }
@@ -106,7 +209,7 @@ public class OpenOrdersFragment extends Fragment {
         // 5
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            if (openOrders!=null) {
+            if (openOrders!=null && openOrders.get(position).isOpen()) {
                 TableLayout order_layout = new TableLayout(mContext);
                 order_layout.setBackgroundResource(R.drawable.note);
                 TableLayout.LayoutParams tableRowParams =
@@ -168,14 +271,10 @@ public class OpenOrdersFragment extends Fragment {
 //         fragment_layout.setAdapter(tablesAdapter);
 //        }
 
-
+/*sapir
     ValueEventListener listener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-
-
 
                 if (dataSnapshot.child("Orders").getValue() != null) {
                     Integer[] ids = new Integer[(int) ((long) dataSnapshot.child("Orders").getChildrenCount())];
@@ -260,5 +359,5 @@ public class OpenOrdersFragment extends Fragment {
         public void onCancelled(DatabaseError error) {
         }
     };
-
+sapir*/
 }
