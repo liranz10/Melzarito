@@ -53,8 +53,7 @@ public class OpenOrdersFragment extends Fragment {
     public  int openOrdersNum = 0;
     FirebaseDatabase database ;
     DatabaseReference db ;
-   // HashMap<Integer,Order> orders = new LinkedHashMap<>();
-    //private boolean toRefresh = true;
+
     private Button refresh_btn;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -263,101 +262,4 @@ public class OpenOrdersFragment extends Fragment {
             else return null;
         }
     }
-//     public static void update(){
-//         openOrders.clear();
-//         openOrders.addAll(RestaurantManager.getOpenOrders());
-//         view.refreshDrawableState();
-//         tablesAdapter = new OpenOrdersAdapter(view.getContext(),openOrders.size());
-//         fragment_layout.setAdapter(tablesAdapter);
-//        }
-
-/*sapir
-    ValueEventListener listener = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if (dataSnapshot.child("Orders").getValue() != null) {
-                    Integer[] ids = new Integer[(int) ((long) dataSnapshot.child("Orders").getChildrenCount())];
-                    int i = 0;
-                    for (DataSnapshot d : dataSnapshot.child("Orders").getChildren()) {
-                        ids[i] = Integer.parseInt(d.getKey());
-                        i++;
-                    }
-                    for (final Integer order_id : ids) {
-
-                        GenericTypeIndicator<Order> order_type= new GenericTypeIndicator<Order>(){};
-                        final Order curr_order =dataSnapshot.child("Orders").child(order_id.toString()).getValue(order_type);
-                        final Integer[] orderItemsIds = new Integer[(int)((long)dataSnapshot.child("Orders").child(order_id+"").child("Order items").getChildrenCount())];
-                        i=0;
-                        //if(orderItemsIds.length >0) {
-                        for (DataSnapshot d : dataSnapshot.child("Orders").child(order_id + "").child("Order items").getChildren()) {
-                            orderItemsIds[i] = Integer.parseInt(d.getKey());
-                            i++;
-                        }
-                        //  }
-
-                        final Query query = db.child("Orders").child(order_id+"").child("Order items");
-
-                        query.addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                                    if (dataSnapshot.getValue() != null) {
-//
-                                        try {
-                                            GenericTypeIndicator<Date> date_type = new GenericTypeIndicator<Date>() {
-                                            };
-                                            Date tempLastModified = dataSnapshot.child("lastModifiedTime").getValue(date_type);
-                                            String tempName = (String) dataSnapshot.child("name").getValue();
-                                            int tempCategory = (int) ((long) dataSnapshot.child("category").getValue());
-                                            int tempMenuId = (int) ((long) dataSnapshot.child("MenuItemId").getValue());
-                                            int orderItem_id = Integer.parseInt(dataSnapshot.getKey());
-                                            curr_order.addOrderItem(new OrderItem(tempMenuId, tempName, tempCategory, orderItem_id, tempLastModified, new ArrayList<String>()));
-                                        }catch (NullPointerException ex){}
-
-//
-                                    }
-                                }
-
-
-                            @Override
-                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-                        if (curr_order.isOpen()) {
-                            orders.put(order_id, curr_order);
-                        }
-
-
-
-                        openOrders.addAll(orders.values());
-                        tablesAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-
-
-
-        @Override
-        public void onCancelled(DatabaseError error) {
-        }
-    };
-sapir*/
 }

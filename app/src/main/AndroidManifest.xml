@@ -34,5 +34,16 @@
             android:label="מטבח"
             android:theme="@style/AppTheme" />
     </application>
-
+    <service
+        android:name=".MelzaritoFirebaseMessagingService">
+        <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+        </intent-filter>
+    </service>
+    <service
+        android:name=".MelzaritoFirebaseInstanceIDService">
+        <intent-filter>
+            <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+        </intent-filter>
+    </service>
 </manifest>
