@@ -45,13 +45,13 @@ public class ItemsFragment extends android.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.items_fragment, container, false);
         getActivity().setTitle(text);
-         layout = (TableLayout) view.findViewById(R.id.items_layout);
+        layout = (TableLayout) view.findViewById(R.id.items_layout);
         if (layout.getChildCount()!=0)
             layout.removeAllViews();
         final Menu menu = LoginActivity.restaurantManager.getMenu();
         for(MenuItem item : menu.getItems()){
-            if(item!=null){
-            if (item.getCategory() == category) {
+            if (item != null && item.getCategory() == category)
+            {
 
                 TableRow tr = new TableRow(getActivity());
                 tr.setGravity(Gravity.CENTER);
@@ -96,15 +96,16 @@ public class ItemsFragment extends android.app.Fragment {
                     }
                 });
 
-                item_view.setPadding(60, 0, 30, 0);
-                quantity.setPadding(10, 0, 10, 0);
+                item_view.setPadding(60,0,30,0);
+                quantity.setPadding(10,0,10,0);
                 quantity.setId(item.getId());
                 tr.addView(item_view);
                 tr.addView(pls_button);
                 tr.addView(quantity);
                 tr.addView(minus_button);
                 layout.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
-            }
+
+//                layout.addView(tr);
             }
 
         }
@@ -113,15 +114,15 @@ public class ItemsFragment extends android.app.Fragment {
 
         add_items_to_order_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(View v) {
+            public void onClick(View v) {
                 for (MenuItem i : menu.getItemsOnCategory(category))
                 {
 
-                        int idd = getResources().getIdentifier(String.valueOf(i.getId()), "id", "com.sapir_liran.melzarito.UI");
-                        TextView quantity = (TextView)view.findViewById(idd);
-                        for (int j=0 ; j < Integer.parseInt(quantity.getText().toString()) ; j++ ){
-                            LoginActivity.restaurantManager.createOrderItemAndWriteToDB(i,category);
-                        }
+                    int idd = getResources().getIdentifier(String.valueOf(i.getId()), "id", "com.sapir_liran.melzarito.UI");
+                    TextView quantity = (TextView)view.findViewById(idd);
+                    for (int j=0 ; j < Integer.parseInt(quantity.getText().toString()) ; j++ ){
+                        LoginActivity.restaurantManager.createOrderItemAndWriteToDB(i,category);
+                    }
 
 
                 }

@@ -26,21 +26,22 @@ import sapir_liran.melzarito.R;
 
 public class SearchClubMembersFragment extends Fragment {
     View view;
-    FirebaseDatabase database ;
-    DatabaseReference db ;
+    FirebaseDatabase database;
+    DatabaseReference db;
     ArrayList<Customer> members = new ArrayList<>();
     public static int tableNum;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view= inflater.inflate(R.layout.search_club_members_fragment, container, false);
+        view = inflater.inflate(R.layout.search_club_members_fragment, container, false);
         getActivity().setTitle(R.string.title_fragment_search_club_member);
 
-        final EditText ed = (EditText)view.findViewById(R.id.club_member_id_text);
+        final EditText ed = (EditText) view.findViewById(R.id.club_member_id_text);
         database = FirebaseDatabase.getInstance();
         db = database.getReference();
 
-        ImageButton search_btn = (ImageButton)view.findViewById(R.id.search_club_member_by_id);
+        ImageButton search_btn = (ImageButton) view.findViewById(R.id.search_club_member_by_id);
 
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +49,8 @@ public class SearchClubMembersFragment extends Fragment {
                 db.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        GenericTypeIndicator<ArrayList<Customer>> members_type = new GenericTypeIndicator<ArrayList<Customer>>() {};
+                        GenericTypeIndicator<ArrayList<Customer>> members_type = new GenericTypeIndicator<ArrayList<Customer>>() {
+                        };
                         members = dataSnapshot.child("ClubMembers").getValue(members_type);
                         if (members != null) {
                             for (Customer member : members) {

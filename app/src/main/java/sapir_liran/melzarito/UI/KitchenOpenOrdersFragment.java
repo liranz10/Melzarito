@@ -221,8 +221,14 @@ public class KitchenOpenOrdersFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             TableLayout order_layout = new TableLayout(mContext);
+            if(openOrders.get(position).getStatus()==1)
+                    order_layout.setBackgroundColor(Color.LTGRAY);
+            else if(openOrders.get(position).getStatus()==2)
+                    order_layout.setBackgroundColor(Color.YELLOW);
+            else if(openOrders.get(position).getStatus()==3)
+                    order_layout.setBackgroundColor(Color.GREEN);
 
-            order_layout.setBackgroundColor(Color.LTGRAY);
+
             TableLayout.LayoutParams tableRowParams =
                     new TableLayout.LayoutParams
                             (TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
@@ -257,6 +263,7 @@ public class KitchenOpenOrdersFragment extends Fragment {
             tableRowParams.setMargins(0, 0, 50, 0);
             item_headline.setLayoutParams(tableRowParams);
             order_layout.addView(item_headline, tableRowParams);
+
             for (OrderItem item : openOrders.get(position).getOrderItems()) {
                 TableRow item_row = new TableRow(view.getContext());
                 TextView item_text = new TextView(view.getContext());
@@ -266,12 +273,12 @@ public class KitchenOpenOrdersFragment extends Fragment {
                 tableRowParams.setMargins(0, 0, 50, 20);
                 item_row.setLayoutParams(tableRowParams);
                 order_layout.addView(item_row, tableRowParams);
-
             }
+
             TableRow btns_row = new TableRow(view.getContext());
-            btns_row.addView(new ReadyButton(getContext()), new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-            btns_row.addView(new OnPrepButton(getContext()), new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-            btns_row.addView(new NotReadyButton(getContext()), new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+            btns_row.addView(new ReadyButton(getContext(),openOrders.get(position).getId(),openOrders.get(position).getTableNumber()), new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+            btns_row.addView(new OnPrepButton(getContext(),openOrders.get(position).getId(),openOrders.get(position).getTableNumber()), new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+            btns_row.addView(new NotReadyButton(getContext(),openOrders.get(position).getId(),openOrders.get(position).getTableNumber()), new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
             btns_row.addView(new ServiceButton(getContext(),openOrders.get(position).getId(),openOrders.get(position).getTableNumber()), new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
 
             order_layout.addView(btns_row);
@@ -282,17 +289,23 @@ public class KitchenOpenOrdersFragment extends Fragment {
     }
 
     class ReadyButton extends AppCompatButton {
+        private int orderId;
+        private int tableNumber;
         private OnClickListener listener = new OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((TableLayout) ((TableRow) getParent()).getParent()).setBackgroundColor(Color.GREEN);
+                db.child("Orders").child(orderId+"").child("status").setValue(3);
             }
         };
 
-        public ReadyButton(Context context) {
+        public ReadyButton(Context context,int orderId,int tableNumber) {
             super(context);
+            this.orderId=orderId;
+            this.tableNumber=tableNumber;
             setText("מוכן");
             setBackgroundColor(Color.GREEN);
+
             TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT);
             setLayoutParams(params);
@@ -304,15 +317,21 @@ public class KitchenOpenOrdersFragment extends Fragment {
     }
 
     class OnPrepButton extends AppCompatButton {
+        private int orderId;
+        private int tableNumber;
         private OnClickListener listener = new OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((TableLayout) ((TableRow) getParent()).getParent()).setBackgroundColor(Color.YELLOW);
+                db.child("Orders").child(orderId+"").child("status").setValue(2);
+
             }
         };
 
-        public OnPrepButton(Context context) {
+        public OnPrepButton(Context context,int orderId,int tableNumber) {
             super(context);
+            this.orderId=orderId;
+            this.tableNumber=tableNumber;
             setText("בהכנה");
             setBackgroundColor(Color.YELLOW);
             TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -326,15 +345,21 @@ public class KitchenOpenOrdersFragment extends Fragment {
     }
 
     class NotReadyButton extends AppCompatButton {
+        private int orderId;
+        private int tableNumber;
         private OnClickListener listener = new OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((TableLayout) ((TableRow) getParent()).getParent()).setBackgroundColor(Color.LTGRAY);
+                db.child("Orders").child(orderId+"").child("status").setValue(1);
+
             }
         };
 
-        public NotReadyButton(Context context) {
+        public NotReadyButton(Context context,int orderId,int tableNumber) {
             super(context);
+            this.orderId=orderId;
+            this.tableNumber=tableNumber;
             setText("לא מוכן");
             setBackgroundColor(Color.LTGRAY);
             TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,

@@ -47,8 +47,10 @@ public class Menu {
 
         ArrayList<MenuItem> itemsOnCategory = new ArrayList<>();
         for(MenuItem item : items) {
-            if(item.getCategory()==category)
-                itemsOnCategory.add(item);
+            if(item!=null) {
+                if (item.getCategory() == category)
+                    itemsOnCategory.add(item);
+            }
 
         }
         return itemsOnCategory;

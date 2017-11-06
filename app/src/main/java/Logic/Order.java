@@ -13,18 +13,20 @@ public class Order {
     private Date lastModifiedTime;
     private int lastModifiedBy; //--sapir: why do we need this?
     private boolean open;
+    private int status;//1 not ready 2 onPrep 3 ready
     private ArrayList<OrderItem> orderItems = new ArrayList<>(); //--sapir: add this
 
     public Order() {
     }
 
-    public Order(int id, int tableNumber, String waiterName, Date lastModifiedTime, int lastModifiedBy, boolean open) {
+    public Order(int id, int tableNumber, String waiterName, Date lastModifiedTime, int lastModifiedBy, boolean open,int status) {
         this.id = id;
         this.tableNumber = tableNumber;
         this.waiterName = waiterName;
         this.lastModifiedTime = lastModifiedTime;
         this.lastModifiedBy = lastModifiedBy;
         this.open = open;
+        this.status=status;
     }
 
     public int getId() {
@@ -89,5 +91,13 @@ public class Order {
 
     public void setOpen(boolean open) {
         this.open = open;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

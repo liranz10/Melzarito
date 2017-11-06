@@ -32,7 +32,7 @@ public class WaitersMainActivity extends AppCompatActivity
     private OpenOrdersFragment openOrdersFragment;
     private ClubMembersFragment clubMembersFragment;
     private FragmentManager fragmentManager;
-   // public static RestaurantManager restaurantManager;
+    // public static RestaurantManager restaurantManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -323,9 +323,9 @@ public class WaitersMainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.tables) {
-          if(tablesFragment ==null){
-              tablesFragment=new TablesFragment();
-          }
+            if(tablesFragment ==null){
+                tablesFragment=new TablesFragment();
+            }
             setTitle(R.string.title_fragment_tables);
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, tablesFragment)

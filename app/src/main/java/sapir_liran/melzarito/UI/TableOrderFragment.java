@@ -142,21 +142,24 @@ public class TableOrderFragment extends android.app.Fragment {
         // 5
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-           if(ordersList.get(position).getTableNumber() == tableNumber){
-               TableLayout tableLayout = new TableLayout(mContext);
-               TableLayout.LayoutParams tableLayoutParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-               tableLayoutParams.setMargins(0,20,50,0);
-               for (OrderItem orderItem : ordersList.get(position).getOrderItems()) {
-                   TableRow tr = new TableRow(view.getContext());
-                   TextView tv = new TextView(view.getContext());
-                   tv.setText(orderItem.getName());
-                   tv.setTextSize(20);
-                   tr.addView(tv);
-                   tableLayout.addView(tr, tableLayoutParams);
+            if(ordersList.get(position).getTableNumber() == tableNumber){
+                TableLayout tableLayout = new TableLayout(mContext);
+                TableLayout.LayoutParams tableLayoutParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
+                tableLayoutParams.setMargins(0,20,50,0);
+                for (OrderItem orderItem : ordersList.get(position).getOrderItems()) {
+                    TableRow tr = new TableRow(view.getContext());
+                    TextView tv = new TextView(view.getContext());
+                    tv.setText(orderItem.getName());
+                    tv.setTextSize(20);
+                    tr.addView(tv);
+                    tableLayout.addView(tr, tableLayoutParams);
                 }
                 return tableLayout;
-           }
-           else return null;
+            }
+            else {
+                TextView nothing = new TextView(getContext());
+                return nothing;
+            }
         }
 
     }

@@ -39,8 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
-    public static String loggedInUserName;
-    public static String loggedInUserRole;
+
     String token;
     FirebaseDatabase database ;
     DatabaseReference db ;
@@ -57,9 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         MelzaritoFirebaseMessagingService messagingService = new MelzaritoFirebaseMessagingService();
 
         token = FirebaseInstanceId.getInstance().getToken();
-        FirebaseMessaging.getInstance().subscribeToTopic("orders");
         if (auth.getCurrentUser() != null) {
-            getLoggedinUserFromDB(auth.getCurrentUser().getUid());
             NotificationListener listener = new NotificationListener(this);
             startActivity(new Intent(LoginActivity.this, ChooseEmployeeRoleActivity.class));
             finish();
@@ -130,7 +127,6 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 } else {
 
-                                    getLoggedinUserFromDB(auth.getCurrentUser().getUid());
                                     Intent intent = new Intent(LoginActivity.this, ChooseEmployeeRoleActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -141,26 +137,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void getLoggedinUserFromDB(final String uid){
-        database = FirebaseDatabase.getInstance();
-        db = database.getReference();
-        db.keepSynced(true);
-        db.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                loggedInUserName=(String)dataSnapshot.child("Users").child(uid).child("name").getValue();
-                loggedInUserRole=(String)dataSnapshot.child("Users").child(uid).child("role").getValue();
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
     class MyInstanceIDListenerService extends FirebaseInstanceIdService {
-
-
 
         @Override
         public void onTokenRefresh() {
@@ -170,5 +149,5 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-}
+
 

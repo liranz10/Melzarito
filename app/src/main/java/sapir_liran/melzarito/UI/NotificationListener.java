@@ -40,38 +40,39 @@ public class NotificationListener {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<ArrayList<OrderNotification>> typeIndicator = new GenericTypeIndicator<ArrayList<OrderNotification>>() {
-                };
-                GenericTypeIndicator<ArrayList<StockNotification>> stocktypeIndicator = new GenericTypeIndicator<ArrayList<StockNotification>>() {
-                };
-                try {
+//                if(ChooseEmployeeRoleActivity.loggedInUserRole.equals("מלצר")) {
+                    GenericTypeIndicator<ArrayList<OrderNotification>> typeIndicator = new GenericTypeIndicator<ArrayList<OrderNotification>>() {
+                    };
+                    GenericTypeIndicator<ArrayList<StockNotification>> stocktypeIndicator = new GenericTypeIndicator<ArrayList<StockNotification>>() {
+                    };
+                    try {
 
-                    ArrayList<OrderNotification> notifications = dataSnapshot.getValue(typeIndicator);
-                    if (notifications != null) {
-                        for (OrderNotification notification : notifications) {
-                            if (notification != null) {
-                                if (!notification.isInvoked()) {
+                        ArrayList<OrderNotification> notifications = dataSnapshot.getValue(typeIndicator);
+                        if (notifications != null) {
+                            for (OrderNotification notification : notifications) {
+                                if (notification != null) {
+                                    if (!notification.isInvoked()) {
 
-                                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                                            .setContentTitle("הזמנה מוכנה")
-                                            .setContentText("הזמנה מספר:" + notification.getOrderId() + " שולחן מספר: " + notification.getTableNumber())
-                                            .setSmallIcon(R.drawable.servicebell)
-                                            .setSound( Uri.parse(("android.resource://"+context.getPackageName()+"/raw/bell")));
+                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                                                .setContentTitle("הזמנה מוכנה")
+                                                .setContentText("הזמנה מספר:" + notification.getOrderId() + " שולחן מספר: " + notification.getTableNumber())
+                                                .setSmallIcon(R.drawable.servicebell)
+                                                .setSound(Uri.parse(("android.resource://" + context.getPackageName() + "/raw/bell")));
 
 
+                                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                                        counter++;
+                                        notificationManager.notify(counter, builder.build());
+                                        db.child(notification.getOrderId() + "").child("invoked").setValue(true);
 
-                                    NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                                   counter++;
-                                    notificationManager.notify(counter, builder.build());
-                                    db.child(notification.getOrderId() + "").child("invoked").setValue(true);
-
+                                    }
                                 }
                             }
                         }
-                    }
-                }
-                catch (DatabaseException ex){}
 
+                    } catch (DatabaseException ex) {
+                    }
+//                }
             }
 
             @Override
@@ -84,36 +85,37 @@ public class NotificationListener {
         dbstock.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+//                if(ChooseEmployeeRoleActivity.loggedInUserRole.equals("מלצר")) {
 
-                GenericTypeIndicator<ArrayList<StockNotification>> typeIndicator = new GenericTypeIndicator<ArrayList<StockNotification>>() {
-                };
-                try {
+                    GenericTypeIndicator<ArrayList<StockNotification>> typeIndicator = new GenericTypeIndicator<ArrayList<StockNotification>>() {
+                    };
+                    try {
 
-                    ArrayList<StockNotification> notifications = dataSnapshot.getValue(typeIndicator);
-                    if (notifications != null) {
-                        for (StockNotification notification : notifications) {
-                            if (notification != null) {
-                                if (!notification.isInvoked()) {
-                                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                                            .setContentTitle("פריט אזל בתפריט")
-                                            .setContentText(notification.getItemName())
-                                            .setSmallIcon(R.drawable.outofstock)
-                                            .setSound( Uri.parse(("android.resource://"+context.getPackageName()+"/raw/out")));
+                        ArrayList<StockNotification> notifications = dataSnapshot.getValue(typeIndicator);
+                        if (notifications != null) {
+                            for (StockNotification notification : notifications) {
+                                if (notification != null) {
+                                    if (!notification.isInvoked()) {
+                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                                                .setContentTitle("פריט אזל בתפריט")
+                                                .setContentText(notification.getItemName())
+                                                .setSmallIcon(R.drawable.outofstock)
+                                                .setSound(Uri.parse(("android.resource://" + context.getPackageName() + "/raw/out")));
 
 
-                                    NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                                    counter++;
-                                    notificationManager.notify(counter, builder.build());
-                                    dbstock.child(notification.getItemId() + "").child("invoked").setValue(true);
+                                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                                        counter++;
+                                        notificationManager.notify(counter, builder.build());
+                                        dbstock.child(notification.getItemId() + "").child("invoked").setValue(true);
 
+                                    }
                                 }
                             }
                         }
+                    } catch (DatabaseException ex) {
                     }
                 }
-                catch (DatabaseException ex){}
-
-            }
+//            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -126,39 +128,39 @@ public class NotificationListener {
         dbspecial.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+//                if(ChooseEmployeeRoleActivity.loggedInUserRole.equals("מלצר")) {
 
-                GenericTypeIndicator<ArrayList<SpecialNotification>> typeIndicator = new GenericTypeIndicator<ArrayList<SpecialNotification>>() {
-                };
-                try {
+                    GenericTypeIndicator<ArrayList<SpecialNotification>> typeIndicator = new GenericTypeIndicator<ArrayList<SpecialNotification>>() {
+                    };
+                    try {
 
-                    List<SpecialNotification> notifications = new ArrayList<SpecialNotification>();
-                    for (DataSnapshot child: dataSnapshot.getChildren()) {
-                        notifications.add(child.getValue(SpecialNotification.class));
-                    }
-                    if (notifications != null) {
-                        for (SpecialNotification notification : notifications) {
-                            if (notification != null) {
-                                if (!notification.isInvoked()) {
+                        List<SpecialNotification> notifications = new ArrayList<SpecialNotification>();
+                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            notifications.add(child.getValue(SpecialNotification.class));
+                        }
+                        if (notifications != null) {
+                            for (SpecialNotification notification : notifications) {
+                                if (notification != null) {
+                                    if (!notification.isInvoked()) {
                                         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                                            .setContentTitle("ספיישל חדש נוסף לתפריט")
-                                            .setContentText(notification.getName())
-                                            .setSmallIcon(R.drawable.special)
-                                            .setSound( Uri.parse(("android.resource://"+context.getPackageName()+"/raw/special")));
+                                                .setContentTitle("ספיישל חדש נוסף לתפריט")
+                                                .setContentText(notification.getName())
+                                                .setSmallIcon(R.drawable.special)
+                                                .setSound(Uri.parse(("android.resource://" + context.getPackageName() + "/raw/special")));
 
 
+                                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                                        counter++;
+                                        notificationManager.notify(counter, builder.build());
+                                        dbspecial.child(notification.getId() + "").child("invoked").setValue(true);
 
-                                    NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                                    counter++;
-                                    notificationManager.notify(counter, builder.build());
-                                    dbspecial.child(notification.getId() + "").child("invoked").setValue(true);
-
+                                    }
                                 }
                             }
                         }
+                    } catch (DatabaseException ex) {
                     }
-                }
-                catch (DatabaseException ex){}
-
+//                }
             }
 
             @Override

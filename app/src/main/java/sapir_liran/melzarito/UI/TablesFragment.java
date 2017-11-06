@@ -36,7 +36,7 @@ public class TablesFragment extends android.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-       view= inflater.inflate(R.layout.tables_fragment, container, false);
+        view= inflater.inflate(R.layout.tables_fragment, container, false);
         getActivity().setTitle(R.string.title_fragment_tables);
         tableOrderFragment = new TableOrderFragment();
         gridView = (GridView) view.findViewById(R.id.tables_layout);
@@ -80,7 +80,7 @@ public class TablesFragment extends android.app.Fragment {
     }
 
 
-    
+
     class TableAdapter extends BaseAdapter {
 
         private final Context mContext;
@@ -140,6 +140,3 @@ public class TablesFragment extends android.app.Fragment {
 
     }
 }
-
-
-
