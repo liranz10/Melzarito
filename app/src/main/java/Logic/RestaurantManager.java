@@ -34,8 +34,8 @@ public class RestaurantManager {
      Menu menu;
      int orderIdCounter=0;
      int orderItemIdCounter=0;
-     ArrayList<Table> tables;
-     private boolean readfromDB = false;
+     public static ArrayList<Table> tables;
+     private boolean readfromDB = true;
      public static HashMap<Integer,Order> orders = new LinkedHashMap<>();
 
     private boolean hasDataChanged;
@@ -166,6 +166,8 @@ public class RestaurantManager {
         return tables;
     }
 
+
+
     public void createOrderItemAndWriteToDB(MenuItem item,int category) {
 
         OrderItem new_item = new OrderItem(item.getId(),item.getName(),category,orderItemIdCounter,new Date(),new ArrayList<String>());
@@ -200,6 +202,9 @@ public class RestaurantManager {
         return orders.values();
     }
 
+    public Collection<Order> getOrders() {
+        return orders.values();
+    }
 
 
 }

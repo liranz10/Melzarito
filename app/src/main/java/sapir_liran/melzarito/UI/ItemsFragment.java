@@ -50,7 +50,7 @@ public class ItemsFragment extends android.app.Fragment {
             layout.removeAllViews();
         final Menu menu = LoginActivity.restaurantManager.getMenu();
         for(MenuItem item : menu.getItems()){
-            if (item.getCategory() == category)
+            if (item != null && item.getCategory() == category)
             {
 
                 TableRow tr = new TableRow(getActivity());

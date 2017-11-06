@@ -4,61 +4,81 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
-
 import android.app.FragmentManager;
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-
 import java.util.ArrayList;
-
 import Logic.RestaurantManager;
 import Logic.Table;
 import sapir_liran.melzarito.R;
-
-import static sapir_liran.melzarito.R.drawable.table;
-import static sapir_liran.melzarito.R.drawable.table_button;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
 public class TablesFragment extends android.app.Fragment {
     View view;
-        GridView gridView;
+    GridView gridView;
     FragmentManager fragmentManager;
     TableOrderFragment tableOrderFragment;
+    private Button refresh_btn;
+    FirebaseDatabase database ;
+    DatabaseReference db ;
+    private  int tableNum;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
        view= inflater.inflate(R.layout.tables_fragment, container, false);
-        ArrayList<Button> btn = new ArrayList<>();
         getActivity().setTitle(R.string.title_fragment_tables);
         tableOrderFragment = new TableOrderFragment();
         gridView = (GridView) view.findViewById(R.id.tables_layout);
         fragmentManager = getFragmentManager();
-        gridView.setLayoutParams(new GridView.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
-        int tableNum=0;
-        if(LoginActivity.restaurantManager.getTables()!=null)
-            tableNum=LoginActivity.restaurantManager.getTables().size();
-        TableAdapter tablesAdapter = new TableAdapter(getActivity(), tableNum);
-        gridView.setAdapter(tablesAdapter);
+
+        tableNum=0;
+
+        database = FirebaseDatabase.getInstance();
+        db = database.getReference();
+        refresh_btn = (Button)view.findViewById(R.id.refresh_button);
+
+        refresh_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(LoginActivity.restaurantManager.getTables()!=null)
+                    tableNum=LoginActivity.restaurantManager.getTables().size();
+                TableAdapter tablesAdapter = new TableAdapter(getActivity(), tableNum);
+                gridView.setAdapter(tablesAdapter);
+
+            }
+        });
+
+
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<ArrayList<Table>> table_type = new GenericTypeIndicator<ArrayList<Table>>() {};
+                RestaurantManager.tables = dataSnapshot.child("Tables").getValue(table_type);
+                refresh_btn.callOnClick();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
 
         return view;
-
     }
+
 
     
     class TableAdapter extends BaseAdapter {

@@ -6,6 +6,7 @@ public class Table {
     private int number;
     private int numOfSeats;
     private boolean empty;
+    private boolean isClubMember;
 
     public Table() {
 
@@ -15,6 +16,7 @@ public class Table {
         this.number = number;
         this.numOfSeats = numOfSeats;
         this.empty = true;
+        this.isClubMember = false;
     }
 
     public int getNumber() {
@@ -27,6 +29,14 @@ public class Table {
 
     public boolean isEmpty(){
         return empty;
+    }
+
+    public boolean isClubMember() {
+        return isClubMember;
+    }
+
+    public void setClubMember(boolean clubMember) {
+        isClubMember = clubMember;
     }
 
     public void setIsEmpty(boolean isEmpty){
