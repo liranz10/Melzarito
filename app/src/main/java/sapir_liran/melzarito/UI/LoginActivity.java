@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().subscribeToTopic("orders");
         if (auth.getCurrentUser() != null) {
             getLoggedinUserFromDB(auth.getCurrentUser().getUid());
-
+            NotificationListener listener = new NotificationListener(this);
             startActivity(new Intent(LoginActivity.this, ChooseEmployeeRoleActivity.class));
             finish();
         }

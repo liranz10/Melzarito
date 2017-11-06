@@ -53,7 +53,7 @@ public class KitchenOpenOrdersFragment extends Fragment {
     FirebaseDatabase database;
     DatabaseReference db;
     private Button refresh_btn;
-
+    private int notificationCounter=0;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.kitchen_open_orders_fragment, container, false);
@@ -62,6 +62,18 @@ public class KitchenOpenOrdersFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         db = database.getReference();
 
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                notificationCounter =(int)((long) dataSnapshot.child("NotificationCounter").getValue());
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         refresh_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,7 +272,7 @@ public class KitchenOpenOrdersFragment extends Fragment {
             btns_row.addView(new ReadyButton(getContext()), new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
             btns_row.addView(new OnPrepButton(getContext()), new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
             btns_row.addView(new NotReadyButton(getContext()), new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-            btns_row.addView(new ServiceButton(getContext()), new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+            btns_row.addView(new ServiceButton(getContext(),openOrders.get(position).getId(),openOrders.get(position).getTableNumber()), new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
 
             order_layout.addView(btns_row);
 
@@ -333,18 +345,26 @@ public class KitchenOpenOrdersFragment extends Fragment {
         }
     }
         class ServiceButton extends AppCompatButton {
+            private int orderId;
+            private int tableNumber;
             private OnClickListener listener = new OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
 
 
+                db.child("Notifications").child(orderId+"").child("orderId").setValue(orderId);
+                db.child("Notifications").child(orderId+"").child("tableNumber").setValue(tableNumber);
+                db.child("Notifications").child(orderId+"").child("invoked").setValue(false);
+
+
                 }
             };
 
-            public ServiceButton(Context context) {
+            public ServiceButton(Context context,int orderId,int tableNumber) {
                 super(context);
-
+                this.orderId=orderId;
+                this.tableNumber=tableNumber;
                 Drawable img = context.getDrawable(R.drawable.servicebell);
                 setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
                 TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,

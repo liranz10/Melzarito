@@ -13,8 +13,12 @@
             android:title="@string/title_fragment_update_stocks" />
         <item
             android:id="@+id/update_specials"
-            android:icon="@drawable/club"
+            android:icon="@drawable/special"
             android:title="@string/title_fragment_update_specials" />
+        <item
+            android:id="@+id/choose_employee_role"
+            android:icon="@drawable/pick"
+            android:title="@string/waiter_chef_activity" />
         <item
             android:id="@+id/logout_menu"
             android:icon="@drawable/logout"

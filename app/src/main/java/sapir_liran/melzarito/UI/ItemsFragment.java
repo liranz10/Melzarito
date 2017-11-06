@@ -50,8 +50,8 @@ public class ItemsFragment extends android.app.Fragment {
             layout.removeAllViews();
         final Menu menu = LoginActivity.restaurantManager.getMenu();
         for(MenuItem item : menu.getItems()){
-            if (item != null && item.getCategory() == category)
-            {
+            if(item!=null){
+            if (item.getCategory() == category) {
 
                 TableRow tr = new TableRow(getActivity());
                 tr.setGravity(Gravity.CENTER);
@@ -76,13 +76,13 @@ public class ItemsFragment extends android.app.Fragment {
                 quantity.setText("0");
                 tr.setBackgroundResource(R.drawable.buttonshape);
                 pls_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int curr = Integer.parseInt(quantity.getText().toString());
-                    curr++;
-                    quantity.setText(curr + "");
-                }
-            });
+                    @Override
+                    public void onClick(View v) {
+                        int curr = Integer.parseInt(quantity.getText().toString());
+                        curr++;
+                        quantity.setText(curr + "");
+                    }
+                });
 
                 minus_button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -96,16 +96,15 @@ public class ItemsFragment extends android.app.Fragment {
                     }
                 });
 
-                item_view.setPadding(60,0,30,0);
-                quantity.setPadding(10,0,10,0);
+                item_view.setPadding(60, 0, 30, 0);
+                quantity.setPadding(10, 0, 10, 0);
                 quantity.setId(item.getId());
                 tr.addView(item_view);
                 tr.addView(pls_button);
                 tr.addView(quantity);
                 tr.addView(minus_button);
                 layout.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
-
-//                layout.addView(tr);
+            }
             }
 
         }

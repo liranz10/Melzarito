@@ -20,9 +20,9 @@ import sapir_liran.melzarito.R;
 public class KitchenMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth auth;
-    private TablesFragment tablesFragment;
     private KitchenOpenOrdersFragment openOrdersFragment;
-    private ClubMembersFragment clubMembersFragment;
+    private UpdateStockFragment updateStockFragment;
+    private AddSpecialFragment addSpecialFragment;
     private FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +30,16 @@ public class KitchenMainActivity extends AppCompatActivity
         setContentView(R.layout.activity_kitchen_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        fragmentManager = getFragmentManager();
 
         auth = FirebaseAuth.getInstance();
-
+        if(openOrdersFragment ==null){
+            openOrdersFragment=new KitchenOpenOrdersFragment();
+        }
+        setTitle(R.string.title_fragment_openorders);
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame_kitchen, openOrdersFragment)
+                .commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_kitchen_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -89,6 +96,7 @@ public class KitchenMainActivity extends AppCompatActivity
         int id = item.getItemId();
         fragmentManager = getFragmentManager();
 
+
       if (id == R.id.kitchen_open_order) {
             if(openOrdersFragment ==null){
                 openOrdersFragment=new KitchenOpenOrdersFragment();
@@ -99,19 +107,30 @@ public class KitchenMainActivity extends AppCompatActivity
                     .replace(R.id.content_frame_kitchen, openOrdersFragment)
                     .commit();
 
-        } else if (id == R.id.club) {
-            if(clubMembersFragment ==null){
-                clubMembersFragment=new ClubMembersFragment();
+        }
+        else if (id == R.id.update_stocks) {
+            if(updateStockFragment ==null){
+                updateStockFragment=new UpdateStockFragment();
             }
-            setTitle(R.string.title_fragment_club);
+            setTitle(R.string.title_update_stocks);
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame_kitchen, clubMembersFragment)
+                    .replace(R.id.content_frame_kitchen, updateStockFragment)
                     .commit();
-
-        } else if (id == R.id.choose_employee_role){
+        }
+      else if (id == R.id.update_specials) {
+          if(addSpecialFragment ==null){
+              addSpecialFragment=new AddSpecialFragment();
+          }
+          setTitle(R.string.title_fragment_add_new_special);
+          fragmentManager.beginTransaction()
+                  .replace(R.id.content_frame_kitchen, addSpecialFragment)
+                  .commit();
+      }
+      else if (id == R.id.choose_employee_role){
             finish();
 
-        }else if (id == R.id.logout_menu) {
+        }
+        else if (id == R.id.logout_menu) {
             auth.signOut();
             startActivity(new Intent(KitchenMainActivity.this, LoginActivity.class));
             finish();

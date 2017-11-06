@@ -32,10 +32,13 @@
     <string name="title_fragment_tables">שולחנות</string>
     <string name="title_fragment_openorders">הזמנות פתוחות</string>
     <string name="title_fragment_club">מועדון לקוחות</string>
+    <string name="title_update_stocks">עדכון חוסרים</string>
+
     <string name="title_fragment_add_new_club_member">הוספת חבר מועדון</string>
     <string name="title_fragment_search_club_member">חיפוש חבר מועדון</string>
     <string name="title_fragment_table_total_order">ההזמנות של השולחן</string>
     <string name="title_fragment_menu">תפריט</string>
+    <string name="title_fragment_add_new_special">הוספת ספיישל לתפריט</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -55,4 +58,6 @@
     <string name="side_dishes_btn">תוספות</string>
     <string name="main_course_btn">מנות עיקריות</string>
     <string name="appetizers_btn">מנות ראשונות</string>
+    <string name="special_name">שם המנה</string>
+
 </resources>
