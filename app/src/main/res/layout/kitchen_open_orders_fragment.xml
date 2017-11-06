@@ -4,40 +4,20 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-
     <Button
+        android:id="@+id/refresh_button"
+        android:text="רענן"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="מוכן"
-        android:layout_gravity="center"
-
-        android:background="#89ff5b"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="בהכנה"
-        android:layout_gravity="center"
-        android:background="#ffe855"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="לא מוכן"
-        android:layout_gravity="center"
-        android:background="#cecbb7"/>
-    </LinearLayout>
+        android:layout_height="wrap_content" />
 <GridView
     android:id="@+id/kitchen_open_orders_layout"
     android:layout_gravity="center"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:numColumns="2"
-    android:horizontalSpacing="10sp"
-    android:verticalSpacing="20sp"
+    android:layout_height="wrap_content"
+    android:numColumns="3"
+    android:stretchMode="columnWidth"
+    android:horizontalSpacing="40sp"
+    android:verticalSpacing="60sp"
     android:padding="20sp">
 
 
