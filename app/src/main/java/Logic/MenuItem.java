@@ -1,7 +1,5 @@
 package Logic;
 
-import java.util.Date;
-
 
 public class MenuItem {
     private int id;
@@ -41,8 +39,6 @@ public class MenuItem {
     public void setCategory(int category) {
         this.category = category;
     }
-
-
 
 
 }

@@ -8,7 +8,6 @@ public class OrderItem extends MenuItem {
 
     private int orderItemID;
     private Date lastModifiedTime;
-    private ArrayList<String> notes;
 
     public OrderItem() {
     }
@@ -17,7 +16,6 @@ public class OrderItem extends MenuItem {
         super(id, name, category);
         this.orderItemID = orderItemID;
         this.lastModifiedTime = lastModifiedTime;
-        this.notes = notes;
     }
 
     public int getOrderItemID() {
@@ -34,14 +32,5 @@ public class OrderItem extends MenuItem {
 
     public void setLastModifiedTime(Date lastModifiedTime) {
         this.lastModifiedTime = lastModifiedTime;
-    }
-
-
-    public ArrayList<String> getNotes() {
-        return notes;
-    }
-
-    public void setNotes(ArrayList<String> notes) {
-        this.notes = notes;
     }
 }

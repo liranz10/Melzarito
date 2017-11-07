@@ -6,7 +6,7 @@ import java.util.Date;
 public class Customer {
     private int id;
     private String name;
-    private String address; //--sapir: why do we need this?
+    private String address;
     private Date dateOfBirth;
     private int phoneNumber;
 
@@ -16,6 +16,9 @@ public class Customer {
         this.address = address;
         this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
+    }
+
+    public Customer() {
     }
 
     public int getId() {

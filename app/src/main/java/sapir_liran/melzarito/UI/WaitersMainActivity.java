@@ -22,22 +22,20 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
 
-public class WaitersMainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class WaitersMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth auth;
     private TablesFragment tablesFragment;
     private OpenOrdersFragment openOrdersFragment;
     private ClubMembersFragment clubMembersFragment;
     private FragmentManager fragmentManager;
-    // public static RestaurantManager restaurantManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiters_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -46,16 +44,15 @@ public class WaitersMainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_waiters_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //restaurantManager = new RestaurantManager();
-        //Deafult - Tables
+
         fragmentManager = getFragmentManager();
-        if(tablesFragment ==null){
-            tablesFragment=new TablesFragment();
+        if (tablesFragment == null) {
+            tablesFragment = new TablesFragment();
         }
 
         MenuItem item = new MenuItem() {
@@ -265,12 +262,7 @@ public class WaitersMainActivity extends AppCompatActivity
             }
         };
         onNavigationItemSelected(item);
-//        setTitle(R.string.title_fragment_tables);
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.content_frame, tablesFragment).addToBackStack("")
-//                .commit();
     }
-
 
 
     @Override
@@ -278,20 +270,11 @@ public class WaitersMainActivity extends AppCompatActivity
 
         int count = getSupportFragmentManager().getBackStackEntryCount();
 
-        if (count > 0){
+        if (count > 0) {
             fragmentManager.popBackStack();
-        }
-        else{
+        } else {
             super.onBackPressed();
         }
-
-//        if (count == 0) {
-//            fragmentManager.popBackStack();
-//        }
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_waiters_layout);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        }
     }
 
     @Override
@@ -323,8 +306,8 @@ public class WaitersMainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.tables) {
-            if(tablesFragment ==null){
-                tablesFragment=new TablesFragment();
+            if (tablesFragment == null) {
+                tablesFragment = new TablesFragment();
             }
             setTitle(R.string.title_fragment_tables);
             fragmentManager.beginTransaction()
@@ -332,8 +315,8 @@ public class WaitersMainActivity extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.open_orders) {
-            if(openOrdersFragment ==null){
-                openOrdersFragment=new OpenOrdersFragment();
+            if (openOrdersFragment == null) {
+                openOrdersFragment = new OpenOrdersFragment();
 
             }
             setTitle(R.string.title_fragment_openorders);
@@ -343,18 +326,18 @@ public class WaitersMainActivity extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.club) {
-            if(clubMembersFragment ==null){
-                clubMembersFragment=new ClubMembersFragment();
+            if (clubMembersFragment == null) {
+                clubMembersFragment = new ClubMembersFragment();
             }
             setTitle(R.string.title_fragment_club);
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, clubMembersFragment)
                     .commit();
 
-        } else if (id == R.id.choose_employee_role){
+        } else if (id == R.id.choose_employee_role) {
             finish();
 
-        }else if (id == R.id.logout_menu) {
+        } else if (id == R.id.logout_menu) {
             auth.signOut();
             startActivity(new Intent(WaitersMainActivity.this, LoginActivity.class));
             finish();
@@ -365,8 +348,4 @@ public class WaitersMainActivity extends AppCompatActivity
         return true;
     }
 
-
-    public OpenOrdersFragment getOpenOrdersFragment() {
-        return openOrdersFragment;
-    }
 }

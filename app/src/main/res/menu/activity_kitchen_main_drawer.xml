@@ -8,7 +8,7 @@
             android:icon="@drawable/openorders"
             android:title="@string/title_fragment_openorders" />
         <item
-            android:id="@+id/update_stocks"
+            android:id="@+id/update_stock"
             android:icon="@drawable/outofstock"
             android:title="@string/title_fragment_update_stocks" />
         <item

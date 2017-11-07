@@ -4,34 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
-import com.google.firebase.messaging.*;
-import com.google.firebase.messaging.FirebaseMessagingService;
 
 import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
-import sapir_liran.melzarito.UI.ResetPasswordActivity;
-import sapir_liran.melzarito.UI.SignupActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,11 +29,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
-
-    String token;
-    FirebaseDatabase database ;
-    DatabaseReference db ;
-    public static RestaurantManager restaurantManager = new RestaurantManager();
+    private String token;
+    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,21 +38,18 @@ public class LoginActivity extends AppCompatActivity {
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
-
+        //notifications from firebase console services
         MelzaritoFirebaseInstanceIDService tokenizer = new MelzaritoFirebaseInstanceIDService();
         MelzaritoFirebaseMessagingService messagingService = new MelzaritoFirebaseMessagingService();
-
         token = FirebaseInstanceId.getInstance().getToken();
+
         if (auth.getCurrentUser() != null) {
+            //start NotificationListener
             NotificationListener listener = new NotificationListener(this);
             startActivity(new Intent(LoginActivity.this, ChooseEmployeeRoleActivity.class));
             finish();
         }
-
-
         setContentView(R.layout.activity_login);
-
-
 
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
@@ -74,10 +58,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
 
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
 
-              btnSignup.setOnClickListener(new View.OnClickListener() {
+        btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, SignupActivity.class));
@@ -126,7 +108,6 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
-
                                     Intent intent = new Intent(LoginActivity.this, ChooseEmployeeRoleActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -137,17 +118,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
-    }
-    class MyInstanceIDListenerService extends FirebaseInstanceIdService {
-
+     class MelzaritoFirebaseInstanceIDService extends FirebaseInstanceIdService {
         @Override
         public void onTokenRefresh() {
-            // Get updated InstanceID token.
-            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-
+            token= FirebaseInstanceId.getInstance().getToken();
         }
-
     }
+}
+
+
 
 

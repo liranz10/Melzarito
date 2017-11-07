@@ -1,13 +1,10 @@
-package sapir_liran.melzarito.UI;
+package Logic;
 
-/**
- * Created by Liran on 04/11/2017.
- */
 
 public class SpecialNotification {
     private int id;
     private String name;
-    private boolean invoked=false;
+    private boolean invoked = false;
 
     public SpecialNotification() {
     }

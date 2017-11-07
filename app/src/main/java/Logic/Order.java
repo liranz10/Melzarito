@@ -9,24 +9,24 @@ public class Order {
     private int id;
     private int tableNumber;
     private String waiterName;
-    private String  cookerName;
+    private String cookerName;
     private Date lastModifiedTime;
-    private int lastModifiedBy; //--sapir: why do we need this?
+    private int lastModifiedBy;
     private boolean open;
     private int status;//1 not ready 2 onPrep 3 ready
-    private ArrayList<OrderItem> orderItems = new ArrayList<>(); //--sapir: add this
+    private ArrayList<OrderItem> orderItems = new ArrayList<>();
 
     public Order() {
     }
 
-    public Order(int id, int tableNumber, String waiterName, Date lastModifiedTime, int lastModifiedBy, boolean open,int status) {
+    public Order(int id, int tableNumber, String waiterName, Date lastModifiedTime, int lastModifiedBy, boolean open, int status) {
         this.id = id;
         this.tableNumber = tableNumber;
         this.waiterName = waiterName;
         this.lastModifiedTime = lastModifiedTime;
         this.lastModifiedBy = lastModifiedBy;
         this.open = open;
-        this.status=status;
+        this.status = status;
     }
 
     public int getId() {

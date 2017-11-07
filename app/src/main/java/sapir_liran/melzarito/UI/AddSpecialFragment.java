@@ -9,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
 
 public class AddSpecialFragment extends Fragment {
 
-    View view;
+    private View view;
+    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -25,7 +28,7 @@ public class AddSpecialFragment extends Fragment {
             public void onClick(View v) {
                 EditText special_name =(EditText)view.findViewById(R.id.special_name);
                 String name = special_name.getText().toString();
-                LoginActivity.restaurantManager.addNewSpecial(name);
+                restaurantManager.addNewSpecial(name);
             }
         });
         return view;

@@ -20,9 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
-
-import static sapir_liran.melzarito.R.id.new_order;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -30,8 +29,7 @@ public class SignupActivity extends AppCompatActivity {
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-    FirebaseDatabase database ;
-    DatabaseReference db ;
+    RestaurantManager restaurantManager = RestaurantManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,17 +68,17 @@ public class SignupActivity extends AppCompatActivity {
                 String password = inputPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.enter_email, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.enter_password, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (password.length() < 6) {
-                    Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.enter_more_then_6_characters, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -90,35 +88,32 @@ public class SignupActivity extends AppCompatActivity {
                         .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(SignupActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, getString(R.string.user_created) + task.isSuccessful(), Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
+                                    Toast.makeText(SignupActivity.this, getString(R.string.authentication_faild) + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-//                                    startActivity(new Intent(SignupActivity.this, lo.class));
-//                                    finish();
-                                    database = FirebaseDatabase.getInstance();
-                                    db = database.getReference();
-                                    db.keepSynced(true);
+
+
                                     //get name
                                     EditText inputName = (EditText) findViewById(R.id.name_text);
                                     String name = inputName.getText().toString();
                                     //get rule
-                                    RadioGroup inputRole =  (RadioGroup)findViewById(R.id.select_role_radio);
+                                    RadioGroup inputRole = (RadioGroup) findViewById(R.id.select_role_radio);
                                     int radioButtonID = inputRole.getCheckedRadioButtonId();
                                     View radioButton = inputRole.findViewById(radioButtonID);
                                     int idx = inputRole.indexOfChild(radioButton);
-                                    RadioButton r = (RadioButton)  inputRole.getChildAt(idx);
+                                    RadioButton r = (RadioButton) inputRole.getChildAt(idx);
                                     String role = r.getText().toString();
 
                                     //add to DB
-                                    db.child("Users").child(auth.getCurrentUser().getUid()).child("role").setValue(role);
-                                    db.child("Users").child(auth.getCurrentUser().getUid()).child("name").setValue(name);
-
+                                    restaurantManager.writeUser(role, name, auth.getCurrentUser().getUid());
+                                    startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                                    finish();
                                 }
                             }
                         });

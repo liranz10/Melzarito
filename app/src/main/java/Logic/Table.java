@@ -27,7 +27,7 @@ public class Table {
         return numOfSeats;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return empty;
     }
 
@@ -39,7 +39,7 @@ public class Table {
         isClubMember = clubMember;
     }
 
-    public void setIsEmpty(boolean isEmpty){
+    public void setIsEmpty(boolean isEmpty) {
         this.empty = isEmpty;
     }
 }

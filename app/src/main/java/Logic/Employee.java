@@ -24,7 +24,7 @@ public class Employee {
         return role;
     }
 
-    public void setRole(String role){
+    public void setRole(String role) {
         this.role = role;
-    } //--sapir: add this
+    }
 }

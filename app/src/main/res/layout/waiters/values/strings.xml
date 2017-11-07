@@ -2,4 +2,18 @@
 <resources>
     <string name="title_fragment_update_stocks">עדכון חוסרים</string>
     <string name="title_fragment_update_specials">עדכון ספיישלים</string>
+    <string name="on_prep_btn_txt">בהכנה</string>
+    <string name="not_ready_btn_txt">לא מוכן</string>
+    <string name="new_notification_task">התראה חדשה</string>
+    <string name="order_ready_txt_ntf">הזמנה מוכנה</string>
+    <string name="item_soldout">פריט אזל בתפריט</string>
+    <string name="enter_email_address">הכנס כתובת אימייל</string>
+    <string name="reset_password_txt">נשלח מייל לאתחול הסיסמא</string>
+    <string name="cannot_send_reset_email">מייל אתחול סיסמא לא נשלח</string>
+    <string name="enter_email">הזן כתובת מייל</string>
+    <string name="enter_password">הכנס סיסמא</string>
+    <string name="enter_more_then_6_characters">הסיסמא קצרה מדי, הכנס מינימום 6 תוים</string>
+    <string name="user_created">המשתמש נוצר</string>
+    <string name="authentication_faild">ההזדהות נכשלה</string>
+    <string name="out_of_stock_btn">אזל מהמלאי</string>
 </resources>

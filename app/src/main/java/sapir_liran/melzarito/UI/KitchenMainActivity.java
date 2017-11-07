@@ -14,16 +14,15 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
 
-public class KitchenMainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class KitchenMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth auth;
     private KitchenOpenOrdersFragment openOrdersFragment;
     private UpdateStockFragment updateStockFragment;
     private AddSpecialFragment addSpecialFragment;
     private FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,33 +30,30 @@ public class KitchenMainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         fragmentManager = getFragmentManager();
-
-        auth = FirebaseAuth.getInstance();
-        if(openOrdersFragment ==null){
-            openOrdersFragment=new KitchenOpenOrdersFragment();
+        //default screen
+        if (openOrdersFragment == null) {
+            openOrdersFragment = new KitchenOpenOrdersFragment();
+            setTitle(R.string.title_fragment_openorders);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame_kitchen, openOrdersFragment)
+                    .commit();
         }
-        setTitle(R.string.title_fragment_openorders);
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame_kitchen, openOrdersFragment)
-                .commit();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_kitchen_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
     }
 
 
-
+    //return back fragment
     @Override
     public void onBackPressed() {
-
         int count = getSupportFragmentManager().getBackStackEntryCount();
-
         if (count == 0) {
             fragmentManager.popBackStack();
         }
@@ -76,16 +72,10 @@ public class KitchenMainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -96,40 +86,42 @@ public class KitchenMainActivity extends AppCompatActivity
         int id = item.getItemId();
         fragmentManager = getFragmentManager();
 
-
-      if (id == R.id.kitchen_open_order) {
-            if(openOrdersFragment ==null){
-                openOrdersFragment=new KitchenOpenOrdersFragment();
+        //kitchen open orders screen
+        if (id == R.id.kitchen_open_order) {
+            if (openOrdersFragment == null) {
+                openOrdersFragment = new KitchenOpenOrdersFragment();
             }
             setTitle(R.string.title_fragment_openorders);
-
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame_kitchen, openOrdersFragment)
                     .commit();
-
         }
-        else if (id == R.id.update_stocks) {
-            if(updateStockFragment ==null){
-                updateStockFragment=new UpdateStockFragment();
+        //update stock screen
+        else if (id == R.id.update_stock) {
+            if (updateStockFragment == null) {
+                updateStockFragment = new UpdateStockFragment();
             }
             setTitle(R.string.title_update_stocks);
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame_kitchen, updateStockFragment)
                     .commit();
         }
-      else if (id == R.id.update_specials) {
-          if(addSpecialFragment ==null){
-              addSpecialFragment=new AddSpecialFragment();
-          }
-          setTitle(R.string.title_fragment_add_new_special);
-          fragmentManager.beginTransaction()
-                  .replace(R.id.content_frame_kitchen, addSpecialFragment)
-                  .commit();
-      }
-      else if (id == R.id.choose_employee_role){
+        //update specials screen
+        else if (id == R.id.update_specials) {
+            if (addSpecialFragment == null) {
+                addSpecialFragment = new AddSpecialFragment();
+            }
+            setTitle(R.string.title_fragment_add_new_special);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame_kitchen, addSpecialFragment)
+                    .commit();
+        }
+        //choose role screen
+        else if (id == R.id.choose_employee_role) {
             finish();
 
         }
+        //logout
         else if (id == R.id.logout_menu) {
             auth.signOut();
             startActivity(new Intent(KitchenMainActivity.this, LoginActivity.class));
