@@ -54,8 +54,8 @@ public class NotificationListener {
                                 if (!notification.isInvoked()) {
                                     //send notification
                                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                                            .setContentTitle(context.getString(R.string.order_ready_txt_ntf))
-                                            .setContentText(context.getString(R.string.order_num) + notification.getOrderId() + context.getString(R.string.table_num) + notification.getTableNumber())
+                                            .setContentTitle(context.getResources().getString(R.string.order_ready_txt_ntf))
+                                            .setContentText(context.getResources().getString(R.string.order_num) + notification.getOrderId() + context.getResources().getString(R.string.table_num) + notification.getTableNumber())
                                             .setSmallIcon(R.drawable.servicebell)
                                             .setSound(Uri.parse(("android.resource://" + context.getPackageName() + "/raw/bell")));
 
@@ -96,7 +96,7 @@ public class NotificationListener {
                                 if (!notification.isInvoked()) {
                                     //send notification
                                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                                            .setContentTitle(context.getString(R.string.item_soldout))
+                                            .setContentTitle(context.getResources().getString(R.string.item_soldout))
                                             .setContentText(notification.getItemName())
                                             .setSmallIcon(R.drawable.outofstock)
                                             .setSound(Uri.parse(("android.resource://" + context.getPackageName() + "/raw/out")));
@@ -142,7 +142,7 @@ public class NotificationListener {
                                 if (!notification.isInvoked()) {
                                     //send
                                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                                            .setContentTitle(context.getString(R.string.new_special_added_ntf))
+                                            .setContentTitle(context.getResources().getString(R.string.new_special_added_ntf))
                                             .setContentText(notification.getName())
                                             .setSmallIcon(R.drawable.special)
                                             .setSound(Uri.parse(("android.resource://" + context.getPackageName() + "/raw/special")));

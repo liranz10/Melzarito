@@ -3,22 +3,21 @@ package Logic;
 
 import java.util.Date;
 
-public class Customer {
+public class ClubMember {
     private int id;
     private String name;
     private String address;
-    private Date dateOfBirth;
     private int phoneNumber;
 
-    public Customer(int id, String name, String address, Date dateOfBirth, int phoneNumber) {
+    public ClubMember(int id, String name, String address, int phoneNumber) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.dateOfBirth = dateOfBirth;
+
         this.phoneNumber = phoneNumber;
     }
 
-    public Customer() {
+    public ClubMember() {
     }
 
     public int getId() {
@@ -43,14 +42,6 @@ public class Customer {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
     }
 
     public int getPhoneNumber() {

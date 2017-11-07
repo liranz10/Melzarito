@@ -29,7 +29,7 @@ public class OrderFragment extends android.app.Fragment {
             @Override
             public void onClick(View v) {
                 fragment.setCategoryName((String) appetizers_btn.getText());
-                fragment.setCategory(R.integer.appetizers_menu);
+                fragment.setCategory(view.getContext().getResources().getInteger(R.integer.appetizers_menu));
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, fragment).addToBackStack(OrderFragment.class.getName())
                         .commit();
@@ -43,7 +43,7 @@ public class OrderFragment extends android.app.Fragment {
             @Override
             public void onClick(View v) {
                 fragment.setCategoryName((String) main_course_btn.getText());
-                fragment.setCategory(R.integer.main_course_menu);
+                fragment.setCategory(view.getContext().getResources().getInteger(R.integer.main_course_menu));
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, fragment).addToBackStack(OrderFragment.class.getName())
                         .commit();
@@ -57,7 +57,7 @@ public class OrderFragment extends android.app.Fragment {
             @Override
             public void onClick(View v) {
                 fragment.setCategoryName((String) side_dishes_btn.getText());
-                fragment.setCategory(R.integer.side_dishes_menu);
+                fragment.setCategory(view.getContext().getResources().getInteger(R.integer.side_dishes_menu));
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, fragment).addToBackStack(OrderFragment.class.getName())
                         .commit();
@@ -71,7 +71,7 @@ public class OrderFragment extends android.app.Fragment {
             @Override
             public void onClick(View v) {
                 fragment.setCategoryName((String) specials_btn.getText());
-                fragment.setCategory(R.integer.specials_menu);
+                fragment.setCategory(view.getContext().getResources().getInteger(R.integer.specials_menu));
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, fragment).addToBackStack(OrderFragment.class.getName())
                         .commit();
@@ -85,7 +85,7 @@ public class OrderFragment extends android.app.Fragment {
             @Override
             public void onClick(View v) {
                 fragment.setCategoryName((String) drinks_btn.getText());
-                fragment.setCategory(R.integer.drinks_menu);
+                fragment.setCategory(view.getContext().getResources().getInteger(R.integer.drinks_menu));
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, fragment).addToBackStack(OrderFragment.class.getName())
                         .commit();
@@ -99,7 +99,7 @@ public class OrderFragment extends android.app.Fragment {
             @Override
             public void onClick(View v) {
                 fragment.setCategoryName((String) deserts_btn.getText());
-                fragment.setCategory(R.integer.deserts_menu);
+                fragment.setCategory(view.getContext().getResources().getInteger(R.integer.deserts_menu));
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, fragment).addToBackStack(OrderFragment.class.getName())
                         .commit();

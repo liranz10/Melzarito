@@ -322,7 +322,7 @@ public class WaitersMainActivity extends AppCompatActivity implements Navigation
             setTitle(R.string.title_fragment_openorders);
 
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, openOrdersFragment)
+                    .replace(R.id.content_frame, openOrdersFragment).addToBackStack(WaitersMainActivity.class.getName())
                     .commit();
 
         } else if (id == R.id.club) {

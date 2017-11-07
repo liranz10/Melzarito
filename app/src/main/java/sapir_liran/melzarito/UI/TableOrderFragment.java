@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import Logic.Order;
 import Logic.OrderItem;
 import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class TableOrderFragment extends android.app.Fragment {
     private View view;
@@ -113,23 +116,30 @@ public class TableOrderFragment extends android.app.Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            TableLayout tableLayout = new TableLayout(mContext);
+            tableLayout.setColumnStretchable(1,true);
             if (ordersList.get(position).getTableNumber() == tableNumber) {
-                TableLayout tableLayout = new TableLayout(mContext);
                 TableLayout.LayoutParams tableLayoutParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
                 tableLayoutParams.setMargins(0, 20, 50, 0);
                 for (OrderItem orderItem : ordersList.get(position).getOrderItems()) {
                     TableRow tr = new TableRow(view.getContext());
-                    TextView tv = new TextView(view.getContext());
-                    tv.setText(orderItem.getName());
-                    tv.setTextSize(20);
-                    tr.addView(tv);
+                    TextView item_name = new TextView(view.getContext());
+                    item_name.setText(orderItem.getName());
+                    item_name.setTextSize(20);
+                    //item_name.setPadding(400,0,0,0);
+                    TextView price = new TextView(view.getContext());
+                    price.setText(orderItem.getPrice()+"");
+                    price.setTextSize(20);
+
+//                    item_name.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 0.7f));
+//                    price.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 0.3f));
+
+                    tr.addView(item_name);
+                    tr.addView(price);
                     tableLayout.addView(tr, tableLayoutParams);
                 }
-                return tableLayout;
-            } else {
-                TextView nothing = new TextView(getContext());
-                return nothing;
             }
+            return tableLayout;
         }
 
     }

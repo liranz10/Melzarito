@@ -110,12 +110,13 @@ public class RestaurantManager {
 
     public void createOrderItemAndWriteToDB(MenuItem item, int category) {
 
-        OrderItem new_item = new OrderItem(item.getId(), item.getName(), category, orderItemIdCounter, new Date(), new ArrayList<String>());
+        OrderItem new_item = new OrderItem(item.getId(), item.getName(), category, orderItemIdCounter, new Date(), item.getPrice());
 
         db.child("Orders").child(orderIdCounter + "").child("Order items").child(orderItemIdCounter + "").child("category").setValue(new_item.getCategory());
         db.child("Orders").child(orderIdCounter + "").child("Order items").child(orderItemIdCounter + "").child("MenuItemId").setValue(new_item.getId());
         db.child("Orders").child(orderIdCounter + "").child("Order items").child(orderItemIdCounter + "").child("lastModifiedTime").setValue(new_item.getLastModifiedTime());
         db.child("Orders").child(orderIdCounter + "").child("Order items").child(orderItemIdCounter + "").child("name").setValue(new_item.getName());
+        db.child("Orders").child(orderIdCounter + "").child("Order items").child(orderItemIdCounter + "").child("price").setValue(new_item.getPrice());
 
         orderItemIdCounter++;
 
@@ -151,10 +152,8 @@ public class RestaurantManager {
     }
 
     public void getLoggedInUserFromDB(final String uid) {
-        database = FirebaseDatabase.getInstance();
-        db = database.getReference("Users");
-        db.keepSynced(true);
-        db.addValueEventListener(new ValueEventListener() {
+
+        database.getReference("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 loggedInUserName = (String) dataSnapshot.child(uid).child("name").getValue();
@@ -224,7 +223,8 @@ public class RestaurantManager {
                                         int tempCategory = (int) ((long) dataSnapshot.child("category").getValue());
                                         int tempMenuId = (int) ((long) dataSnapshot.child("MenuItemId").getValue());
                                         int orderItem_id = Integer.parseInt(dataSnapshot.getKey());
-                                        curr_order.addOrderItem(new OrderItem(tempMenuId, tempName, tempCategory, orderItem_id, tempLastModified, new ArrayList<String>()));
+                                        double price = Double.parseDouble(dataSnapshot.child("price").getValue().toString());
+                                        curr_order.addOrderItem(new OrderItem(tempMenuId, tempName, tempCategory, orderItem_id, tempLastModified,price));
                                     } catch (NullPointerException ex) {
                                     }
 
@@ -301,8 +301,8 @@ public class RestaurantManager {
         });
     }
 
-    public void writeClubMember(Customer customer) {
-        db.child("ClubMembers").child(customer.getId() + "").setValue(customer);
+    public void writeClubMember(ClubMember clubMember) {
+        db.child("ClubMembers").child(clubMember.getId() + "").setValue(clubMember);
     }
 
     public void setClubMemberToTable(final int id, final int tableNum, final Context context) {
@@ -311,11 +311,11 @@ public class RestaurantManager {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<Customer> customer_type = new GenericTypeIndicator<Customer>() {
+                GenericTypeIndicator<ClubMember> customer_type = new GenericTypeIndicator<ClubMember>() {
                 };
                 try {
-                    Customer customer = dataSnapshot.child(id + "").getValue(customer_type);
-                    if (customer != null) {
+                    ClubMember clubMember = dataSnapshot.child(id + "").getValue(customer_type);
+                    if (clubMember != null) {
                         for (int i = 0; i < tables.size(); i++) {
                             if (tables.get(i).getNumber() == tableNum) {
                                 tables.get(i).setClubMember(true);

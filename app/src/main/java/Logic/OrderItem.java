@@ -12,8 +12,8 @@ public class OrderItem extends MenuItem {
     public OrderItem() {
     }
 
-    public OrderItem(int id, String name, int category, int orderItemID, Date lastModifiedTime, ArrayList<String> notes) {
-        super(id, name, category);
+    public OrderItem(int id, String name, int category, int orderItemID, Date lastModifiedTime, double price) {
+        super(id, name, category, price);
         this.orderItemID = orderItemID;
         this.lastModifiedTime = lastModifiedTime;
     }
