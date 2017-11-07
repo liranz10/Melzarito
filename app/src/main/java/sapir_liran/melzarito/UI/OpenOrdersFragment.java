@@ -50,13 +50,11 @@ public class OpenOrdersFragment extends Fragment {
                 if (openOrders != null)
                     openOrdersNum = openOrders.size();
                 ordersAdapter = new OpenOrdersAdapter(getActivity(), openOrdersNum);
-
                 fragment_layout.setAdapter(ordersAdapter);
             }
         });
 
 
-        restaurantManager.loadAllOpenOrders();
         refresh_btn.callOnClick();
 
 

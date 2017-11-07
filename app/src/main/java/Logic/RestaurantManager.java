@@ -173,8 +173,10 @@ public class RestaurantManager {
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                notificationCounter = (int) ((long) dataSnapshot.child("NotificationCounter").getValue());
-            }
+                try {
+                    notificationCounter = (int) ((long) dataSnapshot.child("NotificationCounter").getValue());
+                }catch (NullPointerException e){}
+           }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {

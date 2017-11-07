@@ -50,7 +50,6 @@ public class TablesFragment extends android.app.Fragment {
         });
 
         //load tables from DB
-        restaurantManager.loadTables();
         refresh_btn.callOnClick();
 
         return view;
