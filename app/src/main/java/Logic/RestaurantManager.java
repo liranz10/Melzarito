@@ -19,6 +19,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import sapir_liran.melzarito.UI.NotificationListener;
+
+//import static sapir_liran.melzarito.UI.NotificationListener.setSendToWaiters;
+
 //Handles all restaurant actions and DB read/write
 public class RestaurantManager {
     private static RestaurantManager singletonRestaurantManager = null;
@@ -31,7 +35,6 @@ public class RestaurantManager {
     private HashMap<Integer, Order> orders = new LinkedHashMap<>();
     private String loggedInUserName;
     private String loggedInUserRole;
-    private int notificationCounter = 0;
 
     //init db connection
     private RestaurantManager() {
@@ -42,6 +45,8 @@ public class RestaurantManager {
         loadTables();
         loadManagerCounters();
         loadAllOpenOrders();
+
+
     }
 
     public static RestaurantManager getInstance() {
@@ -157,6 +162,12 @@ public class RestaurantManager {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 loggedInUserName = (String) dataSnapshot.child(uid).child("name").getValue();
                 loggedInUserRole = (String) dataSnapshot.child(uid).child("role").getValue();
+                if(loggedInUserRole.equals("מלצר")){
+                    NotificationListener.setSendToWaiters(true);
+                }
+                if(loggedInUserRole.equals("טבח")){
+                    NotificationListener.setSendToKitchen(true);
+                }
             }
 
             @Override
@@ -167,20 +178,7 @@ public class RestaurantManager {
 
     }
 
-    public void getNotificationCounter() {
-        db.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try {
-                    notificationCounter = (int) ((long) dataSnapshot.child("NotificationCounter").getValue());
-                }catch (NullPointerException e){}
-           }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
 
     public void loadAllOpenOrders() {
         db.addValueEventListener(new ValueEventListener() {
@@ -230,7 +228,6 @@ public class RestaurantManager {
                                 }
                             }
 
-
                             @Override
                             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
@@ -256,10 +253,8 @@ public class RestaurantManager {
 
                             orders.put(order_id, curr_order);
                         }
-
                     }
                 }
-
             }
 
             @Override
@@ -338,4 +333,6 @@ public class RestaurantManager {
             }
         });
     }
+
+
 }

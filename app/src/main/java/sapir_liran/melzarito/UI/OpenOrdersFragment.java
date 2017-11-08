@@ -2,6 +2,7 @@ package sapir_liran.melzarito.UI;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -11,11 +12,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import Logic.Order;
 import Logic.OrderItem;
@@ -29,8 +33,8 @@ public class OpenOrdersFragment extends Fragment {
     public OpenOrdersAdapter ordersAdapter;
     public int openOrdersNum = 0;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
-
-
+    private SimpleDateFormat time_format = new SimpleDateFormat("H:mm");
+    private Date currentTime = new Date();
     private Button refresh_btn;
 
     @Override
@@ -38,7 +42,16 @@ public class OpenOrdersFragment extends Fragment {
 
         view = inflater.inflate(R.layout.open_orders_fragment, container, false);
         refresh_btn = (Button) view.findViewById(R.id.refresh_button);
-
+        refresh_btn = (Button) view.findViewById(R.id.refresh_button);
+        //no data was loaded
+        if(restaurantManager.getOrders() == null){
+            refresh_btn.setText(R.string.data_error_text);
+            refresh_btn.setTextColor(Color.RED);
+        }
+        else {
+            refresh_btn.setText(R.string.refresh_btn_text);
+            refresh_btn.setTextColor(Color.BLACK);
+        }
         // refresh view
         refresh_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +138,15 @@ public class OpenOrdersFragment extends Fragment {
                 tableRowParams.setMargins(0, 0, 50, 0);
                 item_headline.setLayoutParams(tableRowParams);
                 order_layout.addView(item_headline, tableRowParams);
+                TextView timer = new TextView(view.getContext());
+                timer.setId(openOrders.get(position).getId());
+                String time = time_format.format(openOrders.get(position).getLastModifiedTime()); // 9:00
+                timer.setText(time);
+                timer.setGravity(Gravity.CENTER);
+                TableRow timer_row = new TableRow(view.getContext());
+                tableRowParams.setMargins(0, 0, 50, 20);
+                timer_row.setLayoutParams(tableRowParams);
+                timer_row.addView(timer);
 
                 for (OrderItem item : openOrders.get(position).getOrderItems()) {
                     TableRow item_row = new TableRow(view.getContext());
@@ -137,9 +159,14 @@ public class OpenOrdersFragment extends Fragment {
 
                     order_layout.addView(item_row, tableRowParams);
                 }
+                order_layout.addView(timer_row);
+
                 return order_layout;
             } else return null;
         }
 
+    }
+    private void updateTimer(){
+        
     }
 }

@@ -2,9 +2,12 @@ package sapir_liran.melzarito.UI;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.print.PrintManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.print.PrintHelper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +33,8 @@ public class TableOrderFragment extends android.app.Fragment {
     private View view;
     private FloatingActionButton newOrderbtn;
     private FloatingActionButton setClubMember_btn;
+    private FloatingActionButton print_btn;
+
     private OrderFragment orderFragment;
     private SearchClubMembersFragment searchClubMembersFragment;
     private FragmentManager fragmentManager;
@@ -75,7 +80,24 @@ public class TableOrderFragment extends android.app.Fragment {
                         .commit();
             }
         });
+        print_btn = (FloatingActionButton) view.findViewById(R.id.print_bill);
+        print_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get a PrintManager instance
+                PrintManager printManager = (PrintManager) getActivity()
+                        .getSystemService(Context.PRINT_SERVICE);
 
+                // Set job name, which will be displayed in the print queue
+                String jobName = getActivity().getString(R.string.app_name) + " Document";
+
+                // Start a print job, passing in a PrintDocumentAdapter implementation
+                // to handle the generation of a print document
+                printManager.print(jobName, new MyPrintDocumentAdapter(),
+                        null); //
+
+            }
+        });
 
         listView = (ListView) view.findViewById(R.id.listView);
 
@@ -166,4 +188,5 @@ public class TableOrderFragment extends android.app.Fragment {
         }
 
     }
+
 }

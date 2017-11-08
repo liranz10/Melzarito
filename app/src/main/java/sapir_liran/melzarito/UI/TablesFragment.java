@@ -2,6 +2,7 @@ package sapir_liran.melzarito.UI;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +13,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
+
+import static android.R.string.no;
 
 public class TablesFragment extends android.app.Fragment {
     private View view;
@@ -37,8 +44,18 @@ public class TablesFragment extends android.app.Fragment {
         tableNum = 0;
 
         refresh_btn = (Button) view.findViewById(R.id.refresh_button);
+        //no data was loaded
+        if(restaurantManager.getTables() == null){
+            refresh_btn.setText(R.string.data_error_text);
+            refresh_btn.setTextColor(Color.RED);
+        }
+        else {
+            refresh_btn.setText(R.string.refresh_btn_text);
+            refresh_btn.setTextColor(Color.BLACK);
+        }
 
-        refresh_btn.setOnClickListener(new View.OnClickListener() {
+
+            refresh_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (restaurantManager.getTables() != null)
@@ -84,7 +101,6 @@ public class TablesFragment extends android.app.Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             Button dummyButton = new Button(mContext);
             dummyButton.setText(String.valueOf(position));
-
             dummyButton.setGravity(Gravity.CENTER);
             dummyButton.setId(position + 1);
             dummyButton.setBackgroundResource(R.drawable.buttonshape);

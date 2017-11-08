@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -38,6 +39,15 @@ public class KitchenOpenOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.kitchen_open_orders_fragment, container, false);
         refresh_btn = (Button) view.findViewById(R.id.refresh_button);
+        //no data was loaded
+        if(restaurantManager.getOrders() == null){
+            refresh_btn.setText(R.string.data_error_text);
+            refresh_btn.setTextColor(Color.RED);
+        }
+        else {
+            refresh_btn.setText(R.string.refresh_btn_text);
+            refresh_btn.setTextColor(Color.BLACK);
+        }
         openOrders.clear();
 
         // refresh view
@@ -57,7 +67,6 @@ public class KitchenOpenOrdersFragment extends Fragment {
         });
 
 
-        restaurantManager.getNotificationCounter();
 
         // get all open orders from DB
         restaurantManager.loadAllOpenOrders();

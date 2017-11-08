@@ -16,4 +16,6 @@
     <string name="user_created">המשתמש נוצר</string>
     <string name="authentication_faild">ההזדהות נכשלה</string>
     <string name="out_of_stock_btn">אזל מהמלאי</string>
+    <string name="data_error_text">שגיאת נתונים - הקש כדי לרענן</string>
+    <string name="refresh_btn_text">רענן</string>
 </resources>
