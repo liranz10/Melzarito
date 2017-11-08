@@ -18,7 +18,7 @@ import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
 
 public class ItemsFragment extends android.app.Fragment {
-    View view;
+    private View view;
     private int category;
     private String categoryName;
     private TableLayout layout;

@@ -11,11 +11,11 @@ import android.widget.Button;
 import sapir_liran.melzarito.R;
 
 public class ClubMembersFragment extends android.app.Fragment {
-    View view;
-    Button addNewMemberBtn, searchMemberBtn;
-    FragmentManager fragmentManager;
-    AddNewClubMemberFragment addClubfragment;
-    SearchClubMembersFragment searchClubFragment;
+    private View view;
+    private Button addNewMemberBtn, searchMemberBtn;
+    private FragmentManager fragmentManager;
+    private AddNewClubMemberFragment addClubfragment;
+    private SearchClubMembersFragment searchClubFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

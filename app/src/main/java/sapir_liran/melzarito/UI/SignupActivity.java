@@ -29,7 +29,7 @@ public class SignupActivity extends AppCompatActivity {
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-    RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

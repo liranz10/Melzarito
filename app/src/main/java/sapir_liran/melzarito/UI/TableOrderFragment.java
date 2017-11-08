@@ -15,6 +15,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import Logic.Order;
@@ -144,20 +145,22 @@ public class TableOrderFragment extends android.app.Fragment {
                     TextView price = new TextView(view.getContext());
                     price.setText(orderItem.getPrice()+"");
                     price.setTextSize(18);
-                    totalPayment += orderItem.getPrice();
+
+                    // check if the customer is club member for 10% discount
+                    if(isClubMember) {
+                        totalPayment += orderItem.getPrice()*0.9;
+                    }
+                    else{
+                        totalPayment += orderItem.getPrice();
+                    }
                     tr.addView(item_name, tableRowItemNameParams);
                     tr.addView(price, tableRowPriceParams);
                     tableLayout.addView(tr);
                 }
 
-                // check if the customer is club member for 10% discount
-                if(isClubMember){
-                    totalPayment = totalPayment * 0.9;
-                }
-
                 //show the total payment
                 TextView total_payment_tv = (TextView)view.findViewById(R.id.total_payment);
-                total_payment_tv.setText("סה\"כ לתשלום: " + totalPayment);
+                total_payment_tv.setText("סה\"כ לתשלום: " + new DecimalFormat("##.##").format(totalPayment));
             }
             return tableLayout;
         }

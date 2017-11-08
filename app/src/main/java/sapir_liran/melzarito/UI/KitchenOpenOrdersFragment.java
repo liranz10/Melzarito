@@ -26,12 +26,12 @@ import Logic.RestaurantManager;
 import sapir_liran.melzarito.R;
 
 public class KitchenOpenOrdersFragment extends Fragment {
-    View view;
+    private View view;
     private GridView fragment_layout;
     public ArrayList<Order> openOrders = new ArrayList<>();
     public OpenOrdersAdapter ordersAdapter;
     public int openOrdersNum = 0;
-    RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
     private Button refresh_btn;
 
     @Override

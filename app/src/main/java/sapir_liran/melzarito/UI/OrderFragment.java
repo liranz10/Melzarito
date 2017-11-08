@@ -12,8 +12,8 @@ import Logic.Order;
 import sapir_liran.melzarito.R;
 
 public class OrderFragment extends android.app.Fragment {
-    View view;
-    ItemsFragment fragment = new ItemsFragment();
+    private View view;
+    private ItemsFragment fragment = new ItemsFragment();
     private FragmentManager fragmentManager;
 
     @Override

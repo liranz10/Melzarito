@@ -25,10 +25,10 @@ import sapir_liran.melzarito.R;
 public class OpenOrdersFragment extends Fragment {
     private GridView fragment_layout;
     public ArrayList<Order> openOrders = new ArrayList<>();
-    View view;
+    private View view;
     public OpenOrdersAdapter ordersAdapter;
     public int openOrdersNum = 0;
-    RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
 
 
     private Button refresh_btn;

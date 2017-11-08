@@ -24,10 +24,10 @@ import sapir_liran.melzarito.R;
 
 public class NotificationListener {
 
-    FirebaseDatabase database;
-    DatabaseReference db_order_notifications;
-    DatabaseReference db_stock_notifications;
-    DatabaseReference db_specials_notifications;
+    private FirebaseDatabase database;
+    private DatabaseReference db_order_notifications;
+    private DatabaseReference db_stock_notifications;
+    private DatabaseReference db_specials_notifications;
 
 
     int counter = 0;

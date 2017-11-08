@@ -78,7 +78,6 @@ public class RestaurantManager {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //--sapir: need to check why we cannot load this 2 integers in the first time from DB
                 if (dataSnapshot.child("counterOrderID").getValue() == null)
                     db.child("counterOrderID").setValue(0);
                 long longOrderIdCounter = (long) dataSnapshot.child("counterOrderID").getValue();
@@ -292,6 +291,9 @@ public class RestaurantManager {
                 GenericTypeIndicator<ArrayList<Table>> table_type = new GenericTypeIndicator<ArrayList<Table>>() {
                 };
                 tables = dataSnapshot.child("Tables").getValue(table_type);
+                for (int i = 0 ; i < tables.size(); i++){
+                    tables.get(i).setClubMember(dataSnapshot.child("Tables").child(i+"").child("isClubMember").getValue(boolean.class));
+                }
             }
 
             @Override

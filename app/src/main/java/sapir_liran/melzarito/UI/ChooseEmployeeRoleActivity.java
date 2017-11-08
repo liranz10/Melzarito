@@ -20,7 +20,7 @@ import sapir_liran.melzarito.R;
 public class ChooseEmployeeRoleActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private Button btnLogout, chefbtn, waiterbtn;
-    RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

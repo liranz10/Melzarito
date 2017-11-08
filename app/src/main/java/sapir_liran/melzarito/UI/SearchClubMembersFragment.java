@@ -15,7 +15,7 @@ import sapir_liran.melzarito.R;
 public class SearchClubMembersFragment extends Fragment {
     View view;
     public static int tableNum;
-    RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
