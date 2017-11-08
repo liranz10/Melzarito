@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import Logic.Order;
 import Logic.OrderItem;
 import Logic.RestaurantManager;
+import Logic.Table;
 import sapir_liran.melzarito.R;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
@@ -35,6 +36,8 @@ public class TableOrderFragment extends android.app.Fragment {
     private ListView listView;
     private ArrayList<Order> ordersList = new ArrayList<>();
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private double totalPayment = 0;
+    private boolean isClubMember = false;
 
 
     @Override
@@ -78,8 +81,15 @@ public class TableOrderFragment extends android.app.Fragment {
         ordersList.clear();
         ordersList.addAll(restaurantManager.getOrders());
 
+        totalPayment = 0;
         TableOrderAdapter tableOrderAdapter = new TableOrderAdapter(getActivity(), ordersList.size());
         listView.setAdapter(tableOrderAdapter);
+
+        // check if the customer is club member
+        for(Table table : restaurantManager.getTables()) {
+            if ((table.getNumber() == tableNumber) && (table.isClubMember()))
+                isClubMember = true;
+        }
 
         return view;
     }
@@ -117,27 +127,37 @@ public class TableOrderFragment extends android.app.Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TableLayout tableLayout = new TableLayout(mContext);
-            tableLayout.setColumnStretchable(1,true);
+            tableLayout.setColumnStretchable(0,true);
             if (ordersList.get(position).getTableNumber() == tableNumber) {
-                TableLayout.LayoutParams tableLayoutParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                tableLayoutParams.setMargins(0, 20, 50, 0);
+
+                TableRow.LayoutParams tableRowPriceParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+                tableRowPriceParams.setMargins(25,0,0,0);
+
+                TableRow.LayoutParams tableRowItemNameParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+                tableRowItemNameParams.setMargins(0,0,25,0);
+
                 for (OrderItem orderItem : ordersList.get(position).getOrderItems()) {
                     TableRow tr = new TableRow(view.getContext());
                     TextView item_name = new TextView(view.getContext());
                     item_name.setText(orderItem.getName());
-                    item_name.setTextSize(20);
-                    //item_name.setPadding(400,0,0,0);
+                    item_name.setTextSize(18);
                     TextView price = new TextView(view.getContext());
                     price.setText(orderItem.getPrice()+"");
-                    price.setTextSize(20);
-
-//                    item_name.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 0.7f));
-//                    price.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 0.3f));
-
-                    tr.addView(item_name);
-                    tr.addView(price);
-                    tableLayout.addView(tr, tableLayoutParams);
+                    price.setTextSize(18);
+                    totalPayment += orderItem.getPrice();
+                    tr.addView(item_name, tableRowItemNameParams);
+                    tr.addView(price, tableRowPriceParams);
+                    tableLayout.addView(tr);
                 }
+
+                // check if the customer is club member for 10% discount
+                if(isClubMember){
+                    totalPayment = totalPayment * 0.9;
+                }
+
+                //show the total payment
+                TextView total_payment_tv = (TextView)view.findViewById(R.id.total_payment);
+                total_payment_tv.setText("סה\"כ לתשלום: " + totalPayment);
             }
             return tableLayout;
         }

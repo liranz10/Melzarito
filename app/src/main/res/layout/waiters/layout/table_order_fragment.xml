@@ -1,33 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout android:id="@+id/table_order_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginTop="60sp"
-    android:orientation="vertical"
-    android:layoutDirection="rtl"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/table_order_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="60sp"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
 
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0">
+<TableRow
+    android:orientation="horizontal">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
         android:layout_marginStart="40sp"
-
         android:text="פרטי ההזמנה"
-        android:textStyle="bold"/>
+
+        android:textSize="20sp"
+        android:textStyle="bold" >
+    </TextView>
+    <TextView
+        android:id="@+id/total_payment"
+        android:layout_marginLeft="40sp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        />
+</TableRow>
+
+    </TableLayout>
+
     <ListView
         android:id="@+id/listView"
-        android:layout_marginTop="30sp"
-        android:layout_marginStart="20sp"
-        android:layout_marginEnd="20sp"
-        android:layout_marginBottom="100sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="100sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="30sp"
         android:background="@drawable/buttonshape"
-        android:textDirection="rtl"
-        android:layout_alignParentTop="true">
+        android:textDirection="rtl">
 
     </ListView>
 
@@ -35,29 +52,29 @@
         android:id="@+id/print_bill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginBottom="30dp"
-        android:src="@drawable/print"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="60dp"
+        android:src="@drawable/print" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/set_club_member"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:src="@drawable/clubmember"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/clubmember" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/new_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:src="@drawable/plus"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="30dp"
         android:layout_marginEnd="60dp"
-        android:layout_alignParentEnd="true"/>
+        android:src="@drawable/plus" />
 
 </RelativeLayout>

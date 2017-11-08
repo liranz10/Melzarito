@@ -12,11 +12,11 @@ public class Table {
 
     }
 
-    public Table(int number, int numOfSeats) {
+    public Table(int number, int numOfSeats, boolean isClubMember) {
         this.number = number;
         this.numOfSeats = numOfSeats;
         this.empty = true;
-        this.isClubMember = false;
+        this.isClubMember = isClubMember;
     }
 
     public int getNumber() {
