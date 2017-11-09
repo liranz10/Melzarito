@@ -14,7 +14,7 @@ import sapir_liran.melzarito.R;
 
 public class SearchClubMembersFragment extends Fragment {
     View view;
-    public static int tableNum;
+    private int tableNum;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
 
     @Override
@@ -39,7 +39,7 @@ public class SearchClubMembersFragment extends Fragment {
 
     }
 
-    public static void setTableNum(int tableNum1) {
-        tableNum = tableNum1;
+    public void setTableNum(int tableNum) {
+        this.tableNum = tableNum;
     }
 }

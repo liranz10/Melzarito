@@ -15,11 +15,15 @@ public class OrderFragment extends android.app.Fragment {
     private View view;
     private ItemsFragment fragment = new ItemsFragment();
     private FragmentManager fragmentManager;
+    private int tableNum;
 
+    public void setTableNum(int tableNum){
+        this.tableNum = tableNum;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.order_fragment, container, false);
-
+        fragment.setTableNum(tableNum);
         fragmentManager = getFragmentManager();
         getActivity().setTitle(R.string.title_fragment_menu);
         final Button appetizers_btn = (Button) view.findViewById(R.id.appetizers_btn);

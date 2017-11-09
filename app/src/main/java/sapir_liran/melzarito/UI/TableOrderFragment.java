@@ -34,6 +34,8 @@ public class TableOrderFragment extends android.app.Fragment {
     private FloatingActionButton newOrderbtn;
     private FloatingActionButton setClubMember_btn;
     private FloatingActionButton print_btn;
+    private FloatingActionButton coins_btn;
+    private TextView total_payment_tv;
 
     private OrderFragment orderFragment;
     private SearchClubMembersFragment searchClubMembersFragment;
@@ -59,6 +61,7 @@ public class TableOrderFragment extends android.app.Fragment {
             @Override
             public void onClick(View v) {
                 orderFragment = new OrderFragment();
+                orderFragment.setTableNum(tableNumber);
                 restaurantManager.CreateNewOrderAndWriteToDB(tableNumber);
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, orderFragment).addToBackStack(TableOrderFragment.class.getName())
@@ -74,7 +77,7 @@ public class TableOrderFragment extends android.app.Fragment {
             @Override
             public void onClick(View v) {
                 searchClubMembersFragment = new SearchClubMembersFragment();
-                SearchClubMembersFragment.setTableNum(tableNumber);
+                searchClubMembersFragment.setTableNum(tableNumber);
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, searchClubMembersFragment).addToBackStack(SearchClubMembersFragment.class.getName())
                         .commit();
@@ -98,6 +101,34 @@ public class TableOrderFragment extends android.app.Fragment {
 
             }
         });
+
+        coins_btn = (FloatingActionButton)view.findViewById(R.id.coins);
+        coins_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(Order order : restaurantManager.getOrders()){
+                    if (order.getTableNumber() == tableNumber){
+                        order.setOpen(false);
+                        //change in DB
+                        restaurantManager.closeOrder(order.getId());
+                    }
+                }
+
+                totalPayment = 0;
+                total_payment_tv.setText("סה\"כ לתשלום: " + new DecimalFormat("##.##").format(totalPayment));
+//                listView.removeAllViews();
+                listView.setAdapter(null);
+                for(int i=0; i < restaurantManager.getTables().size(); i++){
+                    if (restaurantManager.getTables().get(i).getNumber() == tableNumber){
+                        restaurantManager.getTables().get(i).setClubMember(false);
+                        restaurantManager.getTables().get(i).setIsEmpty(true);
+                        //change in db
+                        restaurantManager.emptyTable(i);
+                    }
+                }
+            }
+        });
+
 
         listView = (ListView) view.findViewById(R.id.listView);
 
@@ -181,7 +212,7 @@ public class TableOrderFragment extends android.app.Fragment {
                 }
 
                 //show the total payment
-                TextView total_payment_tv = (TextView)view.findViewById(R.id.total_payment);
+                total_payment_tv = (TextView)view.findViewById(R.id.total_payment);
                 total_payment_tv.setText("סה\"כ לתשלום: " + new DecimalFormat("##.##").format(totalPayment));
             }
             return tableLayout;

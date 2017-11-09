@@ -112,7 +112,7 @@ public class RestaurantManager {
         return tables;
     }
 
-    public void createOrderItemAndWriteToDB(MenuItem item, int category) {
+    public void createOrderItemAndWriteToDB(MenuItem item, int category, int tableNum) {
 
         OrderItem new_item = new OrderItem(item.getId(), item.getName(), category, orderItemIdCounter, new Date(), item.getPrice());
 
@@ -125,6 +125,15 @@ public class RestaurantManager {
         orderItemIdCounter++;
 
         db.child("counterOrderItemsID").setValue(orderItemIdCounter);
+
+        for (int i=0; i < tables.size(); i++){
+            if(tables.get(i).getNumber() == tableNum){
+                tables.get(i).setIsEmpty(false);
+                db.child("Tables").child(i+"").child("empty").setValue(false);
+                break;
+            }
+        }
+
 
     }
 
@@ -334,5 +343,12 @@ public class RestaurantManager {
         });
     }
 
+    public void closeOrder(int orderID){
+        db.child("Orders").child(orderID+"").child("open").setValue(false);
+    }
 
+    public void emptyTable(int indexTable){
+        db.child("Tables").child(indexTable+"").child("empty").setValue(true);
+        db.child("Tables").child(indexTable + "").child("isClubMember").setValue(false);
+    }
 }

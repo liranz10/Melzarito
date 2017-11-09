@@ -24,6 +24,7 @@ public class ItemsFragment extends android.app.Fragment {
     private TableLayout layout;
     private FragmentManager fragmentManager;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private int tableNum;
 
 
     @Override
@@ -102,7 +103,7 @@ public class ItemsFragment extends android.app.Fragment {
                     int text_item_id = getResources().getIdentifier(String.valueOf(i.getId()), "id", "com.sapir_liran.melzarito.UI");
                     TextView quantity = (TextView) view.findViewById(text_item_id);
                     for (int j = 0; j < Integer.parseInt(quantity.getText().toString()); j++) {
-                        restaurantManager.createOrderItemAndWriteToDB(i, category);
+                        restaurantManager.createOrderItemAndWriteToDB(i, category,tableNum);
                     }
                 }
                 //return back screen
@@ -121,4 +122,7 @@ public class ItemsFragment extends android.app.Fragment {
         this.categoryName = categoryName;
     }
 
+    public void setTableNum(int tableNum) {
+        this.tableNum = tableNum;
+    }
 }
