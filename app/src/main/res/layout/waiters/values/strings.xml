@@ -18,4 +18,5 @@
     <string name="out_of_stock_btn">אזל מהמלאי</string>
     <string name="data_error_text">שגיאת נתונים - הקש כדי לרענן</string>
     <string name="refresh_btn_text">רענן</string>
+    <string name="price">מחיר</string>
 </resources>

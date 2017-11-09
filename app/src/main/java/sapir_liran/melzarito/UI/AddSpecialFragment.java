@@ -28,7 +28,9 @@ public class AddSpecialFragment extends Fragment {
             public void onClick(View v) {
                 EditText special_name =(EditText)view.findViewById(R.id.special_name);
                 String name = special_name.getText().toString();
-                restaurantManager.addNewSpecial(name);
+                EditText special_price =(EditText)view.findViewById(R.id.special_price);
+                double price = Double.parseDouble(special_price.getText().toString());
+                restaurantManager.addNewSpecial(name,price);
             }
         });
         return view;

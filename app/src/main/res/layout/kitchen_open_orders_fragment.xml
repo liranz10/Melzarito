@@ -21,6 +21,9 @@
     android:padding="20sp">
 
 
-
 </GridView>
+    <DigitalClock
+        android:id="@+id/simpleDigitalClock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

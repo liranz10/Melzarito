@@ -19,6 +19,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import Logic.Order;
@@ -33,6 +34,7 @@ public class KitchenOpenOrdersFragment extends Fragment {
     public OpenOrdersAdapter ordersAdapter;
     public int openOrdersNum = 0;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private SimpleDateFormat time_format = new SimpleDateFormat("hh:mm:ss");
     private Button refresh_btn;
 
     @Override
@@ -122,6 +124,13 @@ public class KitchenOpenOrdersFragment extends Fragment {
 
             headline.addView(orderNum);
 
+            TextView timer = new TextView(view.getContext());
+            String time = time_format.format(openOrders.get(position).getLastModifiedTime());
+            timer.setText("שעת ההזמנה: "+time);
+            TableRow timer_row = new TableRow(view.getContext());
+
+            timer_row.addView(timer);
+
             TableRow tableNum = new TableRow(view.getContext());
             tableNum.setGravity(Gravity.CENTER);
             TextView tableNumtext = new TextView(view.getContext());
@@ -141,6 +150,7 @@ public class KitchenOpenOrdersFragment extends Fragment {
             headline.setLayoutParams(tableRowParams);
 
             order_layout.addView(headline, tableRowParams);
+            order_layout.addView(timer_row);
             order_layout.addView(tableNum, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
 
             tableRowParams.setMargins(0, 0, 50, 0);

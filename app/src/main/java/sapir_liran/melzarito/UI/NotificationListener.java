@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import Logic.KitchenNotification;
 import Logic.OrderNotification;
 import Logic.SpecialNotification;
 import Logic.StockNotification;
@@ -28,8 +29,10 @@ public class NotificationListener {
     private DatabaseReference db_order_notifications;
     private DatabaseReference db_stock_notifications;
     private DatabaseReference db_specials_notifications;
+    private DatabaseReference db_kitchen_notifications;
     private static boolean sendToWaiters;
     private static boolean sendToKitchen;
+
 
     int counter = 0;
     private Context context;
@@ -53,18 +56,20 @@ public class NotificationListener {
                                 if (notification != null) {
                                     //if not invoked already
                                     if (!notification.isInvoked()) {
-                                        //send notification
-                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                                                .setContentTitle(context.getResources().getString(R.string.order_ready_txt_ntf))
-                                                .setContentText(context.getResources().getString(R.string.order_num) + notification.getOrderId() + context.getResources().getString(R.string.table_num) + notification.getTableNumber())
-                                                .setSmallIcon(R.drawable.servicebell)
-                                                .setSound(Uri.parse(("android.resource://" + context.getPackageName() + "/raw/bell")));
-
-                                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                                        counter++;
-                                        notificationManager.notify(counter, builder.build());
                                         //set invoked on db
-                                        db_order_notifications.child(notification.getOrderId() + "").child("invoked").setValue(true);
+                                        if(notification.getOrderId()!=0 && notification.getTableNumber()!=0) {
+                                            db_order_notifications.child(notification.getOrderId() + "").child("invoked").setValue(true);
+                                            //send notification
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                                                    .setContentTitle(context.getResources().getString(R.string.order_ready_txt_ntf))
+                                                    .setContentText(context.getResources().getString(R.string.order_num) + notification.getOrderId() +" "+ context.getResources().getString(R.string.table_num) + notification.getTableNumber())
+                                                    .setSmallIcon(R.drawable.servicebell)
+                                                    .setSound(Uri.parse(("android.resource://" + context.getPackageName() + "/raw/bell")));
+
+                                            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                                            counter++;
+                                            notificationManager.notify(counter, builder.build());
+                                        }
 
                                     }
                                 }
@@ -94,22 +99,24 @@ public class NotificationListener {
                         if (notifications != null) {
                             for (StockNotification notification : notifications) {
                                 if (notification != null) {
+
                                     //if not invoked already
                                     if (!notification.isInvoked()) {
-                                        //send notification
-                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                                                .setContentTitle(context.getResources().getString(R.string.item_soldout))
-                                                .setContentText(notification.getItemName())
-                                                .setSmallIcon(R.drawable.outofstock)
-                                                .setSound(Uri.parse(("android.resource://" + context.getPackageName() + "/raw/out")));
-
-                                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                                        counter++;
-                                        notificationManager.notify(counter, builder.build());
                                         //set invoked on db
                                         db_stock_notifications.child(notification.getItemId() + "").child("invoked").setValue(true);
+                                        //send notification
+                                        if(notification.getItemName()!=null) {
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                                                    .setContentTitle(context.getResources().getString(R.string.item_soldout))
+                                                    .setContentText(notification.getItemName())
+                                                    .setSmallIcon(R.drawable.outofstock)
+                                                    .setSound(Uri.parse(("android.resource://" + context.getPackageName() + "/raw/out")));
 
-                                    }
+                                            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                                            counter++;
+                                            notificationManager.notify(counter, builder.build());
+                                        }
+                                        }
                                 }
                             }
                         }
@@ -143,18 +150,67 @@ public class NotificationListener {
                                 if (notification != null) {
                                     //if not invoked already
                                     if (!notification.isInvoked()) {
+                                        //store on db
+                                        db_specials_notifications.child(notification.getId() + "").child("invoked").setValue(true);
                                         //send
-                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                                                .setContentTitle(context.getResources().getString(R.string.new_special_added_ntf))
-                                                .setContentText(notification.getName())
-                                                .setSmallIcon(R.drawable.special)
-                                                .setSound(Uri.parse(("android.resource://" + context.getPackageName() + "/raw/special")));
+                                        if (notification.getName()!=null){
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                                                    .setContentTitle(context.getResources().getString(R.string.new_special_added_ntf))
+                                                    .setContentText(notification.getName())
+                                                    .setSmallIcon(R.drawable.special)
+                                                    .setSound(Uri.parse(("android.resource://" + context.getPackageName() + "/raw/special")));
 
                                         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                                         counter++;
                                         notificationManager.notify(counter, builder.build());
+                                    }
+                                    }
+                                }
+                            }
+                        }
+                    } catch (DatabaseException ex) {
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        db_kitchen_notifications = database.getReference("KitchenNotification");
+        //kitchen notifications listener
+        db_kitchen_notifications.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (sendToKitchen) {
+                    GenericTypeIndicator<ArrayList<KitchenNotification>> typeIndicator = new GenericTypeIndicator<ArrayList<KitchenNotification>>() {
+                    };
+                    try {
+                        List<KitchenNotification> notifications = new ArrayList<KitchenNotification>();
+                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            notifications.add(child.getValue(KitchenNotification.class));
+                        }
+                        if (notifications != null) {
+                            for (KitchenNotification notification : notifications) {
+                                if (notification != null) {
+                                    //if not invoked already
+                                    if (!notification.isInvoked()) {
                                         //store on db
-                                        db_specials_notifications.child(notification.getId() + "").child("invoked").setValue(true);
+                                        db_kitchen_notifications.child(notification.getOrderId() + "").child("invoked").setValue(true);
+                                        //send
+                                        if (notification.getOrderId()!=0 && notification.getTableNumber()!=0){
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                                                    .setContentTitle(context.getResources().getString(R.string.new_order))
+                                                    .setContentText(context.getResources().getString(R.string.order_num) + notification.getOrderId() + context.getResources().getString(R.string.table_num) + notification.getTableNumber())
+                                                    .setSmallIcon(R.drawable.neworder)
+                                                    .setSound(Uri.parse(("android.resource://" + context.getPackageName() + "/raw/beep")));
+
+                                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                                        counter++;
+                                        notificationManager.notify(counter, builder.build());
+                                    }
                                     }
                                 }
                             }

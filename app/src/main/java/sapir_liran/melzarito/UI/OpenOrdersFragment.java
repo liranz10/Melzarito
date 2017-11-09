@@ -3,6 +3,7 @@ package sapir_liran.melzarito.UI;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -17,6 +18,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,10 +36,8 @@ public class OpenOrdersFragment extends Fragment {
     public OpenOrdersAdapter ordersAdapter;
     public int openOrdersNum = 0;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
-    private SimpleDateFormat time_format = new SimpleDateFormat("H:mm");
-    private Date currentTime = new Date();
+    private SimpleDateFormat time_format = new SimpleDateFormat("hh:mm:ss");
     private Button refresh_btn;
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -44,11 +45,10 @@ public class OpenOrdersFragment extends Fragment {
         refresh_btn = (Button) view.findViewById(R.id.refresh_button);
         refresh_btn = (Button) view.findViewById(R.id.refresh_button);
         //no data was loaded
-        if(restaurantManager.getOrders() == null){
+        if (restaurantManager.getOrders() == null) {
             refresh_btn.setText(R.string.data_error_text);
             refresh_btn.setTextColor(Color.RED);
-        }
-        else {
+        } else {
             refresh_btn.setText(R.string.refresh_btn_text);
             refresh_btn.setTextColor(Color.BLACK);
         }
@@ -64,6 +64,7 @@ public class OpenOrdersFragment extends Fragment {
                     openOrdersNum = openOrders.size();
                 ordersAdapter = new OpenOrdersAdapter(getActivity(), openOrdersNum);
                 fragment_layout.setAdapter(ordersAdapter);
+
             }
         });
 
@@ -104,6 +105,7 @@ public class OpenOrdersFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             if (openOrders != null && openOrders.get(position).isOpen()) {
                 TableLayout order_layout = new TableLayout(mContext);
+                order_layout.setId(R.id.standard);
                 order_layout.setBackgroundResource(R.drawable.note);
                 TableLayout.LayoutParams tableRowParams =
                         new TableLayout.LayoutParams
@@ -114,6 +116,13 @@ public class OpenOrdersFragment extends Fragment {
                 orderNum.setTextSize(16);
 
                 headline.addView(orderNum);
+
+                TextView timer = new TextView(view.getContext());
+                String time = time_format.format(openOrders.get(position).getLastModifiedTime());
+                timer.setText("שעת ההזמנה: "+time);
+                TableRow timer_row = new TableRow(view.getContext());
+
+                timer_row.addView(timer);
 
                 TableRow tableNum = new TableRow(view.getContext());
                 tableNum.setGravity(Gravity.CENTER);
@@ -133,20 +142,12 @@ public class OpenOrdersFragment extends Fragment {
                 headline.setLayoutParams(tableRowParams);
 
                 order_layout.addView(headline, tableRowParams);
+                order_layout.addView(timer_row);
                 order_layout.addView(tableNum, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
 
                 tableRowParams.setMargins(0, 0, 50, 0);
                 item_headline.setLayoutParams(tableRowParams);
                 order_layout.addView(item_headline, tableRowParams);
-                TextView timer = new TextView(view.getContext());
-                timer.setId(openOrders.get(position).getId());
-                String time = time_format.format(openOrders.get(position).getLastModifiedTime()); // 9:00
-                timer.setText(time);
-                timer.setGravity(Gravity.CENTER);
-                TableRow timer_row = new TableRow(view.getContext());
-                tableRowParams.setMargins(0, 0, 50, 20);
-                timer_row.setLayoutParams(tableRowParams);
-                timer_row.addView(timer);
 
                 for (OrderItem item : openOrders.get(position).getOrderItems()) {
                     TableRow item_row = new TableRow(view.getContext());
@@ -159,14 +160,20 @@ public class OpenOrdersFragment extends Fragment {
 
                     order_layout.addView(item_row, tableRowParams);
                 }
-                order_layout.addView(timer_row);
 
                 return order_layout;
             } else return null;
         }
 
     }
-    private void updateTimer(){
-        
-    }
+
+
 }
+
+
+
+
+
+
+
+

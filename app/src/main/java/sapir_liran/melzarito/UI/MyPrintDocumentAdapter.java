@@ -12,7 +12,7 @@ public class MyPrintDocumentAdapter extends PrintDocumentAdapter
 {
     @Override
     public void onLayout(PrintAttributes oldAttributes, PrintAttributes newAttributes, CancellationSignal cancellationSignal, LayoutResultCallback callback, Bundle extras) {
-
+        //to be added on next version =)
     }
 
     @Override

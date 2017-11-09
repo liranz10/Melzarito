@@ -123,6 +123,7 @@ public class KitchenMainActivity extends AppCompatActivity implements Navigation
         }
         //logout
         else if (id == R.id.logout_menu) {
+            if(auth!=null)
             auth.signOut();
             startActivity(new Intent(KitchenMainActivity.this, LoginActivity.class));
             finish();

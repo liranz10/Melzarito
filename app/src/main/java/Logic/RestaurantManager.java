@@ -126,10 +126,10 @@ public class RestaurantManager {
 
         db.child("counterOrderItemsID").setValue(orderItemIdCounter);
 
-        for (int i=0; i < tables.size(); i++){
-            if(tables.get(i).getNumber() == tableNum){
+        for (int i = 0; i < tables.size(); i++) {
+            if (tables.get(i).getNumber() == tableNum) {
                 tables.get(i).setIsEmpty(false);
-                db.child("Tables").child(i+"").child("empty").setValue(false);
+                db.child("Tables").child(i + "").child("empty").setValue(false);
                 break;
             }
         }
@@ -142,6 +142,7 @@ public class RestaurantManager {
         db.child("counterOrderID").setValue(orderIdCounter);
         Order new_order = new Order(orderIdCounter, tableNumber, loggedInUserName, new Date(), 1, true, 1);
         db.child("Orders").child(new_order.getId() + "").setValue(new_order);
+        kitchenNotification(orderIdCounter,tableNumber);
     }
 
     public Collection<Order> getOrders() {
@@ -154,15 +155,18 @@ public class RestaurantManager {
         db.child("StockNotifications").child(item.getId() + "").child("invoked").setValue(false);
     }
 
-    public void addNewSpecial(String name) {
+    public void addNewSpecial(String name, double price) {
         db.child("Menu").child("Items").child(menu.getItems().size() + 1 + "").child("category").setValue(4);
         db.child("Menu").child("Items").child(menu.getItems().size() + 1 + "").child("id").setValue(menu.getItems().size() + 1);
         db.child("Menu").child("Items").child(menu.getItems().size() + 1 + "").child("name").setValue(name);
+        db.child("Menu").child("Items").child(menu.getItems().size() + 1 + "").child("price").setValue(price);
+
         int id = menu.getItems().size() + 1;
         db.child("SpecialNotifications").child(id + "").child("id").setValue(id);
         db.child("SpecialNotifications").child(id + "").child("name").setValue(name);
         db.child("SpecialNotifications").child(id + "").child("invoked").setValue(false);
     }
+
 
     public void getLoggedInUserFromDB(final String uid) {
 
@@ -171,10 +175,10 @@ public class RestaurantManager {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 loggedInUserName = (String) dataSnapshot.child(uid).child("name").getValue();
                 loggedInUserRole = (String) dataSnapshot.child(uid).child("role").getValue();
-                if(loggedInUserRole.equals("מלצר")){
+                if (loggedInUserRole.equals("מלצר")) {
                     NotificationListener.setSendToWaiters(true);
                 }
-                if(loggedInUserRole.equals("טבח")){
+                if (loggedInUserRole.equals("טבח")) {
                     NotificationListener.setSendToKitchen(true);
                 }
             }
@@ -186,7 +190,6 @@ public class RestaurantManager {
         });
 
     }
-
 
 
     public void loadAllOpenOrders() {
@@ -230,7 +233,7 @@ public class RestaurantManager {
                                         int tempMenuId = (int) ((long) dataSnapshot.child("MenuItemId").getValue());
                                         int orderItem_id = Integer.parseInt(dataSnapshot.getKey());
                                         double price = Double.parseDouble(dataSnapshot.child("price").getValue().toString());
-                                        curr_order.addOrderItem(new OrderItem(tempMenuId, tempName, tempCategory, orderItem_id, tempLastModified,price));
+                                        curr_order.addOrderItem(new OrderItem(tempMenuId, tempName, tempCategory, orderItem_id, tempLastModified, price));
                                     } catch (NullPointerException ex) {
                                     }
 
@@ -295,8 +298,8 @@ public class RestaurantManager {
                 GenericTypeIndicator<ArrayList<Table>> table_type = new GenericTypeIndicator<ArrayList<Table>>() {
                 };
                 tables = dataSnapshot.child("Tables").getValue(table_type);
-                for (int i = 0 ; i < tables.size(); i++){
-                    tables.get(i).setClubMember(dataSnapshot.child("Tables").child(i+"").child("isClubMember").getValue(boolean.class));
+                for (int i = 0; i < tables.size(); i++) {
+                    tables.get(i).setClubMember(dataSnapshot.child("Tables").child(i + "").child("isClubMember").getValue(boolean.class));
                 }
             }
 
@@ -343,12 +346,18 @@ public class RestaurantManager {
         });
     }
 
-    public void closeOrder(int orderID){
-        db.child("Orders").child(orderID+"").child("open").setValue(false);
+    public void closeOrder(int orderID) {
+        db.child("Orders").child(orderID + "").child("open").setValue(false);
     }
 
-    public void emptyTable(int indexTable){
-        db.child("Tables").child(indexTable+"").child("empty").setValue(true);
+    public void emptyTable(int indexTable) {
+        db.child("Tables").child(indexTable + "").child("empty").setValue(true);
         db.child("Tables").child(indexTable + "").child("isClubMember").setValue(false);
+    }
+
+    public void kitchenNotification(int orderid, int tableNum) {
+        db.child("KitchenNotification").child(orderid + "").child("orderId").setValue(orderid);
+        db.child("KitchenNotification").child(orderid + "").child("tableNum").setValue(tableNum);
+        db.child("KitchenNotification").child(orderid + "").child("invoked").setValue(false);
     }
 }

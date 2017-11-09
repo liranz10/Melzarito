@@ -65,6 +65,7 @@
     <integer name="notready">1</integer>
     <string name="order_num">מספר הזמנה: </string>
     <string name="table_num"> מספר שולחן:  </string>
+    <string name="new_order">הזמנה חדשה</string>
 
     <string name="items_in_order"> פריטים בהזמנה:  </string>
     <string name="ready_button_text"> מוכן  </string>

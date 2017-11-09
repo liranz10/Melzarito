@@ -15,24 +15,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UI.LoginActivity"
-                  android:screenOrientation="portrait"
-                  android:configChanges="keyboardHidden|orientation">
+        <activity android:name=".UI.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.ResetPasswordActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="keyboardHidden|orientation"/>
-        <activity android:name=".UI.SignupActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="keyboardHidden|orientation"/>
-        <activity android:name=".UI.ChooseEmployeeRoleActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="keyboardHidden|orientation"/>
+        <activity android:name=".UI.ResetPasswordActivity" />
+        <activity android:name=".UI.SignupActivity"/>
+        <activity android:name=".UI.ChooseEmployeeRoleActivity" />
         <activity
             android:name=".UI.WaitersMainActivity"
             android:label="@string/title_fragment_tables"
@@ -43,7 +34,7 @@
             android:name=".UI.KitchenMainActivity"
             android:label="מטבח"
             android:theme="@style/AppTheme"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:configChanges="keyboardHidden|orientation"/>
     </application>
     <service
